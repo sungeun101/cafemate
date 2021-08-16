@@ -1,6 +1,7 @@
 package cafemate.back.service;
 
-import cafemate.back.domain.Users;
+import cafemate.back.dto.users.UserSaveRequestDto;
+import cafemate.back.dto.users.UsersResponseDto;
 import cafemate.back.repository.UsersRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,14 +24,14 @@ public class UsersServiceTest {
     @Test
     @Rollback(value = false)
     public void 회원가입() throws Exception {
-        Users userA = new Users();
-        Users userB = new Users();
-
-        userA.setName("userA");
-        userB.setName("userB");
+        UserSaveRequestDto userA = new UserSaveRequestDto();
+        UserSaveRequestDto userB = new UserSaveRequestDto();
 
         userA.setEmail("userA@gmail.com");
         userB.setEmail("userB@gmail.com");
+
+        userA.setName("userA");
+        userB.setName("userB");
 
         usersService.joinUser(userA);
         usersService.joinUser(userB);
@@ -38,7 +39,14 @@ public class UsersServiceTest {
 
     @Test
     @Rollback(value = false)
+    public void 회원조회() throws Exception {
+        UsersResponseDto user = usersService.findUser(1);
+        System.out.println(user.getEmail());
+    }
+
+    @Test
+    @Rollback(value = false)
     public void 회원탈퇴() throws Exception {
-        usersService.deleteUser(1);
+        usersService.deleteUser(2);
     }
 }
