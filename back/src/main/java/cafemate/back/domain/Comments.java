@@ -1,8 +1,9 @@
 package cafemate.back.domain;
 
+import com.sun.istack.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -10,12 +11,12 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "comments")
 @NoArgsConstructor
-@Getter @Setter
+@Getter
 public class Comments {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
-    private Long id;
+    private Integer id;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "user_id")
@@ -25,14 +26,32 @@ public class Comments {
 //    @JoinColumn(name = "cafe_id")
 //    private Cafes cafes;
 
-    //@NotNull
+    @NotNull
     private String content;
 
     private String img_path;
 
-    //@NotNull
+    @NotNull
     private float star;
 
+
     private LocalDate created_at;
+
+    public void updateContent(String newContent){
+        this.content = newContent;
+    }
+
+    public void updateDate() {
+        this.created_at = LocalDate.now();
+    }
+
+    // DTO를 엔티티로 변환해주기
+    @Builder
+    public Comments (String content, String img_path, float star, LocalDate created_at) {
+        this.content = content;
+        this.img_path = img_path;
+        this.star = star;
+        this.created_at = created_at;
+    }
 
 }

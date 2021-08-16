@@ -1,6 +1,7 @@
 package cafemate.back.service;
 
 import cafemate.back.domain.Comments;
+import cafemate.back.dto.comments.CommentsRequestDto;
 import cafemate.back.repository.CommentsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,35 +17,47 @@ public class CommentsService {
 
     private final CommentsRepository commentsRepository;
 
-    // C 리뷰 쓰기 (테스트용 리턴)
-    public Long createComment(Comments comment) {
-        commentsRepository.save(comment);
-        return comment.getId();
-    }
+    // C 리뷰 쓰기
+    public void createComment(CommentsRequestDto commentsRequestDto) {
+        //Dto -> Entity
+        String content = commentsRequestDto.getContent();
+        String img_path = commentsRequestDto.getImg_path();
+        float star = commentsRequestDto.getStar();
 
-    //R 카페 리뷰 조회 - 카페번호로 전체 조회
-    @Transactional(readOnly = true)
-    public List<Comments> showCommentsByCafeId (Long cafeId) {
-        return commentsRepository.findAllById(cafeId);
-    }
-
-    //R 유저 리뷰 조회 - 유저번호로 전체 조회
-    @Transactional(readOnly = true)
-    public List<Comments> showCommentsByUserId (Long userId) {
-        return commentsRepository.findAllById(userId);
+        commentsRepository.save(
+                Comments.builder()
+                        .content(content)
+                        .img_path(img_path)
+                        .star(star)
+                        .created_at(LocalDate.now())
+                        .build()
+        );
     }
 
     // U 리뷰 수정
-    public Comments updateComment (Long commentId, String newContent) {
+    public void updateComment (Integer commentId, String newContent) {
         Comments comment = commentsRepository.getById(commentId);
-        comment.setContent(newContent); //setter 함수 취소
-        comment.setCreated_at(LocalDate.now());
-        return comment;
+        comment.updateContent(newContent);
+        comment.updateDate();
     }
 
-    //D 리뷰 삭제 (테스트용 리턴)
-    public Long deleteComment(Long commentId) {
+    //D 리뷰 삭제
+    public void deleteComment(Integer commentId) {
         commentsRepository.deleteById(commentId);
-        return commentId;
     }
+
+//    //조회 : Entity -> Dto
+//
+//    //R 카페 리뷰 조회 - 카페번호로 전체 조회
+//    @Transactional(readOnly = true)
+//    public List<Comments> showCommentsByCafeId (Integer cafeId) {
+//        return commentsRepository.findAllById(cafeId);
+//    }
+//
+//    //R 유저 리뷰 조회 - 유저번호로 전체 조회
+//    @Transactional(readOnly = true)
+//    public List<Comments> showCommentsByUserId (Integer userId) {
+//        return commentsRepository.findAllById(userId);
+//    }
+
 }
