@@ -1,16 +1,16 @@
 package cafemate.back.domain;
 
 import com.sun.istack.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
-@Getter @Setter
+@Getter
 public class Users {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,5 +30,13 @@ public class Users {
 
 //    @OneToMany(mappedBy = "userLikes")
 //    private List<Likes> likes = new ArrayList<>();
+
+    @Builder
+    public Users(Integer id, String email, String name, String img_path) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
+        this.img_path = img_path;
+    }
 
 }

@@ -1,6 +1,8 @@
 package cafemate.back.service;
 
 import cafemate.back.domain.Users;
+import cafemate.back.dto.users.UserSaveRequestDto;
+import cafemate.back.dto.users.UsersResponseDto;
 import cafemate.back.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,8 +16,17 @@ public class UsersService {
     private final UsersRepository usersRepository;
 
     // C 유저 등록
-    public void joinUser(Users users) {
+    public void joinUser(UserSaveRequestDto userSaveRequestDto) {
+        Users users = userSaveRequestDto.toEntity();
         usersRepository.save(users);
+    }
+
+    // R 유저 조회
+    @Transactional(readOnly = true)
+    public UsersResponseDto findUser(Integer userId) {
+        Users user = usersRepository.getById(userId);
+        UsersResponseDto usersResponseDto = new UsersResponseDto (user);
+        return usersResponseDto;
     }
 
     // D 유저 탈퇴
