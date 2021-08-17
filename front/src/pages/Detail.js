@@ -79,7 +79,7 @@ const Detail = () => {
       <FlexContainer>
         <MenuAndReviews>
           <Menu />
-          {/* <Reviews /> */}
+          <Reviews />
         </MenuAndReviews>
         <LocationAndTags>
           <Location />
