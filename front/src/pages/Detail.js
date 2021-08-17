@@ -81,10 +81,10 @@ const Detail = () => {
           <Menu />
           {/* <Reviews /> */}
         </MenuAndReviews>
-        {/* <LocationAndTags>
+        <LocationAndTags>
           <Location />
-          <Tags />
-        </LocationAndTags> */}
+          {/* <Tags /> */}
+        </LocationAndTags>
       </FlexContainer>
     </div>
   );
