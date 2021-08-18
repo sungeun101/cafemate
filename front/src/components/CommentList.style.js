@@ -1,43 +1,43 @@
 import styled from 'styled-components';
-import { Comment, List } from 'antd';
+import { List } from 'antd';
 
-export const StyledList = styled(List)`
-  /* color: #fff;
-  overflow: auto;
-  padding: 0 1rem;
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  ::-webkit-scrollbar-thumb {
-    height: 17%;
-    background-color: rgba(234, 227, 227, 0.5);
-    border-radius: 10px;
-  }
-  ::-webkit-scrollbar-track {
-    background-color: rgba(0, 0, 0, 0);
-  } */
-`;
+export const StyledList = styled(List)``;
 export const CommentContainer = styled.div`
-  /* word-break: break-all;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  margin-right: 3rem;
-  */
+  padding: 1.2rem;
   margin-bottom: 0.5rem;
   border: 1px solid var(--grey-color);
+  border-radius: 10px;
 `;
-export const StyledComment = styled(Comment)`
+export const Info = styled.div`
   display: flex;
+  justify-content: space-between;
+`;
+export const LeftBox = styled.div`
+  display: flex;
+  align-items: center;
+`;
+export const AuthorAndTime = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.5rem;
+`;
+export const AuthorName = styled.div`
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--black-color);
+`;
+export const Datetime = styled.div`
+  font-size: 0.8rem;
 `;
 export const Content = styled.div`
-  background-color: rgba(234, 227, 227, 0.5);
-  color: #000;
-  border-radius: 10px;
-  border-top-left-radius: 0;
-  padding: 0.2rem 1rem;
-  max-width: 35rem;
+  margin-top: 0.5rem;
 `;
-export const BtnContainer = styled.div`
-  padding-left: 2rem;
+export const RightBox = styled.div`
+  margin-top: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 `;
+export const BtnContainer = styled.div``;

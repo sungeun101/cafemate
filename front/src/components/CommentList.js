@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { Popconfirm, Button, Input, Avatar, message, Modal } from 'antd';
 import {
+  AuthorAndTime,
+  AuthorName,
   BtnContainer,
   CommentContainer,
   Content,
-  StyledComment,
+  Datetime,
+  Info,
+  LeftBox,
+  RightBox,
   StyledList,
 } from './CommentList.style.js';
 import Stars from './Stars.js';
@@ -74,34 +79,47 @@ const CommentList = ({ comment, userObj, fetchComments }) => {
         renderItem={(comment) => (
           <>
             <CommentContainer>
-              <StyledComment
-                avatar={
+              <Info>
+                <LeftBox>
                   <Avatar
-                  // src={comment.img_path}
-                  // alt={`${comment.name}'s avatar`}
+                    size="large"
+                    // src={comment.img_path}
+                    // alt={`${comment.name}'s avatar`}
                   />
-                }
-                author={<span>유저네임</span>}
-                content={<Content>{comment.content}</Content>}
-                datetime={comment.created_at}
-              />
-              <Stars star={comment.star} />
-              <BtnContainer>
-                <Button
-                  type="link"
-                  //   onClick={() => showModal(comment)}
-                >
-                  수정
-                </Button>
-                <Popconfirm
-                  title="삭제할까요?"
-                  // onConfirm={() => deleteComment(comment.id)}
-                  okText="Yes"
-                  cancelText="No"
-                >
-                  <Button type="link">삭제</Button>
-                </Popconfirm>
-              </BtnContainer>
+                  <AuthorAndTime>
+                    <AuthorName>유저네임</AuthorName>
+                    <Datetime>{comment.created_at}</Datetime>
+                  </AuthorAndTime>
+                </LeftBox>
+                <RightBox>
+                  <Stars star={comment.star} size="sm" />
+                  <BtnContainer>
+                    <Button
+                      type="text"
+                      size="small"
+                      //   onClick={() => showModal(comment)}
+                    >
+                      수정
+                    </Button>
+                    <Popconfirm
+                      title="삭제할까요?"
+                      // onConfirm={() => deleteComment(comment.id)}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                      <Button
+                        type="text"
+                        size="small"
+                        style={{ marginLeft: '0.4rem' }}
+                      >
+                        삭제
+                      </Button>
+                    </Popconfirm>
+                  </BtnContainer>
+                </RightBox>
+              </Info>
+
+              <Content>{comment.content}</Content>
             </CommentContainer>
           </>
         )}
