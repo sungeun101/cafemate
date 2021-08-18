@@ -35,9 +35,9 @@ public class CommentsService {
     }
 
     // U 리뷰 수정
-    public void updateComment (Integer commentId, String newContent) {
+    public void updateComment (Integer commentId, String newContent, float newStar) {
         Comments comment = commentsRepository.getById(commentId);
-        comment.updateContent(newContent);
+        comment.updateContent(newContent, newStar);
         comment.updateDate();
     }
 

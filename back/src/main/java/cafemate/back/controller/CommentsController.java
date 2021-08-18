@@ -22,10 +22,10 @@ public class CommentsController {
 
     // U 리뷰 수정 - 리뷰 번호로
     @PatchMapping ("/comments/{rno-id}")
-    public void updateComment(
-            @PathVariable(value = "rno-id") Integer commentId,
-            @RequestBody @Validated CommentsRequestDto comment) {
-        commentsService.updateComment(commentId, comment.getContent());
+        public void updateComment(
+                @PathVariable(value = "rno-id") Integer commentId,
+                @RequestBody @Validated CommentsRequestDto comment) {
+            commentsService.updateComment(commentId, comment.getContent(), comment.getStar());
     }
 
     // U 리뷰 삭제 - 리뷰 번호로

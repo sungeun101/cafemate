@@ -34,11 +34,11 @@ public class Comments {
     @NotNull
     private float star;
 
-
     private LocalDate created_at;
 
-    public void updateContent(String newContent){
+    public void updateContent(String newContent, float newStar){
         this.content = newContent;
+        this.star = newStar;
     }
 
     public void updateDate() {
