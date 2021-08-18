@@ -17,20 +17,16 @@ import {
   MenuAndReviews,
   Name,
   NameContainer,
-  StarContainer,
   TitleContainer,
-  StarIcon,
 } from './Detail.style';
-import { faStar, faHeart } from '@fortawesome/free-solid-svg-icons';
-import {
-  faStar as farStar,
-  faHeart as farHeart,
-} from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
+import Stars from '../components/Stars';
 
 const Detail = () => {
   const [liked, setLiked] = useState(true);
-  const star = Array.from({ length: 3 });
-  const emptyStar = Array.from({ length: 5 - star.length });
+  const [star, setStar] = useState(3);
 
   const handleLikes = () => {
     setLiked((prev) => !prev);
@@ -49,21 +45,14 @@ const Detail = () => {
           ></HeartIcon>
           <HeartCount>120</HeartCount>
         </NameContainer>
-        <StarContainer>
-          {star.map((count, i) => {
-            return <StarIcon key={i} icon={faStar} size="2x" />;
-          })}
-          {emptyStar.map((count, i) => {
-            return <StarIcon key={i} icon={farStar} size="2x" />;
-          })}
-        </StarContainer>
+        <Stars star={star} />
       </TitleContainer>
 
       <Divider />
 
       <InfoList>
         <InfoItem>
-          <i className="fas fa-map-marker-alt"></i>
+          <FontAwesomeIcon icon={faMapMarkerAlt} />
           <InfoText style={{ marginLeft: '0.8rem' }}>주소</InfoText>
         </InfoItem>
         <InfoItem>
