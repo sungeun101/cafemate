@@ -18,64 +18,64 @@ function formatter(val) {
     return `${1000 + (40 * val)}원`
 }
 
-class Searchbar extends React.Component {
-    render(){
-        const {
-            handleChange,
-            sliderChange,
-            rateChange,
-            tagChange,
-            changeAddress1,
-            changeAddress2,
-            changeAddress3,
-            state
-        } = this.props
-        const {
-            keyword,
-            address1,
-            address2,
-            address3,
-            tags
-        } = state
+function Searchbar(props) {
+    const { setKeyword, setPrice, setRate, setAddress1, setAddress2, setAddress3, setTags } = props.funcs
+    const { keyword, price, rate, address1, address2, address3, tags } = props.filterData
 
-        return (
-            <Form>
-                <Form.Item>
-                    <Input name="keyword" placeholder="키워드 검색" value={keyword} onChange={handleChange}/>
-                </Form.Item>
-                <Address
-                    changeAddress1={changeAddress1}
-                    changeAddress2={changeAddress2}
-                    changeAddress3={changeAddress3}
-                    address1={address1}
-                    address2={address2}
-                    address3={address3}
-                />
-                <Form.Item>
-                    가격대 (아메리카노 기준)
-                    <Slider marks={marks} tipFormatter={formatter} onChange={sliderChange} />
-                    별점 
-                    <Rate allowHalf onChange={rateChange}/>
-                </Form.Item>
-                <Form.Item>
-                    {tagsData.map(tag => (
-                        <CheckableTag
-                            key={tag}
-                            checked={tags.indexOf(tag) > -1}
-                            onChange={checked => tagChange(tag, checked)}
-                        >
-                            {tag}
-                        </CheckableTag>
-                    ))}
-                </Form.Item>
-                <Form.Item>
-                    <Link to='/search'>
-                        <Button>검색</Button>
-                    </Link>
-                </Form.Item>
-            </Form>
-        )
+    const handleChange = (event) => {
+        setKeyword(event.target.value);
     }
+
+    const sliderChange = (value) => {
+        setPrice(value);
+    }
+
+    const rateChange = (value) => {
+        setRate(value);
+    }
+
+    const tagChange = (tag, checked) => {
+        const nextTags = checked ? [...tags, tag] : tags.filter(t => t !== tag);
+        setTags(nextTags);
+    }
+
+    return (
+        <Form>
+            <Form.Item>
+                <Input name="keyword" placeholder="키워드 검색" value={keyword} onChange={handleChange}/>
+            </Form.Item>
+            <Address
+                setAddress1={setAddress1}
+                setAddress2={setAddress2}
+                setAddress3={setAddress3}
+                address1={address1}
+                address2={address2}
+                address3={address3}
+            />
+            <Form.Item>
+                가격대 (아메리카노 기준)
+                <Slider marks={marks} tipFormatter={formatter} onChange={sliderChange} value={price} />
+                별점 
+                <Rate allowHalf onChange={rateChange} value={rate}/>
+            </Form.Item>
+            <Form.Item>
+                {tagsData.map(tag => (
+                    <CheckableTag
+                        key={tag}
+                        checked={tags.indexOf(tag) > -1}
+                        onChange={checked => tagChange(tag, checked)}
+                    >
+                        {tag}
+                    </CheckableTag>
+                ))}
+            </Form.Item>
+            <Form.Item>
+                <Link to='/search'>
+                    <Button>검색</Button>
+                </Link>
+            </Form.Item>
+        </Form>
+    )
 }
 
 export default Searchbar;

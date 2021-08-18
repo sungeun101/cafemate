@@ -68,7 +68,7 @@ const cafeData = [
 ]
 
 function Results(props){
-    const {address1, address2, address3} = props.state;
+    const {address1, address2, address3} = props.filterData;
     const [width, setWidth] = useState(window.innerWidth);
     const handleResize = () => {
         setWidth(window.innerWidth);
