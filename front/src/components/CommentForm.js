@@ -1,18 +1,12 @@
 import React, { useState } from 'react';
-import { Form, Button, Input } from 'antd';
-import { SendOutlined } from '@ant-design/icons';
-import { StyledForm, StyledInput } from './CommentForm.style';
+import { Form, Input } from 'antd';
+import { StyledForm } from './CommentForm.style';
 import {
-  BtnContainer,
   CameraIcon,
-  CommentContainer,
-  Content,
   Header,
   StarIcon,
   StyledButton,
-  StyledComment,
-  StyledList,
-} from './Reviews.style';
+} from './CommentForm.style';
 import { faCamera, faStar } from '@fortawesome/free-solid-svg-icons';
 const { TextArea } = Input;
 
@@ -25,8 +19,7 @@ const CommentForm = ({ addComment }) => {
     console.log(count);
     setRating(count);
   };
-  //   const [width, setWidth] = useState('15rem');
-  //   const [form] = Form.useForm();
+  const [form] = Form.useForm();
 
   //   const handleSubmit = (input) => {
   //     addComment(input);
@@ -35,8 +28,8 @@ const CommentForm = ({ addComment }) => {
 
   return (
     <StyledForm
-    // form={form}
-    // onFinish={handleSubmit}
+      form={form}
+      // onFinish={handleSubmit}
     >
       <Form.Item
         name="rating"
@@ -89,11 +82,6 @@ const CommentForm = ({ addComment }) => {
         ]}
       >
         <TextArea placeholder="후기를 작성해주세요." rows={4} allowClear />
-        {/* <StyledInput
-          width={width}
-          onMouseOver={() => setWidth('23rem')}
-          onMouseLeave={() => setWidth('15rem')}
-        /> */}
       </Form.Item>
     </StyledForm>
   );

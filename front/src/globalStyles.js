@@ -20,7 +20,6 @@ const GlobalStyle = createGlobalStyle`
       font-size:1.5rem;
     }
     .fa-star{
-      font-size:1.5rem;
       margin-right:0.2vw;
       &:last-child{
         margin-right:0;
