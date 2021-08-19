@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { commentService } from '../service/comments';
 import { Popconfirm, Button, Input, Avatar, message, Modal } from 'antd';
 import {
   AuthorAndTime,
@@ -13,12 +14,16 @@ import {
   StyledList,
 } from './CommentList.style.js';
 import Stars from './Stars.js';
+import { useDispatch } from 'react-redux';
+import { getComment } from '../redux/ducks/comment';
 const { TextArea } = Input;
 
-const CommentList = ({ comment, userObj, fetchComments }) => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [content, setContent] = useState('');
-  const [editId, setEditId] = useState(1);
+const CommentList = ({ comment }) => {
+  // const [isModalVisible, setIsModalVisible] = useState(false);
+  // const [content, setContent] = useState('');
+  // const [editId, setEditId] = useState(1);
+
+  const dispatch = useDispatch();
 
   //   const updateComment = async () => {
   //     setIsModalVisible(false);
@@ -35,15 +40,15 @@ const CommentList = ({ comment, userObj, fetchComments }) => {
   //     message.success('수정되었습니다.');
   //   };
 
-  //   const deleteComment = async (id) => {
-  //     try {
-  //       await commentService.remove(id);
-  //     } catch (e) {
-  //       console.log(e.message);
-  //     }
-  //     await fetchComments();
-  //     message.success('삭제되었습니다.');
-  //   };
+  const deleteComment = async (id) => {
+    try {
+      await commentService.remove(id);
+    } catch (e) {
+      console.log(e.message);
+    }
+    dispatch(getComment());
+    message.success('삭제되었습니다.');
+  };
 
   //   const showModal = (comment) => {
   //     setContent(comment.content);
@@ -103,7 +108,7 @@ const CommentList = ({ comment, userObj, fetchComments }) => {
                     </Button>
                     <Popconfirm
                       title="삭제할까요?"
-                      // onConfirm={() => deleteComment(comment.id)}
+                      onConfirm={() => deleteComment(comment.id)}
                       okText="Yes"
                       cancelText="No"
                     >
