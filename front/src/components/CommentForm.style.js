@@ -7,18 +7,17 @@ export const StyledInput = styled(Input)``;
 export const Header = styled.header`
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  position: relative;
 `;
 export const StarIcon = styled(FontAwesomeIcon)`
+  cursor: pointer;
   color: ${(props) =>
     props.selected ? 'var(--yellow-color)' : 'var(--grey-color)'};
 `;
 
+export const UploadBox = styled.div`
+  display: flex;
+`;
 export const CameraIcon = styled(FontAwesomeIcon)`
-  position: absolute;
-  top: 0.1rem;
-  right: 7rem;
   cursor: pointer;
   &:hover {
     color: var(--main-color);
