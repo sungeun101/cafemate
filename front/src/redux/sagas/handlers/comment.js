@@ -7,7 +7,7 @@ export function* handleGetComment(action) {
     const response = yield call(requestGetComment);
     // Handler calls a function to make the Request
     const { data } = response;
-    yield put(setComment(data));
+    yield put(setComment(data)); // dispatch this action
   } catch (error) {
     console.log(error);
   }

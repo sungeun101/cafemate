@@ -1,5 +1,5 @@
 {
-  "data": [
+  "comments": [
     {
       "id": 1,
       "cafe_id": 2,
@@ -15,6 +15,11 @@
       "content": "별로에요",
       "star": 2,
       "created_at": "2021-08-01"
+    },
+    {
+      "star": 4,
+      "content": "커피가 맛있어요",
+      "id": 3
     }
   ]
 }

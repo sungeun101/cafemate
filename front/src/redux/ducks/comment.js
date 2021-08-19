@@ -1,5 +1,6 @@
 export const GET_COMMENT = 'GET_COMMENT';
 const SET_COMMENT = 'SET_COMMENT';
+export const CREATE_COMMENT = 'CREATE_COMMENT';
 
 export const getComment = () => ({
   type: GET_COMMENT,
@@ -13,7 +14,7 @@ const initialState = {
   comment: undefined,
 };
 
-export default (state = initialState, action) => {
+const commentReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_COMMENT:
       const { comment } = action;
@@ -22,3 +23,5 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+export default commentReducer;
