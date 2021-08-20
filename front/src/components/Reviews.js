@@ -38,7 +38,7 @@ const Reviews = () => {
       </h1>
       <Comment content={<CommentForm addComment={addComment} />} />
       <Divider style={{ marginTop: '-1rem' }} />
-      {comment && <CommentList comment={comment} />}
+      {comment && <CommentList />}
     </InfoWrapper>
   );
 };
