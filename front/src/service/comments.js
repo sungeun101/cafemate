@@ -3,24 +3,29 @@ import axios from 'axios';
 const baseURL = 'http://localhost:4000';
 const endpoint = '/comments';
 
-const get = (cafe_id) => {
+const getByCafeId = (cafe_id) => {
   return axios.get(baseURL + endpoint + '/' + cafe_id);
+};
+
+const getByUserId = (user_id) => {
+  return axios.get(baseURL + endpoint + '/users/' + user_id);
 };
 
 const add = (data) => {
   return axios.post(baseURL + endpoint, data);
 };
 
-const update = (id) => {
-  return axios.patch(baseURL + endpoint + '/' + id);
+const update = (comment_id, data) => {
+  return axios.patch(baseURL + endpoint + '/' + comment_id, data);
 };
 
-const remove = (id) => {
-  return axios.delete(baseURL + endpoint + '/' + id);
+const remove = (comment_id) => {
+  return axios.delete(baseURL + endpoint + '/' + comment_id);
 };
 
 export const commentService = {
-  get,
+  getByCafeId,
+  getByUserId,
   add,
   update,
   remove,

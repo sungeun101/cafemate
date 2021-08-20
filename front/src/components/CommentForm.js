@@ -49,12 +49,12 @@ const CommentForm = ({ addComment }) => {
       addComment({
         star: value.star,
         content: value.content,
+        img_path: value.image && value.image.file.response.result,
         // user_id, cafe_id
       });
     } else {
       addComment({
         star: value.star,
-        img_path: value.image && value.image.file.response.result,
         content: value.content,
         // user_id, cafe_id
       });

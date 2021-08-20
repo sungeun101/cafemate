@@ -29,6 +29,21 @@ const GlobalStyle = createGlobalStyle`
       font-size:1.5rem;
       font-weight:700;
     }
+    .main-bg{
+      background-color:var(--black-color);
+      color:#fff;
+      border:none;
+      &:hover{
+        background-color:var(--main-color);
+        color:#fff;
+      }
+    }
+    .main{
+      &:hover{
+        color:var(--main-color);
+        border:1px solid var(--main-color)
+      }
+    }
 `;
 
 export const Container = styled.div`

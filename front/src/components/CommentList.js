@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { commentService } from '../service/comments';
-import { Popconfirm, Button, Input, Avatar, message, Modal } from 'antd';
+import { Popconfirm, Button, Avatar, message } from 'antd';
 import {
   AuthorAndTime,
   AuthorName,
@@ -14,31 +14,18 @@ import {
   StyledList,
 } from './CommentList.style.js';
 import Stars from './Stars.js';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getComment } from '../redux/ducks/comment';
-const { TextArea } = Input;
+import EditModal from './EditModal';
 
-const CommentList = ({ comment }) => {
-  // const [isModalVisible, setIsModalVisible] = useState(false);
-  // const [content, setContent] = useState('');
-  // const [editId, setEditId] = useState(1);
+const CommentList = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [editId, setEditId] = useState(1);
+  const [editComment, setEditComment] = useState({});
 
   const dispatch = useDispatch();
 
-  //   const updateComment = async () => {
-  //     setIsModalVisible(false);
-  //     try {
-  //       const res = await commentService.update({
-  //         id: editId,
-  //         content,
-  //       });
-  //       console.log(res.data);
-  //     } catch (e) {
-  //       console.log(e.message);
-  //     }
-  //     await fetchComments();
-  //     message.success('수정되었습니다.');
-  //   };
+  const comment = useSelector((state) => state.comment.comment);
 
   const deleteComment = async (id) => {
     try {
@@ -50,38 +37,32 @@ const CommentList = ({ comment }) => {
     message.success('삭제되었습니다.');
   };
 
-  //   const showModal = (comment) => {
-  //     setContent(comment.content);
-  //     setEditId(comment.id);
-  //     setIsModalVisible(true);
-  //   };
+  const showModal = (item) => {
+    setEditId(item.id);
+    setIsModalVisible(true);
+  };
 
-  //   const handleCancel = () => {
-  //     setIsModalVisible(false);
-  //   };
+  const onUpdateClick = (item) => {
+    showModal(item);
+  };
 
-  //   const onChange = (e) => {
-  //     setContent(e.target.value);
-  //   };
+  useEffect(() => {
+    const arr = comment.filter((item) => item.id === editId);
+    setEditComment(arr[0]);
+  }, [isModalVisible]);
 
   return (
     <>
-      {/* <Modal
-        visible={isModalVisible}
-        footer={[
-          <Button onClick={handleCancel}>Cancel</Button>,
-          <Button type="primary" onClick={updateComment}>
-            Save
-          </Button>,
-        ]}
-        closable={false}
-      >
-        <TextArea rows={4} defaultValue={content} onChange={onChange} />
-      </Modal> */}
+      <EditModal
+        comment={editComment}
+        isModalVisible={isModalVisible}
+        setIsModalVisible={setIsModalVisible}
+      />
+
       <StyledList
         dataSource={comment}
         itemLayout="horizontal"
-        renderItem={(comment) => (
+        renderItem={(item) => (
           <>
             <CommentContainer>
               <Info>
@@ -93,22 +74,22 @@ const CommentList = ({ comment }) => {
                   />
                   <AuthorAndTime>
                     <AuthorName>유저네임</AuthorName>
-                    <Datetime>{comment.created_at}</Datetime>
+                    <Datetime>{item.created_at}</Datetime>
                   </AuthorAndTime>
                 </LeftBox>
                 <RightBox>
-                  <Stars star={comment.star} size="sm" />
+                  <Stars star={item.star} size="sm" />
                   <BtnContainer>
                     <Button
                       type="text"
                       size="small"
-                      //   onClick={() => showModal(comment)}
+                      onClick={() => onUpdateClick(item)}
                     >
                       수정
                     </Button>
                     <Popconfirm
                       title="삭제할까요?"
-                      onConfirm={() => deleteComment(comment.id)}
+                      onConfirm={() => deleteComment(item.id)}
                       okText="Yes"
                       cancelText="No"
                     >
@@ -124,7 +105,7 @@ const CommentList = ({ comment }) => {
                 </RightBox>
               </Info>
 
-              <Content>{comment.content}</Content>
+              <Content>{item.content}</Content>
             </CommentContainer>
           </>
         )}
