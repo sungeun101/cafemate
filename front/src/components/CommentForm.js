@@ -9,11 +9,22 @@ import {
   UploadBox,
 } from './CommentForm.style';
 import { faCamera, faStar } from '@fortawesome/free-solid-svg-icons';
+import { commentService } from '../service/comments.js';
+import { getComment } from '../redux/ducks/comment';
+import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+
 const { TextArea } = Input;
 
-const CommentForm = ({ addComment }) => {
+const CommentForm = () => {
   const [uploadVisible, setUploadVisible] = useState(true);
   const [rating, setRating] = useState(0);
+
+  const dispatch = useDispatch();
+
+  let location = useLocation();
+  const cafe_id = parseInt(location.pathname.split('/')[2]);
+  console.log('cafe_id', cafe_id);
 
   const yellowStar = Array.from({ length: rating }, (v, i) => i + 1);
   const greyStar = Array.from({ length: 5 - rating }, (v, i) => i + 1);
@@ -50,17 +61,30 @@ const CommentForm = ({ addComment }) => {
         star: value.star,
         content: value.content,
         img_path: value.image && value.image.file.response.result,
-        // user_id, cafe_id
+        cafe_id,
+        // user_id,
       });
     } else {
       addComment({
         star: value.star,
         content: value.content,
-        // user_id, cafe_id
+        cafe_id,
+        // user_id,
       });
     }
     setUploadVisible(true);
     form.resetFields();
+  };
+
+  const addComment = async (value) => {
+    try {
+      const res = await commentService.add(value);
+      console.log('post comment result : ', res);
+    } catch (e) {
+      console.log(e.message);
+    }
+    dispatch(getComment());
+    message.success('작성되었습니다.');
   };
 
   return (
