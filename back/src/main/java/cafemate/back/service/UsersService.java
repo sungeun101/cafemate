@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -24,13 +27,19 @@ public class UsersService {
     // R 유저 조회
     @Transactional(readOnly = true)
     public UsersResponseDto findUser(Integer userId) {
+        validateUser(userId);
         Users user = usersRepository.getById(userId);
-        UsersResponseDto usersResponseDto = new UsersResponseDto (user);
-        return usersResponseDto;
+        return new UsersResponseDto(user);
     }
 
     // D 유저 탈퇴
     public void deleteUser(Integer userId) {
+        validateUser(userId);
         usersRepository.deleteById(userId);
+    }
+
+    // 회원이 있는 지 검증하기 - 함수화
+    public void validateUser(Integer userId) {
+        Users user = usersRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
     }
 }
