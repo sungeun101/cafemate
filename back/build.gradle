@@ -26,6 +26,8 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation group: 'org.qlrm', name: 'qlrm', version: '3.0.1'
+	implementation group: 'org.springframework.security', name: 'spring-security-core', version: '5.5.2'
 }
 
 test {

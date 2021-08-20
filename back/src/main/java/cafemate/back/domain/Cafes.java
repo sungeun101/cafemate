@@ -2,17 +2,14 @@ package cafemate.back.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "cafes")
 @NoArgsConstructor
 @Getter
 @Setter
@@ -20,16 +17,10 @@ import java.util.List;
 public class Cafes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @NotNull
     private String name;
-
-    @ManyToOne(fetch = FetchType.LAZY)//like와 연동
-    private Users users;
-    private int viewCount;
-
-
 
     @NotNull
     private String img_path;
@@ -67,5 +58,11 @@ public class Cafes {
 
     @JsonIgnoreProperties({"cafes"})
     @OneToMany(mappedBy = "cafes")
-    private List<Likes> likes = new ArrayList<>();
+    private List<Likes> likeList;
+
+    @Transient
+    private boolean likesState;
+
+
+
 }
