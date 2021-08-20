@@ -72,7 +72,7 @@ const Detail = () => {
       <FlexContainer>
         <MenuAndReviews>
           <Menu />
-          <Reviews />
+          <Reviews cafe={cafe} />
         </MenuAndReviews>
         <LocationAndTags>
           <Location />
