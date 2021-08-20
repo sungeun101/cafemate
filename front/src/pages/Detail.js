@@ -23,10 +23,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 import Stars from '../components/Stars';
+import { useLocation } from 'react-router-dom';
 
 const Detail = () => {
+  let location = useLocation();
+  const cafe = location.state.cafe;
+  console.log(cafe);
+
   const [liked, setLiked] = useState(true);
-  const [star, setStar] = useState(3);
 
   const handleLikes = () => {
     setLiked((prev) => !prev);
@@ -38,14 +42,14 @@ const Detail = () => {
 
       <TitleContainer>
         <NameContainer>
-          <Name>ABC카페</Name>
+          <Name>{cafe.name}</Name>
           <HeartIcon
             onClick={handleLikes}
             icon={liked ? faHeart : farHeart}
           ></HeartIcon>
           <HeartCount>120</HeartCount>
         </NameContainer>
-        <Stars star={star} />
+        <Stars star={cafe.star} />
       </TitleContainer>
 
       <Divider />
@@ -57,11 +61,11 @@ const Detail = () => {
         </InfoItem>
         <InfoItem>
           <ClockCircleOutlined />
-          <InfoText>영업시간</InfoText>
+          <InfoText>{cafe.time}</InfoText>
         </InfoItem>
         <InfoItem>
           <PhoneOutlined />
-          <InfoText>연락처</InfoText>
+          <InfoText>{cafe.phone}</InfoText>
         </InfoItem>
       </InfoList>
 
