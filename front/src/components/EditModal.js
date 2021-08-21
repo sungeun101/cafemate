@@ -77,7 +77,7 @@ const EditModal = ({
 
   return (
     <Modal
-      forceRender
+      // forceRender
       visible={isModalVisible}
       footer={[
         <Button className="main" onClick={handleCancel}>

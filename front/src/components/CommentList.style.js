@@ -6,7 +6,7 @@ export const CommentContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1.2rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
   border: 1px solid var(--grey-color);
   border-radius: 10px;
 `;
