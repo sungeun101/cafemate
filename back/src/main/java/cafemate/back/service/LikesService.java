@@ -1,20 +1,29 @@
 package cafemate.back.service;
 
 
+import cafemate.back.domain.Cafes;
 import cafemate.back.repository.LikesRepository;
 import cafemate.back.repository.UsersRepository;
+import cafemate.back.domain.Likes;
+import cafemate.back.repository.LikesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 
 
 @RequiredArgsConstructor
 @Service
 public class LikesService {
     private final LikesRepository likesRepository;
-    private final UsersRepository usersRepository;
 
+//    public List<Likes> getLikes(long userId) {
+//        return likesRepository.findByUserId(userId);
+//    }
 
+//    private final UsersRepository usersRepository;
+//
+//
     public void likes(long sessionId, long cafeId) {
     try{//좋아요
         likesRepository.likes(sessionId, cafeId);
@@ -26,7 +35,6 @@ public class LikesService {
     public void cancelLikes(long sessionId, long cafeId){
         likesRepository.cancelLikes(sessionId, cafeId);
     }
-
 
 
 }

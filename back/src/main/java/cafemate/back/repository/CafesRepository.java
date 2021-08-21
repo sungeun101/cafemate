@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface CafesRepository extends JpaRepository<Cafes,Long> {
-    List<Cafes> findAllByOrder();//전체 리스트
+//    List<Cafes> findAllByOrder();//전체 리스트
 
 
 }

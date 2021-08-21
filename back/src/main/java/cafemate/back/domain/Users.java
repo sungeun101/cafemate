@@ -17,7 +17,6 @@ import javax.persistence.*;
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
     private long id;
 
     @NotNull
@@ -27,4 +26,6 @@ public class Users {
     private String email;
 
     private String img_path;
+
+
 }

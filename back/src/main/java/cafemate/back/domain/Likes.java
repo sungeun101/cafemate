@@ -1,5 +1,7 @@
-package cafemate.back.domain;
 
+
+package cafemate.back.domain;
+//
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 import lombok.Builder;
@@ -37,3 +39,4 @@ public class Likes {
     }
 
 }
+

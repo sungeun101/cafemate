@@ -31,6 +31,7 @@ public class CafeDetailInfoDto {
     private boolean wifi;
     private boolean animal;
     private boolean likeState;
+    private long likesCount;
 
 
 

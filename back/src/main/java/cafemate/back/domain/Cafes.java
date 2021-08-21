@@ -61,7 +61,10 @@ public class Cafes {
     private List<Likes> likeList;
 
     @Transient
-    private boolean likesState;
+    private boolean likeState;
+
+    @Transient
+    private long likesCount;
 
 
 

@@ -26,8 +26,8 @@ public class CafesService {
     private final CafesRepository cafesRepository;
     private final UsersRepository usersRepository;
     private final EntityManager em;
-
-
+//
+//
     //카페 상세보기
     public CafeDetailInfoDto getCafeDetail(long cafeId, long sessionId){
         CafeDetailInfoDto cafeDetailInfoDto = new CafeDetailInfoDto();
@@ -50,8 +50,9 @@ public class CafesService {
         cafeDetailInfoDto.setParking(cafe.isParking());
         cafeDetailInfoDto.setWifi(cafe.isWifi());
         cafeDetailInfoDto.setAnimal(cafe.isAnimal());
+        cafeDetailInfoDto.setLikesCount(cafe.getLikeList().size());//카페 좋아요 갯수
         cafe.getLikeList().forEach(likes -> {
-            if(likes.getUsers().getId() == sessionId) cafeDetailInfoDto.setLikeState(true);
+            if(likes.getUsers().getId() == sessionId) cafeDetailInfoDto.setLikeState(true);//로그인한 아이디가 체크하였는지 확인
         });
 
         return cafeDetailInfoDto;
@@ -60,7 +61,7 @@ public class CafesService {
     //myPageLikesList
     public Page<LikesListDto> getLikesCafe(long sessionId, Pageable pageable){
         StringBuffer sb = new StringBuffer();
-        sb.append("SELECT c.id, c.name, c.img_path");//likesState long을 boolean으로
+        sb.append("SELECT c.id, c.name, c.img_path ");//likesState long을 boolean으로, //count와 상태 넣어야함
         sb.append("FROM likes l, cafes c ");
         sb.append("WHERE l.cafe_id = c.id ");
         sb.append("AND c.id IN (SELECT c.id FROM likes l, cafes c WHERE l.user_id = ? AND c.id = l.cafe_id) ");
