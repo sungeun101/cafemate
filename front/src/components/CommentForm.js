@@ -10,17 +10,17 @@ import {
 } from './CommentForm.style';
 import { faCamera, faStar } from '@fortawesome/free-solid-svg-icons';
 import { commentService } from '../service/comments.js';
-import { getComment } from '../redux/ducks/comment';
-import { useDispatch } from 'react-redux';
+// import { getComment } from '../redux/ducks/comment';
+// import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 const { TextArea } = Input;
 
-const CommentForm = () => {
+const CommentForm = ({ getCafeComments }) => {
   const [uploadVisible, setUploadVisible] = useState(true);
   const [rating, setRating] = useState(0);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   let location = useLocation();
   const cafe_id = parseInt(location.pathname.split('/')[2]);
@@ -83,7 +83,8 @@ const CommentForm = () => {
     } catch (e) {
       console.log(e.message);
     }
-    dispatch(getComment());
+    // dispatch(getComment());
+    getCafeComments();
     message.success('작성되었습니다.');
   };
 

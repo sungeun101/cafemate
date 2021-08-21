@@ -2,19 +2,33 @@
   "comments": [
     {
       "id": 1,
-      "cafe_id": 2,
+      "cafe_id": 1,
       "user_id": 1,
-      "content": "좋았어요!!",
+      "content": "좋았어요",
       "star": 5,
       "created_at": "2021-01-01"
     },
     {
       "id": 2,
-      "cafe_id": 1,
+      "cafe_id": 2,
       "user_id": 2,
-      "content": "별로에요ㅠㅠ",
-      "star": 1,
+      "content": "별로에요ㅠ",
+      "star": 2,
       "created_at": "2021-08-01"
+    },
+    {
+      "id": 3,
+      "cafe_id": 2,
+      "user_id": 2,
+      "content": "커피가 맛있어요",
+      "star": 5,
+      "created_at": "2021-08-01"
+    },
+    {
+      "star": 3,
+      "content": "너무 비싸용",
+      "cafe_id": 3,
+      "id": 4
     }
   ]
 }

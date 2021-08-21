@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 const Main = () => {
   let history = useHistory();
   const cafe = {
-    id: 3,
+    id: 2,
     name: '가로수 카페',
     img_path: '이미지 url',
     phone: '010-0000-0000',

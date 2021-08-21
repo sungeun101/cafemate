@@ -8,20 +8,21 @@ import {
   UploadBox,
 } from './CommentForm.style';
 import { faCamera, faStar } from '@fortawesome/free-solid-svg-icons';
-import { commentService } from '../service/comments';
-import { useDispatch, useSelector } from 'react-redux';
-import { getComment } from '../redux/ducks/comment';
+
 const { TextArea } = Input;
 
-const EditModal = ({ comment, isModalVisible, setIsModalVisible }) => {
+const EditModal = ({
+  comment,
+  isModalVisible,
+  setIsModalVisible,
+  updateComment,
+}) => {
   const [uploadVisible, setUploadVisible] = useState(true);
   const [rating, setRating] = useState(comment.star);
-  const dispatch = useDispatch();
 
   const [form] = Form.useForm();
 
   useEffect(() => {
-    console.log('edit comment ', comment);
     setRating(comment.star);
     form.setFieldsValue({ star: comment.star, content: comment.content });
   }, [comment]);
@@ -58,29 +59,15 @@ const EditModal = ({ comment, isModalVisible, setIsModalVisible }) => {
         star: value.star,
         content: value.content,
         img_path: value.image.file.response.result,
-        // user_id, cafe_id
       });
     } else {
       updateComment({
         star: value.star,
         content: value.content,
-        // user_id, cafe_id
       });
     }
     setUploadVisible(true);
     setIsModalVisible(false);
-  };
-
-  const updateComment = async (value) => {
-    console.log('update this : ', value);
-    try {
-      const res = await commentService.update(comment.id, value);
-      console.log('update comment : ', res.data);
-    } catch (e) {
-      console.log(e.message);
-    }
-    dispatch(getComment());
-    message.success('수정되었습니다.');
   };
 
   const handleCancel = () => {

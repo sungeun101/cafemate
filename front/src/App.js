@@ -10,6 +10,7 @@ import 'antd/dist/antd.css';
 import GlobalStyle, { Container } from './globalStyles';
 import Detail from './pages/Detail';
 import Main from './pages/Main';
+import My from './pages/My';
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
               </Route>
               <Route exact path="/detail/:id">
                 <Detail />
+              </Route>
+              <Route exact path="/my">
+                <My />
               </Route>
               <Route>
                 <NotFound />
