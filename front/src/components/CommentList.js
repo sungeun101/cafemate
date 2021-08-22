@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { commentService } from '../service/comments';
-import { Popconfirm, Button, Avatar, message } from 'antd';
+import { Popconfirm, Avatar, message } from 'antd';
 import {
   AuthorAndTime,
   AuthorName,
@@ -11,6 +11,7 @@ import {
   Info,
   LeftBox,
   RightBox,
+  StyledButton,
   StyledList,
 } from './CommentList.style.js';
 import Stars from './Stars.js';
@@ -102,26 +103,22 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
                 <RightBox>
                   <Stars star={comment.star} size="sm" />
                   <BtnContainer>
-                    <Button
+                    <StyledButton
                       type="text"
                       size="small"
                       onClick={() => onUpdateClick(comment)}
                     >
                       수정
-                    </Button>
+                    </StyledButton>
                     <Popconfirm
                       title="삭제할까요?"
                       onConfirm={() => deleteComment(comment.id)}
                       okText="Yes"
                       cancelText="No"
                     >
-                      <Button
-                        type="text"
-                        size="small"
-                        style={{ marginLeft: '0.4rem' }}
-                      >
+                      <StyledButton type="text" size="small">
                         삭제
-                      </Button>
+                      </StyledButton>
                     </Popconfirm>
                   </BtnContainer>
                 </RightBox>

@@ -1,7 +1,11 @@
-import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import { InfoWrapper } from '../globalStyles';
-import { IconContainer, Items } from './Menu.style';
+import {
+  DownOutlinedIcon,
+  IconContainer,
+  Items,
+  UpOutlinedIcon,
+} from './Menu.style';
 
 const menu = [
   { id: 0, name: '아이스크림 블렌딩 콜드 브루', price: '5000원' },
@@ -45,10 +49,7 @@ const Menu = () => {
             );
           })}
           <IconContainer>
-            <UpOutlined
-              style={{ fontSize: '1.7rem' }}
-              onClick={() => setShowAllMenu(false)}
-            />
+            <UpOutlinedIcon onClick={() => setShowAllMenu(false)} />
           </IconContainer>
         </div>
       ) : (
@@ -62,10 +63,7 @@ const Menu = () => {
             );
           })}
           <IconContainer>
-            <DownOutlined
-              style={{ fontSize: '1.7rem' }}
-              onClick={() => setShowAllMenu(true)}
-            />
+            <DownOutlinedIcon onClick={() => setShowAllMenu(true)} />
           </IconContainer>
         </div>
       )}

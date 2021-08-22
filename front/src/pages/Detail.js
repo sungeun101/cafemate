@@ -54,7 +54,7 @@ const Detail = () => {
       <InfoList>
         <InfoItem>
           <FontAwesomeIcon icon={faMapMarkerAlt} />
-          <InfoText style={{ marginLeft: '0.8rem' }}>주소</InfoText>
+          <InfoText>주소</InfoText>
         </InfoItem>
         <InfoItem>
           <ClockCircleOutlined />

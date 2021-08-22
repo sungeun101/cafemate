@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { getComment } from '../redux/ducks/comment';
-import { Comment, Divider } from 'antd';
+import { Comment } from 'antd';
 import { InfoWrapper } from '../globalStyles';
 import CommentForm from './CommentForm';
 import CommentList from './CommentList';
 import { commentService } from '../service/comments';
+import { Count, StyledDivider } from './Reviews.style';
 
 const Reviews = ({ cafe }) => {
   const [comments, setComments] = useState([]);
@@ -36,13 +37,10 @@ const Reviews = ({ cafe }) => {
   return (
     <InfoWrapper>
       <h1>
-        REVIEWS{' '}
-        <span style={{ color: 'var(--main-color)' }}>
-          ({comments ? comments.length : 0})
-        </span>
+        REVIEWS <Count>({comments ? comments.length : 0})</Count>
       </h1>
       <Comment content={<CommentForm getCafeComments={getCafeComments} />} />
-      {comments.length > 0 && <Divider style={{ marginTop: '-1rem' }} />}
+      {comments.length > 0 && <StyledDivider />}
       {comments && (
         <CommentList comments={comments} getCafeComments={getCafeComments} />
       )}

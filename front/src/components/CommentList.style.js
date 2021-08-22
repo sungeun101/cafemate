@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { List } from 'antd';
+import { List, Button } from 'antd';
 
 export const StyledList = styled(List)``;
 export const CommentContainer = styled.div`
@@ -41,3 +41,8 @@ export const RightBox = styled.div`
   align-items: flex-end;
 `;
 export const BtnContainer = styled.div``;
+export const StyledButton = styled(Button)`
+  &:last-child {
+    margin-left: 0.4rem;
+  }
+`;
