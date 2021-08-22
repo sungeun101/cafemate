@@ -17,7 +17,7 @@ const MyReviews = () => {
   const getMyComments = async () => {
     setLoading(true);
     try {
-      const res = await commentService.getByUserId(myUserId);
+      const res = await commentService.getCommentsByUserId(myUserId);
       console.log('getMyComments result : ', res.data);
       setMyComments(res.data);
     } catch (e) {

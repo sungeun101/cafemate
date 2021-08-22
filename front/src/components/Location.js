@@ -16,7 +16,7 @@ const Location = () => {
   return (
     <InfoWrapper>
       <h1>LOCATION</h1>
-      <Map id="map"></Map>
+      <Map id="map" />
     </InfoWrapper>
   );
 };

@@ -25,6 +25,8 @@ const EditModal = ({
   useEffect(() => {
     setRating(comment.star);
     form.setFieldsValue({ star: comment.star, content: comment.content });
+
+    // console.log('star value ', form.getFieldValue('star'));
   }, [comment]);
 
   const yellowStar = Array.from({ length: rating }, (v, i) => i + 1);
@@ -66,7 +68,6 @@ const EditModal = ({
         content: value.content,
       });
     }
-    setUploadVisible(true);
     setIsModalVisible(false);
   };
 
@@ -77,7 +78,7 @@ const EditModal = ({
 
   return (
     <Modal
-      // forceRender
+      forceRender
       visible={isModalVisible}
       footer={[
         <Button className="main" onClick={handleCancel}>

@@ -43,10 +43,7 @@ const Detail = () => {
       <TitleContainer>
         <NameContainer>
           <Name>{cafe.name}</Name>
-          <HeartIcon
-            onClick={handleLikes}
-            icon={liked ? faHeart : farHeart}
-          ></HeartIcon>
+          <HeartIcon onClick={handleLikes} icon={liked ? faHeart : farHeart} />
           <HeartCount>120</HeartCount>
         </NameContainer>
         <Stars star={cafe.star} />

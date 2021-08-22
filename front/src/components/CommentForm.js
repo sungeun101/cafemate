@@ -12,7 +12,7 @@ import { faCamera, faStar } from '@fortawesome/free-solid-svg-icons';
 import { commentService } from '../service/comments.js';
 // import { getComment } from '../redux/ducks/comment';
 // import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const { TextArea } = Input;
 
@@ -22,8 +22,8 @@ const CommentForm = ({ getCafeComments }) => {
 
   // const dispatch = useDispatch();
 
-  let location = useLocation();
-  const cafe_id = parseInt(location.pathname.split('/')[2]);
+  let { id } = useParams();
+  const cafe_id = parseInt(id);
   console.log('cafe_id', cafe_id);
 
   const yellowStar = Array.from({ length: rating }, (v, i) => i + 1);

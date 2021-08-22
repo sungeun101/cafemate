@@ -25,7 +25,7 @@ const Reviews = ({ cafe }) => {
 
   const getCafeComments = async () => {
     try {
-      const res = await commentService.getByCafeId(cafe.id);
+      const res = await commentService.getCommentsByCafeId(cafe.id);
       console.log('getCafeComments : ', res);
       setComments(res.data);
     } catch (e) {

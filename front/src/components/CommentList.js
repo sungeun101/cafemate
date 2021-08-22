@@ -21,7 +21,7 @@ import { useLocation } from 'react-router-dom';
 
 const CommentList = ({ comments, getCafeComments, getMyComments }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [editId, setEditId] = useState(null);
+  const [editId, setEditId] = useState(undefined);
   const [editComment, setEditComment] = useState({});
 
   let location = useLocation();
@@ -29,14 +29,14 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
   // const dispatch = useDispatch();
 
   useEffect(() => {
-    const arr = comments.filter((comment) => comment.id === editId);
-    setEditComment(arr[0]);
+    const item = comments.find((comment) => comment.id === editId);
+    setEditComment(item);
   }, [isModalVisible]);
 
   const updateComment = async (value) => {
     console.log('update this : ', value);
     try {
-      const res = await commentService.update(editComment.id, value);
+      const res = await commentService.updateComment(editComment.id, value);
       console.log('update comment : ', res.data);
     } catch (e) {
       console.log(e.message);
@@ -52,7 +52,7 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
 
   const deleteComment = async (id) => {
     try {
-      await commentService.remove(id);
+      await commentService.removeComment(id);
     } catch (e) {
       console.log(e.message);
     }
@@ -65,13 +65,9 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
     message.success('삭제되었습니다.');
   };
 
-  const showModal = (comment) => {
+  const onUpdateClick = (comment) => {
     setEditId(comment.id);
     setIsModalVisible(true);
-  };
-
-  const onUpdateClick = (comment) => {
-    showModal(comment);
   };
 
   return (
@@ -90,51 +86,49 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
           dataSource={comments}
           itemLayout="horizontal"
           renderItem={(comment) => (
-            <>
-              <CommentContainer>
-                <Info>
-                  <LeftBox>
-                    <Avatar
-                      size="large"
-                      // src={comment.img_path}
-                      // alt={`${comment.name}'s avatar`}
-                    />
-                    <AuthorAndTime>
-                      <AuthorName>유저네임</AuthorName>
-                      <Datetime>{comment.created_at}</Datetime>
-                    </AuthorAndTime>
-                  </LeftBox>
-                  <RightBox>
-                    <Stars star={comment.star} size="sm" />
-                    <BtnContainer>
+            <CommentContainer>
+              <Info>
+                <LeftBox>
+                  <Avatar
+                    size="large"
+                    // src={comment.img_path}
+                    // alt={`${comment.name}'s avatar`}
+                  />
+                  <AuthorAndTime>
+                    <AuthorName>유저네임</AuthorName>
+                    <Datetime>{comment.created_at}</Datetime>
+                  </AuthorAndTime>
+                </LeftBox>
+                <RightBox>
+                  <Stars star={comment.star} size="sm" />
+                  <BtnContainer>
+                    <Button
+                      type="text"
+                      size="small"
+                      onClick={() => onUpdateClick(comment)}
+                    >
+                      수정
+                    </Button>
+                    <Popconfirm
+                      title="삭제할까요?"
+                      onConfirm={() => deleteComment(comment.id)}
+                      okText="Yes"
+                      cancelText="No"
+                    >
                       <Button
                         type="text"
                         size="small"
-                        onClick={() => onUpdateClick(comment)}
+                        style={{ marginLeft: '0.4rem' }}
                       >
-                        수정
+                        삭제
                       </Button>
-                      <Popconfirm
-                        title="삭제할까요?"
-                        onConfirm={() => deleteComment(comment.id)}
-                        okText="Yes"
-                        cancelText="No"
-                      >
-                        <Button
-                          type="text"
-                          size="small"
-                          style={{ marginLeft: '0.4rem' }}
-                        >
-                          삭제
-                        </Button>
-                      </Popconfirm>
-                    </BtnContainer>
-                  </RightBox>
-                </Info>
+                    </Popconfirm>
+                  </BtnContainer>
+                </RightBox>
+              </Info>
 
-                <Content>{comment.content}</Content>
-              </CommentContainer>
-            </>
+              <Content>{comment.content}</Content>
+            </CommentContainer>
           )}
         />
       )}
