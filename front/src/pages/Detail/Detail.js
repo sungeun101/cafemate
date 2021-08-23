@@ -3,7 +3,6 @@ import { ClockCircleOutlined, PhoneOutlined } from '@ant-design/icons';
 import { Divider } from 'antd';
 import {
   FlexContainer,
-  HeartIcon,
   HeartCount,
   InfoItem,
   InfoList,
@@ -15,8 +14,7 @@ import {
   TitleContainer,
 } from './Detail.style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
-import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import Stars from 'components/Stars';
 import { useLocation } from 'react-router-dom';
 import { likesService } from 'service/likes';
@@ -25,13 +23,14 @@ import Menu from './Menu';
 import Reviews from './Reviews';
 import Location from './Location';
 import Tags from './Tags';
+import Heart from 'components/Heart';
 
 const Detail = () => {
+  const [liked, setLiked] = useState(false);
+
   let location = useLocation();
   const cafe = location.state.cafe;
   console.log('cafe : ', cafe);
-
-  const [liked, setLiked] = useState(false);
 
   useEffect(() => {
     checkLiked();
@@ -54,39 +53,6 @@ const Detail = () => {
     }
   };
 
-  const handleLikes = async () => {
-    setLiked((prev) => !prev);
-    if (!liked) {
-      AddtoLikes();
-    } else {
-      RemoveFromLikes();
-    }
-  };
-
-  const AddtoLikes = async () => {
-    try {
-      const res = await likesService.addLike({
-        cafe_id: cafe.id,
-        user_id,
-      });
-      console.log('addLike result : ', res);
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
-
-  const RemoveFromLikes = async () => {
-    try {
-      const res = await likesService.cancelLike({
-        cafe_id: cafe.id,
-        user_id,
-      });
-      console.log('cancelLike result : ', res);
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
-
   return (
     <div>
       <Gallery />
@@ -94,7 +60,7 @@ const Detail = () => {
       <TitleContainer>
         <NameContainer>
           <Name>{cafe.name}</Name>
-          <HeartIcon onClick={handleLikes} icon={liked ? faHeart : farHeart} />
+          <Heart liked={liked} setLiked={setLiked} cafe={cafe} />
           <HeartCount>120</HeartCount>
         </NameContainer>
         <Stars star={cafe.star} />

@@ -19,11 +19,7 @@ export const Name = styled.h1`
   font-size: 1.8rem;
   margin-right: 0.8rem;
 `;
-export const HeartIcon = styled(FontAwesomeIcon)`
-  margin-top: -0.6rem;
-  cursor: pointer;
-  user-select: none;
-`;
+
 export const HeartCount = styled.div`
   color: var(--black-color);
   font-size: 1rem;

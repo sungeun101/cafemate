@@ -14,7 +14,8 @@ const addLike = (data) => {
 };
 
 const cancelLike = (data) => {
-  return axios.delete(`${baseUrl}${endpoint}/${data.user_id}/${data.cafe_id}`);
+  // return axios.delete(`${baseUrl}${endpoint}/${data.user_id}/${data.cafe_id}`);
+  return axios.delete(`${baseUrl}${endpoint}/${data.id}`);
 };
 
 export const likesService = {
