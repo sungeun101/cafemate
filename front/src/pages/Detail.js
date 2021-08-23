@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Location from '../components/Location';
 import Menu from '../components/Menu';
 import Reviews from '../components/Reviews';
@@ -29,20 +29,55 @@ import { likesService } from '../service/likes';
 const Detail = () => {
   let location = useLocation();
   const cafe = location.state.cafe;
-  console.log(cafe);
+  console.log('cafe : ', cafe);
 
   const [liked, setLiked] = useState(false);
 
+  useEffect(() => {
+    checkLiked();
+  }, []);
+
   const user_id = 1;
+
+  const checkLiked = async () => {
+    const res = await likesService.getLikedByUserId(user_id);
+    console.log('getLikedByUserId result : ', res.data);
+    if (res.data.length > 0) {
+      const obj = res.data.find((element) => element.cafe_id === cafe.id);
+      if (obj) {
+        setLiked(true);
+      }
+    }
+  };
 
   const handleLikes = async () => {
     setLiked((prev) => !prev);
+    if (!liked) {
+      AddtoLikes();
+    } else {
+      RemoveFromLikes();
+    }
+  };
+
+  const AddtoLikes = async () => {
     try {
-      const res = await likesService.likeCafe({
+      const res = await likesService.addLike({
         cafe_id: cafe.id,
         user_id,
       });
-      console.log('likeCafe result : ', res);
+      console.log('addLike result : ', res);
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
+  const RemoveFromLikes = async () => {
+    try {
+      const res = await likesService.cancelLike({
+        cafe_id: cafe.id,
+        user_id,
+      });
+      console.log('cancelLike result : ', res);
     } catch (e) {
       console.log(e.message);
     }

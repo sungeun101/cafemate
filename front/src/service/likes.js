@@ -4,24 +4,21 @@ import axios from 'axios';
 const baseUrl = 'http://localhost:4001';
 const endpoint = '/likes';
 
-const getLikedCafesByUserId = (user_id) => {
+const getLikedByUserId = (user_id) => {
   // return axios.get(`${baseUrl}${endpoint}/${user_id}`);
   return axios.get(`${baseUrl}${endpoint}?user_id=${user_id}`);
 };
 
-const likeCafe = (data) => {
+const addLike = (data) => {
   return axios.post(baseUrl + endpoint, data);
 };
 
-const cancelLikeCafe = (data) => {
-  // return axios.delete(`${baseUrl}${endpoint}/${data.user_id}/${data.cafe_id}`);
-  return axios.delete(
-    `${baseUrl}${endpoint}?user_id=${data.user_id}/${data.cafe_id}`
-  );
+const cancelLike = (data) => {
+  return axios.delete(`${baseUrl}${endpoint}/${data.user_id}/${data.cafe_id}`);
 };
 
 export const likesService = {
-  getLikedCafesByUserId,
-  likeCafe,
-  cancelLikeCafe,
+  getLikedByUserId,
+  addLike,
+  cancelLike,
 };
