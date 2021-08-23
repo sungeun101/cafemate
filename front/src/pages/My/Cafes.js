@@ -1,5 +1,6 @@
 import { Empty, Skeleton, Card } from 'antd';
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { cafeService } from 'service/cafes';
 import { likesService } from 'service/likes';
 import { StyledCard, Container } from './Cafes.style';
@@ -9,6 +10,8 @@ const MyCafes = () => {
   const [likes, setLikes] = useState([]);
   const [myCafes, setMyCafes] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  let history = useHistory();
 
   useEffect(() => {
     getLikes();
@@ -46,6 +49,13 @@ const MyCafes = () => {
     setLoading(false);
   };
 
+  const onClick = (cafe) => {
+    history.push({
+      pathname: `/detail/${cafe.id}`,
+      state: { cafe },
+    });
+  };
+
   return (
     <Container>
       {loading ? (
@@ -55,6 +65,7 @@ const MyCafes = () => {
       ) : (
         myCafes.map((cafe) => (
           <StyledCard
+            onClick={() => onClick(cafe)}
             key={cafe.id}
             hoverable
             cover={<img alt={cafe.name} src={cafe.img_path} />}
