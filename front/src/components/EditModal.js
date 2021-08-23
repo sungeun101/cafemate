@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, message, Upload, Modal, Button } from 'antd';
-import {
-  StyledForm,
-  CameraIcon,
-  Header,
-  StarIcon,
-  UploadBox,
-} from './CommentForm.style';
-import { faCamera, faStar } from '@fortawesome/free-solid-svg-icons';
+import { StyledForm, CameraIcon, Header, UploadBox } from './CommentForm.style';
+import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import Rating from './Rating';
 
 const { TextArea } = Input;
 
@@ -18,19 +13,14 @@ const EditModal = ({
   updateComment,
 }) => {
   const [uploadVisible, setUploadVisible] = useState(true);
-  const [rating, setRating] = useState(comment.star);
+  const [selectedStars, setSelectedStars] = useState([]);
 
   const [form] = Form.useForm();
 
   useEffect(() => {
-    setRating(comment.star);
     form.setFieldsValue({ star: comment.star, content: comment.content });
-
-    // console.log('star value ', form.getFieldValue('star'));
+    setSelectedStars(Array.from({ length: comment.star }, (v, i) => i + 1));
   }, [comment]);
-
-  const yellowStar = Array.from({ length: rating }, (v, i) => i + 1);
-  const greyStar = Array.from({ length: 5 - rating }, (v, i) => i + 1);
 
   const props = {
     action: '????????',
@@ -48,11 +38,6 @@ const EditModal = ({
       form.resetFields(['image']);
       setUploadVisible(true);
     },
-  };
-
-  const handleRating = (count) => {
-    form.setFieldsValue({ star: count });
-    setRating(count);
   };
 
   const handleUpdate = (value) => {
@@ -74,6 +59,7 @@ const EditModal = ({
   const handleCancel = () => {
     setIsModalVisible(false);
     form.setFieldsValue({ star: comment.star, content: comment.content });
+    setSelectedStars(Array.from({ length: comment.star }, (v, i) => i + 1));
   };
 
   return (
@@ -114,27 +100,11 @@ const EditModal = ({
               },
             ]}
           >
-            {yellowStar.map((count, i) => {
-              return (
-                <StarIcon
-                  selected
-                  key={i}
-                  icon={faStar}
-                  size="2x"
-                  onClick={() => handleRating(count)}
-                />
-              );
-            })}
-            {greyStar.map((count, i) => {
-              return (
-                <StarIcon
-                  key={i}
-                  icon={faStar}
-                  size="2x"
-                  onClick={() => handleRating(count + rating)}
-                />
-              );
-            })}
+            <Rating
+              form={form}
+              selectedStars={selectedStars}
+              setSelectedStars={setSelectedStars}
+            />
           </Form.Item>
           <UploadBox>
             <Form.Item name="image">

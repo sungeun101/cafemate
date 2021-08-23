@@ -4,30 +4,26 @@ import {
   StyledForm,
   CameraIcon,
   Header,
-  StarIcon,
   StyledButton,
   UploadBox,
 } from './CommentForm.style';
-import { faCamera, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faCamera } from '@fortawesome/free-solid-svg-icons';
 import { commentService } from '../service/comments.js';
 // import { getComment } from '../redux/ducks/comment';
 // import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import Rating from './Rating';
 
 const { TextArea } = Input;
 
 const CommentForm = ({ getCafeComments }) => {
   const [uploadVisible, setUploadVisible] = useState(true);
-  const [rating, setRating] = useState(0);
-
+  const [selectedStars, setSelectedStars] = useState([]);
   // const dispatch = useDispatch();
 
   let { id } = useParams();
   const cafe_id = parseInt(id);
-  console.log('cafe_id', cafe_id);
 
-  const yellowStar = Array.from({ length: rating }, (v, i) => i + 1);
-  const greyStar = Array.from({ length: 5 - rating }, (v, i) => i + 1);
   const [form] = Form.useForm();
 
   const props = {
@@ -48,14 +44,7 @@ const CommentForm = ({ getCafeComments }) => {
     },
   };
 
-  const handleRating = (count) => {
-    form.setFieldsValue({ star: count });
-    setRating(count);
-  };
-
   const handleSubmit = (value) => {
-    setRating(0);
-    console.log(value);
     if (value.image) {
       addComment({
         star: value.star,
@@ -74,11 +63,12 @@ const CommentForm = ({ getCafeComments }) => {
     }
     setUploadVisible(true);
     form.resetFields();
+    setSelectedStars([]);
   };
 
   const addComment = async (value) => {
     try {
-      const res = await commentService.add(value);
+      const res = await commentService.addComment(value);
       console.log('post comment result : ', res);
     } catch (e) {
       console.log(e.message);
@@ -100,27 +90,11 @@ const CommentForm = ({ getCafeComments }) => {
             },
           ]}
         >
-          {yellowStar.map((count, i) => {
-            return (
-              <StarIcon
-                selected
-                key={i}
-                icon={faStar}
-                size="2x"
-                onClick={() => handleRating(count)}
-              />
-            );
-          })}
-          {greyStar.map((count, i) => {
-            return (
-              <StarIcon
-                key={i}
-                icon={faStar}
-                size="2x"
-                onClick={() => handleRating(count + rating)}
-              />
-            );
-          })}
+          <Rating
+            form={form}
+            selectedStars={selectedStars}
+            setSelectedStars={setSelectedStars}
+          />
         </Form.Item>
         <UploadBox>
           <Form.Item name="image">
