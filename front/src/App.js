@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import GlobalStyle, { Container } from './globalStyles';
 import Detail from './pages/Detail';
 import Main from './pages/Main';
-import My from './pages/My';
+import My from './pages/My/My';
 
 function App() {
   return (

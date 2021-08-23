@@ -24,16 +24,28 @@ import { faHeart, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 import Stars from '../components/Stars';
 import { useLocation } from 'react-router-dom';
+import { likesService } from '../service/likes';
 
 const Detail = () => {
   let location = useLocation();
   const cafe = location.state.cafe;
   console.log(cafe);
 
-  const [liked, setLiked] = useState(true);
+  const [liked, setLiked] = useState(false);
 
-  const handleLikes = () => {
+  const user_id = 1;
+
+  const handleLikes = async () => {
     setLiked((prev) => !prev);
+    try {
+      const res = await likesService.likeCafe({
+        cafe_id: cafe.id,
+        user_id,
+      });
+      console.log('likeCafe result : ', res);
+    } catch (e) {
+      console.log(e.message);
+    }
   };
 
   return (

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { commentService } from '../service/comments';
-import CommentList from './CommentList';
+import { commentService } from '../../service/comments';
+import CommentList from '../../components/CommentList';
 import { Empty, Skeleton } from 'antd';
-import { Container, Title } from './MyReviews.style';
+import { Container, Title } from './Reviews.style';
 
 const MyReviews = () => {
   const [myComments, setMyComments] = useState([]);
@@ -29,7 +29,7 @@ const MyReviews = () => {
   return (
     <Container>
       {loading ? (
-        <Skeleton avatar paragraph={{ rows: 4 }} />
+        <Skeleton active={true} avatar paragraph={{ rows: 4 }} />
       ) : (
         <>
           <Title>내가 쓴 리뷰 {myComments.length}개</Title>
