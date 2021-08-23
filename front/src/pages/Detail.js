@@ -40,13 +40,17 @@ const Detail = () => {
   const user_id = 1;
 
   const checkLiked = async () => {
-    const res = await likesService.getLikedByUserId(user_id);
-    console.log('getLikedByUserId result : ', res.data);
-    if (res.data.length > 0) {
-      const obj = res.data.find((element) => element.cafe_id === cafe.id);
-      if (obj) {
-        setLiked(true);
+    try {
+      const res = await likesService.getLikedByUserId(user_id);
+      console.log('getLikedByUserId result : ', res.data);
+      if (res.data.length > 0) {
+        const obj = res.data.find((element) => element.cafe_id === cafe.id);
+        if (obj) {
+          setLiked(true);
+        }
       }
+    } catch (e) {
+      console.log(e.message);
     }
   };
 

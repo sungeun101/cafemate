@@ -1,0 +1,59 @@
+{
+  "cafes": [
+    {
+      "id": 1,
+      "name": "카페 일",
+      "img_path": "https://blog.kakaocdn.net/dn/zRTMr/btqW4iEwRTw/fULNvoGxM6kOIkE04dSK9K/img.jpg",
+      "latitude": 89.584991,
+      "longitude": 95.18178,
+      "phone": "010-0000-0000",
+      "time": "09:00~24:00",
+      "star": 5,
+      "menu": "아메리카노(HOT, ICE):3,500/카페민트:4,500/딸기라떼:5,500/민트초코라떼:5,000"
+    },
+    {
+      "id": 2,
+      "name": "카페 이",
+      "img_path": "https://static.hubzum.zumst.com/hubzum/2018/09/07/17/a05ebf2014d04af19c1dc2ffa2be7ed8.jpg",
+      "latitude": 80.584991,
+      "longitude": 90.18178,
+      "phone": "010-0000-0000",
+      "time": "09:00~23:00",
+      "star": 3,
+      "menu": "아메리카노(HOT, ICE):3,500/카페민트:4,500"
+    },
+    {
+      "id": 3,
+      "name": "카페 삼",
+      "img_path": "https://static.hubzum.zumst.com/hubzum/2018/09/07/17/a05ebf2014d04af19c1dc2ffa2be7ed8.jpg",
+      "latitude": 80.584991,
+      "longitude": 90.18178,
+      "phone": "010-0000-0000",
+      "time": "09:00~23:00",
+      "star": 3,
+      "menu": "아메리카노(HOT, ICE):3,500/카페민트:4,500"
+    },
+    {
+      "id": 4,
+      "name": "카페 사",
+      "img_path": "https://static.hubzum.zumst.com/hubzum/2018/09/07/17/a05ebf2014d04af19c1dc2ffa2be7ed8.jpg",
+      "latitude": 80.584991,
+      "longitude": 90.18178,
+      "phone": "010-0000-0000",
+      "time": "09:00~23:00",
+      "star": 3,
+      "menu": "아메리카노(HOT, ICE):3,500/카페민트:4,500"
+    },
+    {
+      "id": 5,
+      "name": "카페 오",
+      "img_path": "https://static.hubzum.zumst.com/hubzum/2018/09/07/17/a05ebf2014d04af19c1dc2ffa2be7ed8.jpg",
+      "latitude": 80.584991,
+      "longitude": 90.18178,
+      "phone": "010-0000-0000",
+      "time": "09:00~23:00",
+      "star": 3,
+      "menu": "아메리카노(HOT, ICE):3,500/카페민트:4,500"
+    }
+  ]
+}
