@@ -38,16 +38,16 @@ const cafeData = [
         id: 4,
         name: "엔제리너스 울산대점",
         address: "울산광역시 남구 대학로 94",
-        rate: 4.5,
-        star: "http://t1.kakaocdn.net/thumb/T800x0.q80/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fplace%2FD2827586E0724A4684BB12DBEA8B7C22",
+        star: 4.5,
+        img: "http://t1.kakaocdn.net/thumb/T800x0.q80/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fplace%2FD2827586E0724A4684BB12DBEA8B7C22",
         tags: ["직접로스팅하는카페"]
     },
     {
         id: 5,
         name: "탐앤탐스 울산호계점",
         address: "울산광역시 북구 호계로 258",
-        rate: 4,
-        star: "http://t1.kakaocdn.net/thumb/T800x0.q80/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fplace%2FF37FF120E3CE49BABE9C98193D3C7C8B",
+        star: 4,
+        img: "http://t1.kakaocdn.net/thumb/T800x0.q80/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fplace%2FF37FF120E3CE49BABE9C98193D3C7C8B",
         tags: ["베이글","와이파이","깨끗한카페"]
     },
     {
@@ -149,7 +149,7 @@ function Results(props){
                                 </div>
                             </Col>
                             <Col span={6}>
-                                <Rate allowHalf disabled defaultValue={data.rate} />
+                                <Rate allowHalf disabled defaultValue={data.star} />
                                 <HeartFilled onClick={like} />
                             </Col>
                         </Row>
