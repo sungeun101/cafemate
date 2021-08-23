@@ -51,6 +51,7 @@ out/
 /build
 
 # misc
+/front/.env.development
 .DS_Store
 .env.local
 .env.development.local
