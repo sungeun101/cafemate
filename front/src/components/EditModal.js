@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, message, Upload, Modal, Button } from 'antd';
-import { StyledForm, CameraIcon, Header, UploadBox } from './CommentForm.style';
+import {
+  StyledForm,
+  CameraIcon,
+  Header,
+  UploadBox,
+} from 'pages/Detail/CommentForm.style';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
 import Rating from './Rating';
 

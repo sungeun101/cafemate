@@ -1,6 +1,6 @@
 /* global kakao */
 import React, { useEffect } from 'react';
-import { InfoWrapper } from '../globalStyles';
+import { InfoWrapper } from 'globalStyles';
 import { Map } from './Location.style';
 
 const Location = () => {

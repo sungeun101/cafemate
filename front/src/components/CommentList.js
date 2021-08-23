@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { commentService } from '../service/comments';
+import { commentService } from 'service/comments';
 import { Popconfirm, Avatar, message } from 'antd';
 import {
   AuthorAndTime,
@@ -16,7 +16,7 @@ import {
 } from './CommentList.style.js';
 import Stars from './Stars.js';
 // import { useDispatch } from 'react-redux';
-// import { getComment } from '../redux/ducks/comment';
+// import { getComment } from 'redux/ducks/comment';
 import EditModal from './EditModal';
 import { useLocation } from 'react-router-dom';
 

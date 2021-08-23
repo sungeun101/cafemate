@@ -1,9 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Location from '../components/Location';
-import Menu from '../components/Menu';
-import Reviews from '../components/Reviews';
-import Tags from '../components/Tags';
-import Gallery from '../components/Gallery';
 import { ClockCircleOutlined, PhoneOutlined } from '@ant-design/icons';
 import { Divider } from 'antd';
 import {
@@ -22,9 +17,14 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
-import Stars from '../components/Stars';
+import Stars from 'components/Stars';
 import { useLocation } from 'react-router-dom';
-import { likesService } from '../service/likes';
+import { likesService } from 'service/likes';
+import Gallery from './Gallery';
+import Menu from './Menu';
+import Reviews from './Reviews';
+import Location from './Location';
+import Tags from './Tags';
 
 const Detail = () => {
   let location = useLocation();

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
-// import { getComment } from '../redux/ducks/comment';
+// import { getComment } from 'redux/ducks/comment';
 import { Comment } from 'antd';
-import { InfoWrapper } from '../globalStyles';
+import { InfoWrapper } from 'globalStyles';
 import CommentForm from './CommentForm';
-import CommentList from './CommentList';
-import { commentService } from '../service/comments';
+import { commentService } from 'service/comments';
 import { Count, StyledDivider } from './Reviews.style';
+import CommentList from 'components/CommentList';
 
 const Reviews = ({ cafe }) => {
   const [comments, setComments] = useState([]);

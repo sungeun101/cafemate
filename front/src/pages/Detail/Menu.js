@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { InfoWrapper } from '../globalStyles';
+import { InfoWrapper } from 'globalStyles';
 import {
   DownOutlinedIcon,
   IconContainer,

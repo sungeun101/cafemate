@@ -1,7 +1,7 @@
 import { Empty, Skeleton, Card } from 'antd';
 import React, { useState, useEffect } from 'react';
-import { cafeService } from '../../service/cafes';
-import { likesService } from '../../service/likes';
+import { cafeService } from 'service/cafes';
+import { likesService } from 'service/likes';
 import { StyledCard, Container } from './Cafes.style';
 const { Meta } = Card;
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StarIcon } from './CommentForm.style';
+import { StarIcon } from 'pages/Detail/CommentForm.style';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 const Rating = ({ form, selectedStars, setSelectedStars }) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, Route, BrowserRouter, Switch } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import GlobalStyle, { Container } from './globalStyles';
-import Detail from './pages/Detail';
+import Detail from './pages/Detail/Detail';
 import Main from './pages/Main';
 import My from './pages/My/My';
 

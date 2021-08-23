@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { commentService } from '../../service/comments';
-import CommentList from '../../components/CommentList';
+import { commentService } from 'service/comments';
+import CommentList from 'components/CommentList';
 import { Empty, Skeleton } from 'antd';
 import { Container, Title } from './Reviews.style';
 

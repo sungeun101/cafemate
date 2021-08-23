@@ -8,11 +8,11 @@ import {
   UploadBox,
 } from './CommentForm.style';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
-import { commentService } from '../service/comments.js';
-// import { getComment } from '../redux/ducks/comment';
+import { commentService } from 'service/comments.js';
+// import { getComment } from 'redux/ducks/comment';
 // import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import Rating from './Rating';
+import Rating from 'components/Rating';
 
 const { TextArea } = Input;
 

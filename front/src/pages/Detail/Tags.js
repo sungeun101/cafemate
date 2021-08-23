@@ -1,5 +1,5 @@
 import React from 'react';
-import { InfoWrapper } from '../globalStyles';
+import { InfoWrapper } from 'globalStyles';
 import { StyledTag } from './Tags.style';
 
 const tagNames = ['디저트가 있는', '과제하기 좋은'];
