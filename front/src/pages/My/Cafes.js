@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { cafeService } from 'service/cafes';
 import { likesService } from 'service/likes';
-import Heart from 'components/Heart';
 import {
   StyledCard,
   Container,
@@ -12,13 +11,14 @@ import {
   Cover,
   CafeContainer,
 } from './Cafes.style';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { HeartIcon } from 'pages/Detail/Heart.style';
 const { Meta } = Card;
 
 const MyCafes = () => {
   const [likes, setLikes] = useState([]);
   const [myCafes, setMyCafes] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [liked, setLiked] = useState(true);
 
   let history = useHistory();
 
@@ -28,7 +28,6 @@ const MyCafes = () => {
 
   useEffect(() => {
     if (likes.length > 0) {
-      setLoading(true);
       getCafes();
     }
   }, [likes]);
@@ -48,6 +47,7 @@ const MyCafes = () => {
   };
 
   const getCafes = async () => {
+    setLoading(true);
     let resArr = [];
     for await (const obj of likes) {
       // const res = await cafeService.getCafesById(obj.cafe_id);
@@ -64,6 +64,20 @@ const MyCafes = () => {
     //   pathname: `/detail/${cafe.id}`,
     //   state: { cafe },
     // });
+  };
+
+  const RemoveFromLikes = async (cafe) => {
+    try {
+      const res = await likesService.cancelLike({
+        //   cafe_id: cafe.id,
+        id: cafe.id,
+        user_id,
+      });
+      console.log('cancelLike result : ', res);
+    } catch (e) {
+      console.log(e.message);
+    }
+    getLikes();
   };
 
   return loading ? (
@@ -89,7 +103,10 @@ const MyCafes = () => {
               <Description>
                 <p>주소(동까지)</p>
                 <HeartContainer>
-                  <Heart liked={liked} setLiked={setLiked} cafe={cafe} />
+                  <HeartIcon
+                    icon={faHeart}
+                    onClick={() => RemoveFromLikes(cafe)}
+                  />
                 </HeartContainer>
               </Description>
             }

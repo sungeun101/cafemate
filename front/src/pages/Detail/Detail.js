@@ -23,7 +23,7 @@ import Menu from './Menu';
 import Reviews from './Reviews';
 import Location from './Location';
 import Tags from './Tags';
-import Heart from 'components/Heart';
+import Heart from './Heart';
 
 const Detail = () => {
   const [liked, setLiked] = useState(false);
