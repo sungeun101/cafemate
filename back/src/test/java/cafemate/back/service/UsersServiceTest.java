@@ -3,7 +3,6 @@ package cafemate.back.service;
 import cafemate.back.domain.Users;
 import cafemate.back.repository.UsersRepository;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,12 +21,8 @@ public class UsersServiceTest {
 
     @Autowired
     UsersService usersService;
-    // DTO <-> Entity 변환을 service에서 하므로,
-    // 원래 이 테스트코드에서는 usersRepository만을 사용하나,
-    // (service단에서는 인자/리턴값으로 dto를 받기에)
-    // usersService.validateUser()만을 사용하기 위해서 usersService를 가져옴.
 
-    @BeforeEach
+    //@BeforeEach
     Users buildUser() {
         String name = "유저이름";
         String email = "유저@gmail.com";

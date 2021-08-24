@@ -4,7 +4,6 @@ import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -20,11 +19,11 @@ public class Comments {
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "user_id")
-//    private Users userComments;
-
+//    private Users user;
+//
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "cafe_id")
-//    private Cafes cafes;
+//    private Cafes cafe;
 
     @NotNull
     private String content;
@@ -45,13 +44,14 @@ public class Comments {
         this.created_at = LocalDate.now();
     }
 
-    // DTO를 엔티티로 변환해주기
     @Builder
-    public Comments (String content, String img_path, float star, LocalDate created_at) {
+    public Comments (String content, String img_path, float star, LocalDate created_at,Users userComments,Cafes cafeComments ) {
         this.content = content;
         this.img_path = img_path;
         this.star = star;
         this.created_at = created_at;
+        //this.user = userComments;
+        //this.cafe = cafeComments;
     }
 
 }

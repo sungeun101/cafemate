@@ -82,13 +82,5 @@ public class UsersServiceUnitTest {
         //then
         assertNull(deleteUser);
     }
-//    @Test
-//    public void 카페리뷰조회() throws Exception {
-//
-//    }
-//
-//    @Test
-//    public void 유저리뷰조회() throws Exception {
-//
-//    }
+
 }

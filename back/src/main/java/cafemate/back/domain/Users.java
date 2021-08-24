@@ -4,8 +4,9 @@ import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -25,14 +26,13 @@ public class Users {
 
     private String img_path;
 
-//    @OneToMany(mappedBy = "userComments")
-//    private List<Comments> comments = new ArrayList<>();
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+//    private List<Comments> commentsUsers = new ArrayList<Comments>();
 
-//    @OneToMany(mappedBy = "userLikes")
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 //    private List<Likes> likes = new ArrayList<>();
 
-    @Builder //id는 자동생성이니까, 엔티티화할때 인자로 받을 필요없지만,
-    //테스트 케이스에서 id가 자동생성이 안되서 일단 id 항목도 인자로 받게 함
+    @Builder
     public Users(String email, String name, String img_path) {
         this.email = email;
         this.name = name;

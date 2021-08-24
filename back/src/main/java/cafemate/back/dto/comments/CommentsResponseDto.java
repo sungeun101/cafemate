@@ -14,7 +14,8 @@ public class CommentsResponseDto {
     private float star;
     private LocalDate created_at;
 
-    //FK로 카페번호, 유저번호 추가
+    private Integer cafeId;
+    private Integer userId;
 
     //엔티티를 받으면 DTO로 변환하기
     public CommentsResponseDto(Comments comment){
@@ -22,5 +23,7 @@ public class CommentsResponseDto {
         this.img_path = comment.getContent();
         this.star = comment.getStar();
         this.created_at = comment.getCreated_at();
+        //this.cafeId = comment.getCafeComments().getId();
+        //this.userId = comment.getUserComments().getId();
     }
 }

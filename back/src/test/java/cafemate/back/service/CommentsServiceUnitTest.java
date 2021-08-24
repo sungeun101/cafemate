@@ -1,26 +1,37 @@
 package cafemate.back.service;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import cafemate.back.domain.Cafes;
 import cafemate.back.domain.Comments;
+import cafemate.back.domain.Users;
 import cafemate.back.repository.CommentsRepository;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.AdditionalAnswers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import java.time.LocalDate;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+@MockitoSettings(strictness = Strictness.LENIENT)
 @ExtendWith(MockitoExtension.class)
 public class CommentsServiceUnitTest {
 
     @Mock // 유닛테스트에서의 레포지토리 : @Mock 이용
     private CommentsRepository commentsRepository;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -38,6 +49,19 @@ public class CommentsServiceUnitTest {
                 .star(star)
                 .created_at(created_at)
                 .build();
+    }
+
+    private List<Comments> getStubCommentList() {
+        List<Comments> commentsList = new ArrayList<>();
+        Comments comment1 = Comments.builder().content("content1").img_path("img_path").star(1F).created_at(LocalDate.now()).build();
+        Comments comment2 = Comments.builder().content("content2").img_path("img_path").star(2F).created_at(LocalDate.now()).build();
+        Comments comment3 = Comments.builder().content("content3").img_path("img_path").star(3F).created_at(LocalDate.now()).build();
+
+        commentsList.add(comment1);
+        commentsList.add(comment2);
+        commentsList.add(comment3);
+
+        return commentsList;
     }
 
     @Test
@@ -92,12 +116,32 @@ public class CommentsServiceUnitTest {
 
 //    @Test
 //    public void 카페리뷰조회() throws Exception {
+//        //given
+//        when(commentsRepository.findAllByCafeCommentsOrderByCreatedAtDesc(any(Cafes.class)))
+//                .thenReturn(getStubCommentList());
 //
+//        //when
+//        List<Comments> commentsList = getStubCommentList();
+//
+//        //then
+//
+//        assertEquals(commentsList.size(), getStubCommentList().size());
+//        assertEquals(commentsList.get(1).getContent(), getStubCommentList().get(1).getContent());
 //    }
-//
+
 //    @Test
 //    public void 유저리뷰조회() throws Exception {
+//        //given
+//        when(commentsRepository.findAllByUserOrderByCreatedAtDesc(any(Users.class)))
+//                .thenReturn(getStubCommentList());
 //
+//        //when
+//        List<Comments> commentsList = getStubCommentList();
+//
+//        //then
+//
+//        assertEquals(commentsList.size(), getStubCommentList().size());
+//        assertEquals(commentsList.get(1).getContent(), getStubCommentList().get(1).getContent());
 //    }
 
 }
