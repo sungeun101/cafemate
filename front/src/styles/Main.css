@@ -1,5 +1,9 @@
 @import '~antd/dist/antd.css';
 
+.ant-layout {
+    background-color: white;
+}
+
 .ant-layout-header {
     background: #ffffff;
     padding-left: 1em;

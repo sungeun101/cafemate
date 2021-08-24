@@ -16,7 +16,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import Stars from 'components/Stars';
-import { useLocation } from 'react-router-dom';
 import { likesService } from 'service/likes';
 import Gallery from './Gallery';
 import Menu from './Menu';
@@ -25,12 +24,8 @@ import Location from './Location';
 import Tags from './Tags';
 import Heart from './Heart';
 
-const Detail = () => {
+const Detail = ({ cafe }) => {
   const [liked, setLiked] = useState(false);
-
-  let location = useLocation();
-  const cafe = location.state.cafe;
-  console.log('cafe : ', cafe);
 
   useEffect(() => {
     checkLiked();
@@ -71,7 +66,7 @@ const Detail = () => {
       <InfoList>
         <InfoItem>
           <FontAwesomeIcon icon={faMapMarkerAlt} />
-          <InfoText>주소</InfoText>
+          <InfoText>{cafe.address}</InfoText>
         </InfoItem>
         <InfoItem>
           <ClockCircleOutlined />
