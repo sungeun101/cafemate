@@ -7,11 +7,14 @@ import {
   BtnContainer,
   CommentContainer,
   Content,
+  ContentsContainer,
   Datetime,
   Info,
   LeftBox,
+  MoreBtn,
   RightBox,
   StyledButton,
+  StyledImage,
   StyledList,
 } from './CommentList.style.js';
 import Stars from './Stars.js';
@@ -24,6 +27,8 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editId, setEditId] = useState(undefined);
   const [editComment, setEditComment] = useState({});
+  const [showAllContents, setShowAllContents] = useState(false);
+  const [moreId, setMoreId] = useState(undefined);
 
   let location = useLocation();
 
@@ -71,6 +76,11 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
     setIsModalVisible(true);
   };
 
+  const onMoreBtnClick = (comment) => {
+    setShowAllContents(true);
+    setMoreId(comment.id);
+  };
+
   return (
     <>
       {editComment && (
@@ -87,7 +97,7 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
           dataSource={comments}
           itemLayout="horizontal"
           renderItem={(comment) => (
-            <CommentContainer>
+            <CommentContainer key={comment.id}>
               <Info>
                 <LeftBox>
                   <Avatar
@@ -124,7 +134,24 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
                 </RightBox>
               </Info>
 
-              <Content>{comment.content}</Content>
+              <ContentsContainer>
+                {comment.img_path && <StyledImage src={comment.img_path} />}
+                <Content
+                  className={comment.id === moreId && showAllContents && 'open'}
+                >
+                  {comment.content}
+                </Content>
+                {comment.content.length > 300 && (
+                  <MoreBtn
+                    className={
+                      comment.id === moreId && showAllContents && 'open'
+                    }
+                    onClick={() => onMoreBtnClick(comment)}
+                  >
+                    ...더보기
+                  </MoreBtn>
+                )}
+              </ContentsContainer>
             </CommentContainer>
           )}
         />
