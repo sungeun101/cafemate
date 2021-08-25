@@ -8,8 +8,8 @@
 }
 
 .ant-avatar {
-    color: #20110b;
-    background-color: white;
+    color: white;
+    background-color: #20110b;
 }
 
 .ant-typography {
@@ -19,4 +19,8 @@
 
 h2.ant-typography, .ant-typography h2 {
     color: #dba56c;
+}
+
+#userName {
+    margin-right: 0.5em;
 }

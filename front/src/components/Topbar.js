@@ -12,11 +12,14 @@ const GOOGLE_KEY = process.env.REACT_APP_GOOGLE_KEY
 const {Title} = Typography;
 
 function Topbar(props) {
-    const { googleId, setGoogleId } = props
+    const { setGoogleId, setGoogleName, setGoogleImg } = props
+    const { googleId, googleName, googleImg } = props.userInfo
 
     const loginSuccess = (res) => {
         console.log("Login success!")
         setGoogleId(res.googleId)
+        setGoogleName(res.profileObj.givenName)
+        setGoogleImg(res.profileObj.imageUrl)
     }
     const loginFailure = (res) => {
         console.log("Failed to log in.")
@@ -72,8 +75,9 @@ function Topbar(props) {
             <div className="user">
             {googleId?
                 <>
+                <span id="userName">{googleName}</span>
                 <Popover placement="bottomRight" content={logoutPopover}>
-                    <Avatar size="small" icon={<UserOutlined />} />
+                    <Avatar src={googleImg} />
                 </Popover>
                 </>
                 :
