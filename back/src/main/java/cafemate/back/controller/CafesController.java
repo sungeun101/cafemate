@@ -30,12 +30,12 @@ public class CafesController {
     }
 
 
-//    @GetMapping("/cafes/{cafe_id}")//카페 상세보기
-//    public ResponseEntity<?> cafeDetail(@PathVariable("cafe_id") Long cafeId, @AuthenticationPrincipal Users user){
-//        System.out.println("cafe : "+cafeId);
-//        System.out.println("user : "+user.getId());
-//        return new ResponseEntity<>(cafesService.getCafeDetail(cafeId, user.getId()), HttpStatus.OK);
-//    }
+    @GetMapping("/cafes/{cafe_id}")//카페 상세보기
+    public ResponseEntity<?> cafeDetail(@PathVariable("cafe_id") Long cafeId, @AuthenticationPrincipal Users user){
+        System.out.println("cafe : "+cafeId);
+        System.out.println("user : "+user.getId());
+        return new ResponseEntity<>(cafesService.getCafeDetail(cafeId, user.getId()), HttpStatus.OK);
+    }
     //
     @PostMapping("/cafes/{cafe_id}/likes")//좋아요 클릭
     public ResponseEntity<?> likes(@PathVariable("cafe_id") Long cafeId , @AuthenticationPrincipal Users user){
@@ -57,10 +57,10 @@ public class CafesController {
         likesService.cancelLikes(user.getId() , cafeId);
         return new ResponseEntity<>("좋아요 취소 성공",HttpStatus.OK);
     }
-//    //
-//    @GetMapping("/likes/users/{user_id}")//좋아요 리스트 불러오기
-//    public ResponseEntity<?> getLikesCafe(@AuthenticationPrincipal @PathVariable("user_id") Users user, @PageableDefault(size=12) Pageable pageable){
-//        System.out.println("user "+user.getId());
-//        return new ResponseEntity<>(cafesService.getLikesCafe(user.getId(), pageable), HttpStatus.OK);
-//    }
+    //
+    @GetMapping("/likes/users/{user_id}")//좋아요 리스트 불러오기
+    public ResponseEntity<?> getLikesCafe(@AuthenticationPrincipal @PathVariable("user_id") Users user, @PageableDefault(size=12) Pageable pageable){
+        System.out.println("user "+user.getId());
+        return new ResponseEntity<>(cafesService.getLikesCafe(user.getId(), pageable), HttpStatus.OK);
+    }
 }
