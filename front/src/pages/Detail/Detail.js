@@ -55,7 +55,7 @@ const Detail = () => {
 
   return (
     <div>
-      <Gallery />
+      <Gallery cafe={cafe} />
 
       <TitleContainer>
         <NameContainer>
