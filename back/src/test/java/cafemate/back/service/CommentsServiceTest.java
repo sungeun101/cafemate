@@ -1,5 +1,6 @@
 package cafemate.back.service;
 
+import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 import static org.junit.Assert.*;
 
 import cafemate.back.domain.Cafes;
@@ -8,20 +9,14 @@ import cafemate.back.domain.Users;
 import cafemate.back.repository.CafesRepository;
 import cafemate.back.repository.CommentsRepository;
 import cafemate.back.repository.UsersRepository;
-import org.apache.catalina.User;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -37,11 +32,17 @@ public class CommentsServiceTest {
 
     //@BeforeEach
     void getCommentsList() {
+
+        LocalDate date = LocalDate.now();
+        String text = date.format(ISO_LOCAL_DATE);
+        LocalDate parsedDate = LocalDate.parse(text, ISO_LOCAL_DATE);
+
+
         Comments comment = commentsRepository.save(Comments.builder()
                 .content("댓글 내용")
                 .img_path("이미지경로")
                 .star(3.5F)
-                .created_at(LocalDate.now())
+                .createdAt(parsedDate)
                 .build());
 
         commentsRepository.save(comment);
@@ -57,21 +58,31 @@ public class CommentsServiceTest {
         String content = "댓글 내용";
         String img_path = "이미지경로";
         float star = 3.5F;
-        LocalDate created_at = LocalDate.now();
+
+        LocalDate date = LocalDate.now();
+        String text = date.format(ISO_LOCAL_DATE);
+        LocalDate parsedDate = LocalDate.parse(text, ISO_LOCAL_DATE);
+
+
+
+        Users user = Users.builder().name("유저명").email("이메일").build();
+        Cafes cafe = Cafes.builder().name("카페명").dong("do").address("address").build();
 
         //when
         Comments comment = commentsRepository.save(Comments.builder()
                     .content(content)
                     .img_path(img_path)
                     .star(star)
-                    .created_at(created_at)
+                    .createdAt(parsedDate)
+                    .userComments(user)
+                    .cafeComments(cafe)
                     .build());
 
         //then
         assertEquals(comment.getContent(), content);
         assertEquals(comment.getImg_path(), img_path);
         assertEquals(comment.getStar(), star,0.0001);
-        assertEquals(comment.getCreated_at(), created_at);
+        assertEquals(comment.getCreatedAt(), parsedDate);
     }
 
     @Test
@@ -83,10 +94,15 @@ public class CommentsServiceTest {
         String newContent = "바뀐 댓글 내용";
         float newStar = 1F;
 
+        LocalDate date = LocalDate.now();
+        String text = date.format(ISO_LOCAL_DATE);
+        LocalDate parsedDate = LocalDate.parse(text, ISO_LOCAL_DATE);
+
+
         Comments comment = commentsRepository.save(Comments.builder()
                 .content(originalContent)
                 .star(originalStar)
-                .created_at(LocalDate.now())
+                .createdAt(parsedDate)
                 .build());
 
         //when
@@ -106,7 +122,7 @@ public class CommentsServiceTest {
                 .content(content)
                 .star(star)
                 .build());
-        Integer commentId = comment.getId();
+        Long commentId = comment.getId();
 
         //when
         commentsRepository.deleteById(commentId);
@@ -136,7 +152,7 @@ public class CommentsServiceTest {
 //        commentsList.add(comments3);
 //
 //        //when
-//        List<Comments> getCommentsList = commentsRepository.findAllByCafeOrderByCreatedAtDesc(cafe);
+//        List<Comments> getCommentsList = commentsRepository.findAllByCafesOrderByCreatedAtDesc(cafe);
 //
 //        //then
 //        System.out.println(commentsList.get(1).getContent());

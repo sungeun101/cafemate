@@ -4,6 +4,8 @@ import cafemate.back.dto.users.UserSaveRequestDto;
 import cafemate.back.dto.users.UsersResponseDto;
 import cafemate.back.service.UsersService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,19 +17,21 @@ public class UsersController {
 
     // C 회원 등록
     @PostMapping("/users")
-    public void saveUser(@RequestBody @Validated UserSaveRequestDto userSaveRequestDto) {
+    public ResponseEntity saveUser(@RequestBody @Validated UserSaveRequestDto userSaveRequestDto) {
         usersService.joinUser(userSaveRequestDto);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     // R 회원 조회
     @GetMapping("/users/{user-id}")
-    public UsersResponseDto getUser(@PathVariable(value = "user-id") Integer userId) {
-        return usersService.findUser(userId);
+    public ResponseEntity<UsersResponseDto> getUser(@PathVariable(value = "user-id") Long userId) {
+        return new ResponseEntity(usersService.findUser(userId), HttpStatus.OK);
     }
 
     // U 회원 삭제
     @DeleteMapping("/users/{user-id}")
-    public void deleteUser(@PathVariable(value = "user-id") Integer userId) {
+    public ResponseEntity deleteUser(@PathVariable(value = "user-id") Long userId) {
         usersService.deleteUser(userId);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

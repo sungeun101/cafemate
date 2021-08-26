@@ -15,9 +15,9 @@ import java.util.List;
 @Getter
 public class Cafes {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cafe_id")
-    private Integer id;
+    private Long id;
 
     @NotNull
     private String name;
@@ -31,6 +31,12 @@ public class Cafes {
 
     @NotNull
     private String address;
+
+    @NotNull
+    private double longitude;
+
+    @NotNull
+    private double latitude;
 
     private String phone;
 
@@ -49,9 +55,6 @@ public class Cafes {
     private boolean parking;
 
     private boolean wifi;
-    @JsonIgnoreProperties({"cafes"})
-    @OneToMany(mappedBy = "cafes")
-    private List<Likes> likeList;
 
     @Transient
     private boolean likeState;
@@ -59,26 +62,33 @@ public class Cafes {
     @Transient
     private Long likesCount;
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cafe")
-//    private List<Comments> commentsCafes = new ArrayList<Comments>();
+    //@JsonIgnoreProperties({"cafes"})
+    @OneToMany(mappedBy = "cafes")
+    private List<Likes> likeList;
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cafesLikes")
+    @OneToMany(mappedBy = "cafes") //fetch = FetchType.LAZY,
+    private List<Comments> commentsCafes = new ArrayList<Comments>();
+
+//    @OneToMany(mappedBy = "cafesLikes") //fetch = FetchType.LAZY,
 //    private List<Comments> commentsLikes = new ArrayList<>();
 
-//    public void updateStar(float newStar){
-//        int number = commentsCafes.size() +1;
-//        float averStar = (this.star+newStar) / number;
-//        this.star = Math.round((averStar)*10 /10.0);
-//    }
+    public void updateStar(float newStar){
+        int number = commentsCafes.size() +1;
+        float averStar = (this.star+newStar) / number;
+        this.star = Math.round((averStar)*10 /10.0);
+    }
 
     @Builder
-    public Cafes (String name, String dong,float star, String address, boolean parking) {
+    public Cafes (Long id, String phone, String name, String dong,float star, String address, boolean parking, double longitude, double latitude) {
+        this.id = id;
         this.name = name;
         this.dong = dong;
         this.star = star;
         this.address = address;
         this.parking = parking;
-
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.phone = phone;
     }
 
     public void updateLikesCount(Long likesCount){

@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.AdditionalAnswers;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
@@ -41,21 +40,21 @@ public class CommentsServiceUnitTest {
         String content = "댓글 내용입니다";
         String img_path = "이미지경로";
         float star = 3.5F;
-        LocalDate created_at = LocalDate.now();
+        LocalDate createdAt = LocalDate.now();
 
         return Comments.builder()
                 .content(content)
                 .img_path(img_path)
                 .star(star)
-                .created_at(created_at)
+                .createdAt(createdAt)
                 .build();
     }
 
     private List<Comments> getStubCommentList() {
         List<Comments> commentsList = new ArrayList<>();
-        Comments comment1 = Comments.builder().content("content1").img_path("img_path").star(1F).created_at(LocalDate.now()).build();
-        Comments comment2 = Comments.builder().content("content2").img_path("img_path").star(2F).created_at(LocalDate.now()).build();
-        Comments comment3 = Comments.builder().content("content3").img_path("img_path").star(3F).created_at(LocalDate.now()).build();
+        Comments comment1 = Comments.builder().content("content1").img_path("img_path").star(1F).createdAt(LocalDate.now()).build();
+        Comments comment2 = Comments.builder().content("content2").img_path("img_path").star(2F).createdAt(LocalDate.now()).build();
+        Comments comment3 = Comments.builder().content("content3").img_path("img_path").star(3F).createdAt(LocalDate.now()).build();
 
         commentsList.add(comment1);
         commentsList.add(comment2);
@@ -77,7 +76,7 @@ public class CommentsServiceUnitTest {
         assertEquals(savedComment.getContent(), comment.getContent());
         assertEquals(savedComment.getImg_path(), comment.getImg_path());
         assertEquals(savedComment.getStar(), comment.getStar(),0.0001);
-        assertEquals(savedComment.getCreated_at(), comment.getCreated_at());
+        assertEquals(savedComment.getCreatedAt(), comment.getCreatedAt());
     }
 
     @Test
@@ -91,7 +90,7 @@ public class CommentsServiceUnitTest {
 
         //when
         comment.updateContent(newContent,newStar);
-        Integer commentId = comment.getId();
+        Long commentId = comment.getId();
 
         //then
         assertEquals(comment, commentsRepository.getById(commentId));
@@ -104,7 +103,7 @@ public class CommentsServiceUnitTest {
         //given
         when(commentsRepository.getById(any())).thenReturn(getStubComment());
         Comments comment = commentsRepository.getById(any());
-        Integer commentId = comment.getId();
+        Long commentId = comment.getId();
 
         //when
         commentsRepository.deleteById(commentId);
@@ -114,34 +113,34 @@ public class CommentsServiceUnitTest {
         assertNull(deleteComment);
     }
 
-//    @Test
-//    public void 카페리뷰조회() throws Exception {
-//        //given
-//        when(commentsRepository.findAllByCafeCommentsOrderByCreatedAtDesc(any(Cafes.class)))
-//                .thenReturn(getStubCommentList());
-//
-//        //when
-//        List<Comments> commentsList = getStubCommentList();
-//
-//        //then
-//
-//        assertEquals(commentsList.size(), getStubCommentList().size());
-//        assertEquals(commentsList.get(1).getContent(), getStubCommentList().get(1).getContent());
-//    }
+    @Test
+    public void 카페리뷰조회() throws Exception {
+        //given
+        when(commentsRepository.findAllByCafesOrderByCreatedAtDesc(any(Cafes.class)))
+                .thenReturn(getStubCommentList());
 
-//    @Test
-//    public void 유저리뷰조회() throws Exception {
-//        //given
-//        when(commentsRepository.findAllByUserOrderByCreatedAtDesc(any(Users.class)))
-//                .thenReturn(getStubCommentList());
-//
-//        //when
-//        List<Comments> commentsList = getStubCommentList();
-//
-//        //then
-//
-//        assertEquals(commentsList.size(), getStubCommentList().size());
-//        assertEquals(commentsList.get(1).getContent(), getStubCommentList().get(1).getContent());
-//    }
+        //when
+        List<Comments> commentsList = getStubCommentList();
+
+        //then
+
+        assertEquals(commentsList.size(), getStubCommentList().size());
+        assertEquals(commentsList.get(1).getContent(), getStubCommentList().get(1).getContent());
+    }
+
+    @Test
+    public void 유저리뷰조회() throws Exception {
+        //given
+        when(commentsRepository.findAllByUsersOrderByCreatedAtDesc(any(Users.class)))
+                .thenReturn(getStubCommentList());
+
+        //when
+        List<Comments> commentsList = getStubCommentList();
+
+        //then
+
+        assertEquals(commentsList.size(), getStubCommentList().size());
+        assertEquals(commentsList.get(1).getContent(), getStubCommentList().get(1).getContent());
+    }
 
 }

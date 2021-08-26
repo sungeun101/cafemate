@@ -46,7 +46,7 @@ public class UsersServiceTest {
     @Test
     public void 회원조회() throws Exception {
         //given : 없는 회원일 경우
-        Integer userId = Integer.MAX_VALUE;
+        Long userId = Long.MAX_VALUE;
 
         //when
         try {

@@ -24,20 +24,20 @@ public class UsersService {
 
     // R 유저 조회
     @Transactional(readOnly = true)
-    public UsersResponseDto findUser(Integer userId) {
+    public UsersResponseDto findUser(Long userId) {
         validateUser(userId);
         Users user = usersRepository.getById(userId);
         return new UsersResponseDto(user);
     }
 
     // D 유저 탈퇴
-    public void deleteUser(Integer userId) {
+    public void deleteUser(Long userId) {
         validateUser(userId);
         usersRepository.deleteById(userId);
     }
 
     // 회원이 있는 지 검증하기 - 함수화
-    public void validateUser(Integer userId) {
+    public void validateUser(Long userId) {
         Users user = usersRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
     }
 }

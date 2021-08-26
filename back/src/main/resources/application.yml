@@ -5,11 +5,15 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    password: connect123!@#
-    url: jdbc:mysql://localhost:3306/connectdb?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
-    username: connectuser
+    password: cafecafe123
+    #url: jdbc:mysql://localhost:3306/cafedb?characterEncoding=UTF-8&serverTimezone=Asia/Seoul # autoReconnect=true #useSSL=false& autoReconnect=true&
+    url : jdbc:mysql://cafedb.csfbpebiara7.ap-northeast-2.rds.amazonaws.com:3306/cafedb
+    username: cafeadmin
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    generate-ddl: true
-    show-sql: true
+    # generate-ddl: true
+    #show-sql: true
+    hibernate:
+      format_sql : true
+      ddl-auto :  create # none #

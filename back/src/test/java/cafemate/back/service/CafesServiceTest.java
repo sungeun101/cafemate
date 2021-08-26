@@ -42,9 +42,9 @@ public class CafesServiceTest {
     //@Rollback(value = false)
     public void 카페조회() throws Exception {
         //given : Cafes 테이블은 미리 저장되어있고 새로 저장X -> builder가 불필요하나, 테스트용으로 만듦
-        Cafes cafe1 = Cafes.builder().name("주차안되는 카페").dong("삼양동").address("카페주소").star(1F).parking(false).build();
-        Cafes cafe2 = Cafes.builder().name("주차가능 카페 별점2").dong("삼양동").address("카페주소").star(2F).parking(true).build();
-        Cafes cafe3 = Cafes.builder().name("주차가능 카페 별점3").dong("삼양동").address("카페주소").star(3F).parking(true).build();
+        Cafes cafe1 = Cafes.builder().id(1L).name("주차안되는 카페").dong("삼양동").longitude(11F).latitude(11F).address("카페주소").star(1F).parking(false).phone("1").build();
+        Cafes cafe2 = Cafes.builder().id(2L).name("주차가능 카페 별점2").dong("삼양동").longitude(11F).latitude(11F).address("카페주소").star(2F).parking(true).phone("1").build();
+        Cafes cafe3 = Cafes.builder().id(3L).name("주차가능 카페 별점3").dong("삼양동").longitude(11F).latitude(11F).address("카페주소").star(3F).parking(true).phone("1").build();
 
         List<Cafes> createCafeList = new ArrayList<>();
         createCafeList.add(cafe1);
@@ -61,7 +61,7 @@ public class CafesServiceTest {
         List<CafesSearchResponseDto> getCafesList = findCafesList.stream().map(CafesSearchResponseDto::new).collect(Collectors.toList());
 
         //then (Rollback 지우고)
-        //assertEquals(createCafeListDto.size(), getCafesList.size());
+        assertEquals(createCafeListDto.size(), getCafesList.size());
     }
 
 }

@@ -26,11 +26,11 @@ public class Users {
 
     private String img_path;
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-//    private List<Comments> commentsUsers = new ArrayList<Comments>();
+    @OneToMany(mappedBy = "users") //fetch = FetchType.LAZY,
+    private List<Comments> commentsUsers = new ArrayList<Comments>();
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-//    private List<Likes> likes = new ArrayList<>();
+    @OneToMany( mappedBy = "users") //fetch = FetchType.LAZY,
+    private List<Likes> likes = new ArrayList<Likes>();
 
     @Builder
     public Users(String email, String name, String img_path) {

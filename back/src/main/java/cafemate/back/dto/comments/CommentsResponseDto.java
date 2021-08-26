@@ -12,18 +12,18 @@ public class CommentsResponseDto {
     private String content;
     private String img_path;
     private float star;
-    private LocalDate created_at;
+    private LocalDate createdAt;
 
-    private Integer cafeId;
-    private Integer userId;
+    private Long cafeId;
+    private Long userId;
 
     //엔티티를 받으면 DTO로 변환하기
     public CommentsResponseDto(Comments comment){
         this.content = comment.getContent();
         this.img_path = comment.getContent();
         this.star = comment.getStar();
-        this.created_at = comment.getCreated_at();
-        //this.cafeId = comment.getCafeComments().getId();
-        //this.userId = comment.getUserComments().getId();
+        this.createdAt = comment.getCreatedAt();
+        this.cafeId = comment.getCafes().getId();
+        this.userId = comment.getUsers().getId();
     }
 }

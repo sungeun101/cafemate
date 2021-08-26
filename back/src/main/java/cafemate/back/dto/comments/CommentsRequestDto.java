@@ -7,7 +7,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class CommentsRequestDto {
+
     private String content;
-    private String img_path;
+    private String img_path; //file형식
     private float star;
+
+    private Long userId;
+    private Long cafeId;
 }

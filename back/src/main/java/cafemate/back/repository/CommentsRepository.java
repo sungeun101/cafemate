@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CommentsRepository extends JpaRepository<Comments, Integer> {
-    //List<Comments> findAllByUserOrderByCreatedAtDesc(Users user);
-    //List<Comments> findAllByCafeOrderByCreatedAtDesc(Cafes cafe);
+public interface CommentsRepository extends JpaRepository<Comments, Long> {
+    List<Comments> findAllByUsersOrderByCreatedAtDesc(Users user);
+    List<Comments> findAllByCafesOrderByCreatedAtDesc(Cafes cafe);
 }
