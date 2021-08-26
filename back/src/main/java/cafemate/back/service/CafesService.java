@@ -89,7 +89,7 @@ public class CafesService {
         if (sorting.equals("star")) {
             return cafesListDto.stream()
                     .sorted(Comparator.comparingInt(CafesResponseDto::getPriority)
-                            .thenComparingInt(CafesResponseDto::getStar).reversed())
+                            .thenComparingInt(CafesResponseDto::getStarInt).reversed())
                     .map(CafesSearchResponseDto::new)
                     .collect(Collectors.toList());
         }  else {

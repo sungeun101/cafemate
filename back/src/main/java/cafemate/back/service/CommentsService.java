@@ -30,8 +30,8 @@ public class CommentsService {
     // C 리뷰 쓰기
     public void createComment(CommentsRequestDto commentsRequestDto) {
 
-        Users user = usersRepository.getById(commentsRequestDto.getUserId());
-        Cafes cafe = cafesRepository.getById(commentsRequestDto.getCafeId());
+        Users user = usersRepository.getById(commentsRequestDto.getUser_id());
+        Cafes cafe = cafesRepository.getById(commentsRequestDto.getCafe_id());
 
         String content = commentsRequestDto.getContent();
         String img_path = commentsRequestDto.getImg_path();
@@ -40,7 +40,6 @@ public class CommentsService {
         LocalDate date = LocalDate.now();
         String text = date.format(ISO_LOCAL_DATE);
         LocalDate parsedDate = LocalDate.parse(text, ISO_LOCAL_DATE);
-
 
         Comments comment = Comments.builder()
                         .content(content)

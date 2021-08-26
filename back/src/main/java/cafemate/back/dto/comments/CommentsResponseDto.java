@@ -9,21 +9,23 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 public class CommentsResponseDto {
+    private Long id;
     private String content;
     private String img_path;
     private float star;
     private LocalDate createdAt;
 
-    private Long cafeId;
-    private Long userId;
+    private Long cafe_id;
+    private Long user_id;
 
     //엔티티를 받으면 DTO로 변환하기
     public CommentsResponseDto(Comments comment){
+        this.id = comment.getId();
         this.content = comment.getContent();
         this.img_path = comment.getContent();
         this.star = comment.getStar();
         this.createdAt = comment.getCreatedAt();
-        this.cafeId = comment.getCafes().getId();
-        this.userId = comment.getUsers().getId();
+        this.cafe_id = comment.getCafes().getId();
+        this.user_id = comment.getUsers().getId();
     }
 }

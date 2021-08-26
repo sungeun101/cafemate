@@ -48,7 +48,7 @@ public class CommentsController {
     }
 
     //R 유저 리뷰 조회
-    @GetMapping("/comments/{user-id}")
+    @GetMapping("/comments/users/{user-id}")
     public ResponseEntity<List<CommentsResponseDto>> getCommentsByUser (@PathVariable(value = "user-id") Long userId) {
         usersService.validateUser(userId); //유저가 있는지 검사
         return new ResponseEntity<> (commentsService.getCommentsByUserId(userId), HttpStatus.OK);
