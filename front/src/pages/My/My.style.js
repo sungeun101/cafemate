@@ -2,7 +2,7 @@ import { Tabs } from 'antd';
 import styled from 'styled-components';
 
 export const StyledTabs = styled(Tabs)`
-  margin-top: 4rem;
+  margin-top: 2rem;
   .ant-tabs-tab {
     color: var(--black-color);
   }

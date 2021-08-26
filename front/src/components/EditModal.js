@@ -17,19 +17,27 @@ const EditModal = ({
   setIsModalVisible,
   updateComment,
 }) => {
-  const [uploadVisible, setUploadVisible] = useState(true);
-  const [selectedStars, setSelectedStars] = useState([]);
-
+  const [uploadVisible, setUploadVisible] = useState(false);
   const [form] = Form.useForm();
+  const { star, content, img_path } = comment;
 
   useEffect(() => {
-    form.setFieldsValue({ star: comment.star, content: comment.content });
-    setSelectedStars(Array.from({ length: comment.star }, (v, i) => i + 1));
+    form.setFieldsValue({ star, content, image: img_path });
+    // if (comment.img_path === '') {
+    //   setUploadVisible(true);
+    // } else {
+    //   setUploadVisible(false);
+    //   form.setFieldsValue({ image: comment.img_path });
+    // }
+    // console.log(form.getFieldValue());
+    setUploadVisible(true);
   }, [comment]);
 
   const props = {
-    action: '????????',
-    listType: 'text',
+    action: 'https://api.cloudinary.com/v1_1/dvomptrje/image/upload',
+    data: { upload_preset: 'jslenlim' },
+    listType: 'picture',
+    maxCount: 1,
     onChange(info) {
       if (info.file.status === 'uploading') {
         setUploadVisible(false);
@@ -40,22 +48,25 @@ const EditModal = ({
       }
     },
     onRemove() {
-      form.resetFields(['image']);
+      form.setFieldsValue({ image: '' });
       setUploadVisible(true);
     },
   };
 
   const handleUpdate = (value) => {
-    if (value.image) {
+    console.log('value', value);
+    const { star, content, image } = value;
+    if (img_path === '') {
       updateComment({
-        star: value.star,
-        content: value.content,
-        img_path: value.image.file.response.result,
+        star,
+        content,
+        img_path: image === '' ? '' : image.file.response.url,
       });
     } else {
       updateComment({
-        star: value.star,
-        content: value.content,
+        star,
+        content,
+        img_path: image === '' ? '' : image,
       });
     }
     setIsModalVisible(false);
@@ -63,8 +74,16 @@ const EditModal = ({
 
   const handleCancel = () => {
     setIsModalVisible(false);
-    form.setFieldsValue({ star: comment.star, content: comment.content });
-    setSelectedStars(Array.from({ length: comment.star }, (v, i) => i + 1));
+    form.setFieldsValue({
+      star,
+      content,
+      image: img_path || '',
+    });
+  };
+
+  const onImageRemove = () => {
+    form.setFieldsValue({ image: '' });
+    setUploadVisible(true);
   };
 
   return (
@@ -105,14 +124,20 @@ const EditModal = ({
               },
             ]}
           >
-            <Rating
-              form={form}
-              selectedStars={selectedStars}
-              setSelectedStars={setSelectedStars}
-            />
+            <Rating form={form} />
           </Form.Item>
           <UploadBox>
             <Form.Item name="image">
+              {/* {comment.img_path === '' ? (
+                <Upload {...props} listType="picture" />
+              ) : (
+                <Upload
+                  listType="picture"
+                  defaultFileList={[{ url: comment.img_path }]}
+                  onRemove={onImageRemove}
+                />
+              )} */}
+
               <Upload {...props}>
                 {uploadVisible && <CameraIcon icon={faCamera} size="2x" />}
               </Upload>
