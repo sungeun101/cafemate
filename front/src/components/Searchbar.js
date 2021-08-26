@@ -2,7 +2,7 @@ import '../styles/Searchbar.css';
 import React from 'react';
 import { Link } from 'react-router-dom'
 import Address from './Address'
-import { Form, Input, Button, Tag, Slider, Rate } from 'antd';
+import { Form, Input, Button, Tag, Slider, Rate, Radio } from 'antd';
 
 const { CheckableTag } = Tag;
 
@@ -29,13 +29,22 @@ const tagsData = {
 }
 
 const marks = {
-    0: "1.0",
-    50: "3.0",
-    100: "5.0"
-};
+    0: "0.0",
+    33: "4.0",
+    66: "6.0",
+    100: "ALL"
+}
 
 function formatter(val) {
-    return `${1000 + (40 * val)}원`
+    if (val <= 33){
+        return "4천원 이하"
+    }
+    if (val > 33 && val <= 66){
+        return "6천원 이하"
+    }
+    if (val > 66) {
+        return "모든 가격"
+    }
 }
 
 function Searchbar(props) {
@@ -47,7 +56,7 @@ function Searchbar(props) {
     }
 
     const sliderChange = (value) => {
-        setPrice(value);
+        setPrice(value)
     }
 
     const rateChange = (value) => {
