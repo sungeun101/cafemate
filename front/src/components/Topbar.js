@@ -28,6 +28,8 @@ function Topbar(props) {
     const logoutSuccess = (res) => {
         console.log("Logout success!")
         setGoogleId(null)
+        setGoogleName(null)
+        setGoogleImg(null)
         props.history.push('/')
     }
     const logoutFailure = (res) => {
@@ -77,7 +79,7 @@ function Topbar(props) {
                 <>
                 <span id="userName">{googleName}</span>
                 <Popover placement="bottomRight" content={logoutPopover}>
-                    <Avatar src={googleImg} />
+                    <Avatar size="small" src={googleImg} />
                 </Popover>
                 </>
                 :
