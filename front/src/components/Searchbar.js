@@ -100,7 +100,7 @@ function Searchbar(props) {
             </Form.Item>
             <Form.Item>
                 <Link to='/search'>
-                    <Button>검색</Button>
+                    <Button className="searchButton">검색</Button>
                 </Link>
             </Form.Item>
         </Form>
