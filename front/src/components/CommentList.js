@@ -14,6 +14,7 @@ import {
   MoreBtn,
   RightBox,
   StyledButton,
+  ImageContainer,
   StyledImage,
   StyledList,
 } from './CommentList.style.js';
@@ -135,7 +136,9 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
               </Info>
 
               <ContentsContainer>
-                {comment.img_path && <StyledImage src={comment.img_path} />}
+                <ImageContainer>
+                  {comment.img_path && <StyledImage src={comment.img_path} />}
+                </ImageContainer>
                 <Content
                   className={comment.id === moreId && showAllContents && 'open'}
                 >

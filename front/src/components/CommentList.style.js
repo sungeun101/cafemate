@@ -46,12 +46,15 @@ export const StyledButton = styled(Button)`
 export const ContentsContainer = styled.div`
   display: flex;
   gap: 1rem;
-  /* flex-wrap: wrap; */
   margin-top: 0.5rem;
   padding: 0 1rem;
   position: relative;
 `;
+export const ImageContainer = styled.div`
+  height: 6.5rem;
+`;
 export const StyledImage = styled(Image)`
+  height: 6.5rem;
   width: 10.9rem;
 `;
 export const Content = styled.div`
