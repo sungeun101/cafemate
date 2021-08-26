@@ -44,7 +44,7 @@ function Topbar(props) {
             onSuccess={loginSuccess}
             onFailure={loginFailure}
             render={renderProps => (
-                <List.Item onClick={renderProps.onClick}>
+                <List.Item onClick={() => renderProps.onClick()}>
                     <Button>Sign in with Google</Button>
                 </List.Item>
             )}
@@ -63,7 +63,7 @@ function Topbar(props) {
                 onFailure={logoutFailure}
                 buttonText="Logout"
                 render={renderProps => (
-                    <List.Item onClick={renderProps.onClick}>
+                    <List.Item onClick={() => renderProps.onClick()}>
                         <Button>Log out</Button>
                     </List.Item>
                 )}
