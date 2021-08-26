@@ -40,7 +40,7 @@ function Topbar(props) {
             onFailure={loginFailure}
             render={renderProps => (
                 <List.Item onClick={renderProps.onClick}>
-                    <Button>Sign in with Google</Button>
+                    <Button className="blackButton">Sign in with Google</Button>
                 </List.Item>
             )}
         />
@@ -50,7 +50,7 @@ function Topbar(props) {
     const logoutPopover = (
         <List>
             <List.Item>
-                <Button onClick={() => props.history.push("/my")}>My page</Button>
+                <Button className="blackButton" onClick={() => props.history.push("/my")}>My page</Button>
             </List.Item>
             <GoogleLogout
                 clientId={GOOGLE_KEY}
@@ -59,7 +59,7 @@ function Topbar(props) {
                 buttonText="Logout"
                 render={renderProps => (
                     <List.Item onClick={renderProps.onClick}>
-                        <Button>Log out</Button>
+                        <Button className="blackButton">Log out</Button>
                     </List.Item>
                 )}
             />
