@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CafesRepository extends JpaRepository<Cafes, Integer> {
+public interface CafesRepository extends JpaRepository<Cafes, Long> {
     List<Cafes> findAllByDong(String dong);
 }
 

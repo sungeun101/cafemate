@@ -1,5 +1,6 @@
 package cafemate.back.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -48,6 +49,15 @@ public class Cafes {
     private boolean parking;
 
     private boolean wifi;
+    @JsonIgnoreProperties({"cafes"})
+    @OneToMany(mappedBy = "cafes")
+    private List<Likes> likeList;
+
+    @Transient
+    private boolean likeState;
+
+    @Transient
+    private Long likesCount;
 
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cafe")
 //    private List<Comments> commentsCafes = new ArrayList<Comments>();
@@ -70,4 +80,13 @@ public class Cafes {
         this.parking = parking;
 
     }
+
+    public void updateLikesCount(Long likesCount){
+        this.likesCount = likesCount;
+    }
+
+    public void updateLikeState(boolean likeState){
+        this.likeState = likeState;
+    }
+
 }
