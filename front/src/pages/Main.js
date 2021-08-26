@@ -15,7 +15,7 @@ function Main() {
   const [googleId, setGoogleId] = useState(null);
 
   const [keyword, setKeyword] = useState('');
-  const [price, setPrice] = useState('');
+  const [price, setPrice] = useState(0);
   const [rate, setRate] = useState(0);
   const [address1, setAddress1] = useState(null);
   const [address2, setAddress2] = useState(null);
