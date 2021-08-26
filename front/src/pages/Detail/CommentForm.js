@@ -18,11 +18,12 @@ const { TextArea } = Input;
 
 const CommentForm = ({ getCafeComments }) => {
   const [uploadVisible, setUploadVisible] = useState(true);
-  const [selectedStars, setSelectedStars] = useState([]);
   // const dispatch = useDispatch();
 
   let { id } = useParams();
+
   const cafe_id = parseInt(id);
+  const user_id = 1;
 
   const [form] = Form.useForm();
 
@@ -53,19 +54,18 @@ const CommentForm = ({ getCafeComments }) => {
         content: value.content,
         img_path: value.image.file.response.url,
         cafe_id,
-        // user_id,
+        user_id,
       });
     } else {
       addComment({
         star: value.star,
         content: value.content,
         cafe_id,
-        // user_id,
+        user_id,
       });
     }
     setUploadVisible(true);
     form.resetFields();
-    setSelectedStars([]);
   };
 
   const addComment = async (value) => {
@@ -92,11 +92,7 @@ const CommentForm = ({ getCafeComments }) => {
             },
           ]}
         >
-          <Rating
-            form={form}
-            selectedStars={selectedStars}
-            setSelectedStars={setSelectedStars}
-          />
+          <Rating form={form} />
         </Form.Item>
         <UploadBox>
           <Form.Item name="image">
@@ -144,7 +140,6 @@ export default CommentForm;
 
 // const CommentForm = () => {
 //   const [uploadVisible, setUploadVisible] = useState(true);
-//   const [selectedStars, setSelectedStars] = useState([]);
 //   const [image, setImage] = useState(null);
 
 //   // const dispatch = useDispatch();
@@ -199,8 +194,6 @@ export default CommentForm;
 //         >
 //           <Rating
 //             form={form}
-//             selectedStars={selectedStars}
-//             setSelectedStars={setSelectedStars}
 //           />
 //         </Form.Item>
 

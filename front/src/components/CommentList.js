@@ -102,8 +102,8 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
                 <LeftBox>
                   <Avatar
                     size="large"
-                    // src={comment.img_path}
-                    // alt={`${comment.name}'s avatar`}
+                    // src={유저 이미지 주소}
+                    // alt={`${유저 이름}'s avatar`}
                   />
                   <AuthorAndTime>
                     <AuthorName>유저네임</AuthorName>
