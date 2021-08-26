@@ -24,9 +24,11 @@ import Reviews from './Reviews';
 import Location from './Location';
 import Tags from './Tags';
 import Heart from './Heart';
+import { commentService } from 'service/comments';
 
 const Detail = () => {
   const [liked, setLiked] = useState(false);
+  const [comments, setComments] = useState([]);
 
   let location = useLocation();
   const cafe = location.state.cafe;
@@ -53,9 +55,23 @@ const Detail = () => {
     }
   };
 
+  useEffect(() => {
+    getCafeComments();
+  }, []);
+
+  const getCafeComments = async () => {
+    try {
+      const res = await commentService.getCommentsByCafeId(cafe.id);
+      console.log('getCafeComments : ', res);
+      setComments(res.data);
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
   return (
     <div>
-      <Gallery cafe={cafe} />
+      <Gallery cafe={cafe} comments={comments} />
 
       <TitleContainer>
         <NameContainer>
@@ -86,7 +102,7 @@ const Detail = () => {
       <FlexContainer>
         <MenuAndReviews>
           <Menu />
-          <Reviews cafe={cafe} />
+          <Reviews comments={comments} getCafeComments={getCafeComments} />
         </MenuAndReviews>
         <LocationAndTags>
           <Location />
