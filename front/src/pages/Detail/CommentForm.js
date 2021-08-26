@@ -47,23 +47,14 @@ const CommentForm = ({ getCafeComments }) => {
   };
 
   const handleSubmit = (value) => {
-    if (value.image) {
-      console.log('value.image', value.image);
-      addComment({
-        star: value.star,
-        content: value.content,
-        img_path: value.image.file.response.url,
-        cafe_id,
-        user_id,
-      });
-    } else {
-      addComment({
-        star: value.star,
-        content: value.content,
-        cafe_id,
-        user_id,
-      });
-    }
+    const { star, content, image } = value;
+    addComment({
+      star: star,
+      content: content,
+      img_path: image ? image.file.response.url : '',
+      cafe_id,
+      user_id,
+    });
     setUploadVisible(true);
     form.resetFields();
   };

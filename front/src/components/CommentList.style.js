@@ -5,7 +5,7 @@ export const StyledList = styled(List)``;
 export const CommentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1.2rem;
+  padding: 1.4rem;
   margin-bottom: 1.5rem;
   border: 1px solid var(--grey-color);
   border-radius: 10px;
@@ -49,9 +49,12 @@ export const ContentsContainer = styled.div`
   margin-top: 0.5rem;
   padding: 0 1rem;
   position: relative;
+  &.open {
+    flex-wrap: wrap;
+  }
 `;
 export const ImageContainer = styled.div`
-  height: 6.5rem;
+  height: 6.7rem;
 `;
 export const StyledImage = styled(Image)`
   height: 6.5rem;
@@ -60,7 +63,7 @@ export const StyledImage = styled(Image)`
 export const Content = styled.div`
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 5;
   overflow: hidden;
   &.open {
     display: block;
@@ -72,7 +75,7 @@ export const Content = styled.div`
 export const MoreBtn = styled.span`
   font-weight: 600;
   position: absolute;
-  bottom: 0;
+  bottom: -2px;
   right: 1rem;
   padding-left: 20px;
   background: linear-gradient(

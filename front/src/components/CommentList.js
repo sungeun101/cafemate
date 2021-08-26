@@ -135,10 +135,14 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
                 </RightBox>
               </Info>
 
-              <ContentsContainer>
-                <ImageContainer>
-                  {comment.img_path && <StyledImage src={comment.img_path} />}
-                </ImageContainer>
+              <ContentsContainer
+                className={comment.id === moreId && showAllContents && 'open'}
+              >
+                {comment.img_path !== '' && (
+                  <ImageContainer>
+                    <StyledImage src={comment.img_path} />
+                  </ImageContainer>
+                )}
                 <Content
                   className={comment.id === moreId && showAllContents && 'open'}
                 >
