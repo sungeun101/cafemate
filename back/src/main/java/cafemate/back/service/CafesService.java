@@ -92,7 +92,8 @@ public class CafesService {
                 } else if (filtering.contains("over")) {
                     i.setPriority(i.getPriority()+1);
                 }
-            }
+            } else {i.setAmericano(Integer.MAX_VALUE);}
+
             // cate, dessert 찾고 우선 순위 매기기
             for (String filter : filterArr) {
                 if (i.getCategory().contains(filter)) {
@@ -113,8 +114,8 @@ public class CafesService {
                     .collect(Collectors.toList());
         }  else {
             return cafesListDto.stream()
-                    .sorted(Comparator.comparingInt(CafesResponseDto::getPriority)
-                            .thenComparingInt(CafesResponseDto::getAmericano).reversed())
+                    .sorted(Comparator.comparingInt(CafesResponseDto::getPriority).reversed()
+                            .thenComparingInt(CafesResponseDto::getAmericano))
                     .map(CafesSearchResponseDto::new)
                     .collect(Collectors.toList());
         }
