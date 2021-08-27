@@ -1,8 +1,9 @@
 import '../styles/Searchbar.css';
-import React from 'react';
-import { Link } from 'react-router-dom'
+import React, {useState} from 'react';
 import Address from './Address'
-import { Form, Input, Button, Tag, Slider, Rate } from 'antd';
+import { Form, Button, Tag, Slider, Rate } from 'antd';
+import { withRouter } from 'react-router-dom';
+import axios from 'axios'
 
 const { CheckableTag } = Tag;
 
@@ -35,27 +36,34 @@ const marks = {
     100: "ALL"
 }
 
-function formatter(val) {
-    if (val <= 33){
+function formatter(value) {
+    if (value <= 33){
         return "4천원 이하"
     }
-    if (val > 33 && val <= 66){
+    if (value > 33 && value <= 66){
         return "6천원 이하"
     }
-    if (val > 66) {
+    if (value > 66) {
         return "모든 가격"
     }
 }
 
 function Searchbar(props) {
-    const { setKeyword, setPrice, setRate, setAddress1, setAddress2, setAddress3, setTags } = props.funcs
-    const { keyword, price, rate, address1, address2, address3, tags } = props.filterData
+    const { setCafeData, setPrice, setRate, setAddress1, setAddress2, setAddress3, setTags } = props.funcs
+    const { price, rate, address1, address2, address3, tags } = props.filterData
 
-    const handleChange = (event) => {
-        setKeyword(event.target.value);
-    }
+    const [americano, setAmericano] = useState("four")
 
     const sliderChange = (value) => {
+        if (value <= 33){
+            setAmericano("four")
+        }
+        if (value > 33 && value <= 66){
+            setAmericano("six")
+        }
+        if (value > 66) {
+            setAmericano("over")
+        }
         setPrice(value)
     }
 
@@ -68,11 +76,17 @@ function Searchbar(props) {
         setTags(nextTags);
     }
 
+    const onSearch = () => {
+        axios.get(`/cafes?dong=${address3}&filtering=${tags},${americano}&sorting=star`)
+        .then(response => {
+            setCafeData(response.data)
+            props.history.push("/search")
+        })
+        .catch(e => console.log(e))
+    }
+
     return (
         <Form>
-            <Form.Item>
-                <Input name="keyword" placeholder="키워드 검색" value={keyword} onChange={handleChange}/>
-            </Form.Item>
             <Address
                 setAddress1={setAddress1}
                 setAddress2={setAddress2}
@@ -99,12 +113,10 @@ function Searchbar(props) {
                 ))}
             </Form.Item>
             <Form.Item>
-                <Link to='/search'>
-                    <Button className="blackButton">검색</Button>
-                </Link>
+                <Button onClick={() => onSearch()} className="blackButton">검색</Button>
             </Form.Item>
         </Form>
     )
 }
 
-export default Searchbar;
+export default withRouter(Searchbar);
