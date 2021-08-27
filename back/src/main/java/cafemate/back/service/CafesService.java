@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
 import javax.swing.text.html.parser.Entity;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,44 +48,62 @@ public class CafesService {
         //3. 필터링 (1,2차) - 우선 순위
         boolean parking = checkFilter(filtering, "parking");
         boolean wifi = checkFilter(filtering, "wifi");
-        //if (parking) subtractFiltering(filtering, "parking");
-        //if (wifi) subtractFiltering(filtering, "wifi");
-
         String[] categoryArr = {"work" , "chat" , "camera" , "roasting" , "clean" , "dessert" };
         String[] dessertArr = {"macaron", "ice", "honey", "cafe", "smoothie", "milktea", "ade", "sandwich", "icedtea", "waffle", "cropple", "scone", "bagel"};
 
+        //4. 필터링 배열로 만들기
+        List<String> filterArr = new ArrayList<>();
+        for ( String cate : categoryArr ) {
+            if (filtering.contains(cate)) {
+                filterArr.add(cate);
+                System.out.println(cate);
+            }
+        }
+        for ( String dessert : dessertArr ) {
+            if (filtering.contains(dessert)) {
+                filterArr.add(dessert);
+                System.out.println(dessert);
+            }
+        }
+//        for (String i : filterArr) { // 필터링 출력
+//            System.out.println(i);
+//        }
+
+        // 5. 객체들의 우선순위 매기기
         for (CafesResponseDto i :cafesListDto) {
+
+            // 주차, 와이파이 불리언 체크
             if(parking==i.isParking()) {
                 i.setPriority(i.getPriority()+1);
             }
             if(wifi==i.isWifi()) {
                 i.setPriority(i.getPriority()+1);
             }
-            if (filtering.contains("four")) {
-                filtering.replace("four", "");
-                if (i.getAmericano()>4000) {
-                    i.setPriority(i.getPriority()+1);
-                }
-            } else if (filtering.contains("six")) {
-                filtering.replace("six", "");
-                if (i.getAmericano()>6000) {
-                    i.setPriority(i.getPriority()+1);
-                }
-            } else if (filtering.contains("over")) {
-                filtering.replace("over", "");
-                i.setPriority(i.getPriority()+1);
-            }
-            for (String cate : categoryArr) {
-                if (filtering.contains(cate)) {
+            //아메리카노 가격 없으면 패스
+            if(i.getAmericano() != 0) {
+                if (filtering.contains("four")) {
+                    if (i.getAmericano()<=4000) {
+                        i.setPriority(i.getPriority()+1);
+                    }
+                } else if (filtering.contains("six")) {
+                    if (i.getAmericano()<=6000) {
+                        i.setPriority(i.getPriority()+1);
+                    }
+                } else if (filtering.contains("over")) {
                     i.setPriority(i.getPriority()+1);
                 }
             }
-            for (String dessert : dessertArr) {
-                if (filtering.contains(dessert)) {
+            // cate, dessert 찾고 우선 순위 매기기
+            for (String filter : filterArr) {
+                if (i.getCategory().contains(filter)) {
+                    i.setPriority(i.getPriority()+1);
+                }
+                if (i.getDessert().contains(filter)) {
                     i.setPriority(i.getPriority()+1);
                 }
             }
         }
+
         // 4. 정렬
         if (sorting.equals("star")) {
             return cafesListDto.stream()
@@ -107,9 +126,9 @@ public class CafesService {
         } else return false;
     }
 
-    public String subtractFiltering (String filtering, String column) {
-        return filtering.replace(column, "");
-    }
+//    public String subtractFiltering (String filtering, String column) {
+//        return filtering.replace(column, "");
+//    }
 
 
     //카페 상세보기
