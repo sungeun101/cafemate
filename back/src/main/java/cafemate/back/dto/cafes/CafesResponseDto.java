@@ -52,7 +52,7 @@ public class CafesResponseDto {
 
         this.americano = cafe.getAmericano();
         this.category = cafe.getCategory();
-        this.dessert = cafe.getAddress();
+        this.dessert = cafe.getDessert();
         this.parking = cafe.isParking();
         this.wifi = cafe.isWifi();
         this.longitude = cafe.getLongitude();
