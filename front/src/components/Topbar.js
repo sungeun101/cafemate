@@ -77,7 +77,6 @@ function Topbar(props) {
             <div className="user">
             {googleId?
                 <>
-                <span id="userName">{googleName}</span>
                 <Popover placement="bottomRight" content={logoutPopover}>
                     <Avatar size="small" src={googleImg} />
                 </Popover>
