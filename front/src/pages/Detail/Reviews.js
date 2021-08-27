@@ -7,7 +7,7 @@ import CommentForm from './CommentForm';
 import { Count, StyledDivider } from './Reviews.style';
 import CommentList from 'components/CommentList';
 
-const Reviews = ({ comments, getCafeComments }) => {
+const Reviews = ({ comments, getCafeComments, userInfo }) => {
   // const dispatch = useDispatch();
 
   // useEffect(() => {
@@ -22,10 +22,18 @@ const Reviews = ({ comments, getCafeComments }) => {
       <h1>
         REVIEWS <Count>({comments ? comments.length : 0})</Count>
       </h1>
-      <Comment content={<CommentForm getCafeComments={getCafeComments} />} />
+      <Comment
+        content={
+          <CommentForm getCafeComments={getCafeComments} userInfo={userInfo} />
+        }
+      />
       {comments.length > 0 && <StyledDivider />}
       {comments && (
-        <CommentList comments={comments} getCafeComments={getCafeComments} />
+        <CommentList
+          comments={comments}
+          getCafeComments={getCafeComments}
+          userInfo={userInfo}
+        />
       )}
     </InfoWrapper>
   );

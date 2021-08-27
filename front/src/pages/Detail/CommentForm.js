@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Input, message, Upload } from 'antd';
 import {
   StyledForm,
   CameraIcon,
   Header,
-  StyledButton,
+  SubmitButton,
   UploadBox,
 } from './CommentForm.style';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
@@ -16,8 +16,16 @@ import Rating from 'components/Rating';
 
 const { TextArea } = Input;
 
-const CommentForm = ({ getCafeComments }) => {
+const CommentForm = ({ getCafeComments, userInfo }) => {
   const [uploadVisible, setUploadVisible] = useState(true);
+  const [userLogin, setUserLogin] = useState(false);
+
+  useEffect(() => {
+    if (userInfo.googleId) {
+      setUserLogin(true);
+    }
+  }, []);
+
   // const dispatch = useDispatch();
 
   let { id } = useParams();
@@ -47,6 +55,10 @@ const CommentForm = ({ getCafeComments }) => {
   };
 
   const handleSubmit = (value) => {
+    if (!userLogin) {
+      message.warning('로그인이 필요합니다.');
+      return;
+    }
     const { star, content, image } = value;
     addComment({
       star: star,
@@ -71,6 +83,13 @@ const CommentForm = ({ getCafeComments }) => {
     message.success('작성되었습니다.');
   };
 
+  const showLoginWarning = () => {
+    if (!userLogin) {
+      message.warning('로그인이 필요합니다.');
+      return;
+    }
+  };
+
   return (
     <StyledForm form={form} onFinish={handleSubmit}>
       <Header>
@@ -87,13 +106,21 @@ const CommentForm = ({ getCafeComments }) => {
         </Form.Item>
         <UploadBox>
           <Form.Item name="image">
-            <Upload {...props}>
-              {uploadVisible && <CameraIcon icon={faCamera} size="2x" />}
-            </Upload>
+            {!userLogin ? (
+              <CameraIcon
+                onClick={showLoginWarning}
+                icon={faCamera}
+                size="2x"
+              />
+            ) : (
+              <Upload {...props}>
+                {uploadVisible && <CameraIcon icon={faCamera} size="2x" />}
+              </Upload>
+            )}
           </Form.Item>
-          <StyledButton type="primary" htmlType="submit">
+          <SubmitButton type="primary" htmlType="submit">
             등록
-          </StyledButton>
+          </SubmitButton>
         </UploadBox>
       </Header>
 
@@ -106,7 +133,12 @@ const CommentForm = ({ getCafeComments }) => {
           },
         ]}
       >
-        <TextArea placeholder="후기를 작성해주세요." rows={4} allowClear />
+        <TextArea
+          placeholder="후기를 작성해주세요."
+          rows={4}
+          allowClear
+          onClick={showLoginWarning}
+        />
       </Form.Item>
     </StyledForm>
   );

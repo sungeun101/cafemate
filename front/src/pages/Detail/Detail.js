@@ -24,13 +24,13 @@ import Location from './Location';
 import Tags from './Tags';
 import Heart from './Heart';
 import { commentService } from 'service/comments';
-
-const Detail = ({ cafe }) => {
+const Detail = ({ cafe, userInfo }) => {
   const [liked, setLiked] = useState(false);
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
     checkLiked();
+    console.log('user', userInfo);
   }, []);
 
   const user_id = 1;
@@ -97,7 +97,11 @@ const Detail = ({ cafe }) => {
       <FlexContainer>
         <MenuAndReviews>
           <Menu />
-          <Reviews comments={comments} getCafeComments={getCafeComments} />
+          <Reviews
+            comments={comments}
+            getCafeComments={getCafeComments}
+            userInfo={userInfo}
+          />
         </MenuAndReviews>
         <LocationAndTags>
           <Location />

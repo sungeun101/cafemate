@@ -1,0 +1,12 @@
+import axios from 'axios';
+// import { baseUrl } from './config';
+const baseUrl = 'http://localhost:4003';
+const endpoint = '/users';
+
+const getUser = (user_id) => {
+  return axios.get(baseUrl + endpoint + '/' + user_id);
+};
+
+export const userService = {
+  getUser,
+};

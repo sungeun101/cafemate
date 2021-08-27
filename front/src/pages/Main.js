@@ -13,10 +13,10 @@ const { Header, Sider } = Layout;
 
 function Main() {
   const [googleId, setGoogleId] = useState(null);
-  const [googleName, setGoogleName] = useState(null)
-  const [googleImg, setGoogleImg] = useState(null)
+  const [googleName, setGoogleName] = useState(null);
+  const [googleImg, setGoogleImg] = useState(null);
 
-  const userInfo = { googleId, googleName, googleImg }
+  const userInfo = { googleId, googleName, googleImg };
 
   const [keyword, setKeyword] = useState('');
   const [price, setPrice] = useState(0);
@@ -61,19 +61,24 @@ function Main() {
   return (
     <Layout>
       <Header>
-        <Topbar userInfo={userInfo} setGoogleId={setGoogleId} setGoogleName={setGoogleName} setGoogleImg={setGoogleImg} />
+        <Topbar
+          userInfo={userInfo}
+          setGoogleId={setGoogleId}
+          setGoogleName={setGoogleName}
+          setGoogleImg={setGoogleImg}
+        />
       </Header>
       <Switch>
         <Route exact path="/detail/:id">
           <Container>
             <GlobalStyle />
-            <Detail cafe={cafe} />
+            <Detail cafe={cafe} userInfo={userInfo} />
           </Container>
         </Route>
         <Route exact path="/my">
           <Container>
             <GlobalStyle />
-            <My />
+            <My userInfo={userInfo} />
           </Container>
         </Route>
         <Route

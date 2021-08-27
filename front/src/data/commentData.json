@@ -6,7 +6,7 @@
       "user_id": 1,
       "content": "좋았어요",
       "star": 4,
-      "created_at": "2021-01-01",
+      "createdAt": "2021-01-01",
       "img_path": "http://res.cloudinary.com/dvomptrje/image/upload/v1629975232/mjvpyqoftkudqq7g3z5h.png"
     },
     {
@@ -15,7 +15,7 @@
       "user_id": 2,
       "content": "별로에요ㅠ",
       "star": 2,
-      "created_at": "2021-08-01",
+      "createdAt": "2021-08-01",
       "img_path": ""
     },
     {
@@ -24,7 +24,7 @@
       "user_id": 2,
       "content": "커피가 맛있어요",
       "star": 5,
-      "created_at": "2021-08-01",
+      "createdAt": "2021-08-01",
       "img_path": ""
     },
     {
@@ -33,6 +33,7 @@
       "cafe_id": 3,
       "user_id": 1,
       "id": 4,
+      "createdAt": "2021-08-01",
       "img_path": ""
     },
     {
@@ -42,7 +43,7 @@
       "cafe_id": 1,
       "id": 5,
       "user_id": 2,
-      "image": "http://res.cloudinary.com/dvomptrje/image/upload/v1629902543/oeli2u0bmtsampvftecf.jpg"
+      "createdAt": "2021-08-01"
     },
     {
       "star": 2,
@@ -50,6 +51,7 @@
       "cafe_id": 1,
       "id": 6,
       "user_id": 2,
+      "createdAt": "2021-08-01",
       "img_path": ""
     },
     {
@@ -58,7 +60,26 @@
       "img_path": "http://res.cloudinary.com/dvomptrje/image/upload/v1629909416/iowpiixmibrnyujxyycs.jpg",
       "cafe_id": 1,
       "id": 7,
+      "createdAt": "2021-08-01",
       "user_id": 2
+    },
+    {
+      "star": 4,
+      "content": "후기",
+      "img_path": "http://res.cloudinary.com/dvomptrje/image/upload/v1630032708/mldvjsvwrlbki1jlh5dh.jpg",
+      "cafe_id": 3,
+      "user_id": 1,
+      "createdAt": "2021-08-01",
+      "id": 8
+    },
+    {
+      "star": 2,
+      "content": ";l",
+      "createdAt": "2021-08-01",
+      "img_path": "",
+      "cafe_id": 1,
+      "user_id": 1,
+      "id": 9
     }
   ]
 }

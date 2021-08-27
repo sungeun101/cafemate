@@ -24,7 +24,12 @@ import Stars from './Stars.js';
 import EditModal from './EditModal';
 import { useLocation } from 'react-router-dom';
 
-const CommentList = ({ comments, getCafeComments, getMyComments }) => {
+const CommentList = ({
+  comments,
+  getCafeComments,
+  getMyComments,
+  userInfo,
+}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editId, setEditId] = useState(undefined);
   const [editComment, setEditComment] = useState({});
@@ -39,6 +44,8 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
     const item = comments.find((comment) => comment.id === editId);
     setEditComment(item);
   }, [isModalVisible]);
+
+  console.log('user', userInfo);
 
   const updateComment = async (value) => {
     console.log('update this : ', value);
@@ -108,7 +115,7 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
                   />
                   <AuthorAndTime>
                     <AuthorName>유저네임</AuthorName>
-                    <Datetime>{comment.created_at}</Datetime>
+                    <Datetime>{comment.createdAt}</Datetime>
                   </AuthorAndTime>
                 </LeftBox>
                 <RightBox>
