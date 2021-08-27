@@ -1,15 +1,15 @@
-import '../styles/Topbar.css'
+import '../styles/Topbar.css';
 import React from 'react';
 import { Avatar, Typography, Popover, List, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { GoogleLogin, GoogleLogout } from 'react-google-login'
-import dotenv from "dotenv";
-import {withRouter} from 'react-router-dom';
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import dotenv from 'dotenv';
+import { withRouter } from 'react-router-dom';
 
-dotenv.config()
-const GOOGLE_KEY = process.env.REACT_APP_GOOGLE_KEY
+dotenv.config();
+const GOOGLE_KEY = process.env.REACT_APP_GOOGLE_KEY;
 
-const {Title} = Typography;
+const { Title } = Typography;
 
 function Topbar(props) {
     const { setGoogleId, setGoogleName, setGoogleImg } = props
@@ -45,7 +45,7 @@ function Topbar(props) {
             onFailure={loginFailure}
             render={renderProps => (
                 <List.Item onClick={() => renderProps.onClick()}>
-                    <Button>Sign in with Google</Button>
+                    <Button className="blackButton">Sign in with Google</Button>
                 </List.Item>
             )}
         />
@@ -55,7 +55,7 @@ function Topbar(props) {
     const logoutPopover = (
         <List>
             <List.Item>
-                <Button onClick={() => props.history.push("/my")}>My page</Button>
+                <Button className="blackButton" onClick={() => props.history.push("/my")}>My page</Button>
             </List.Item>
             <GoogleLogout
                 clientId={GOOGLE_KEY}
@@ -64,7 +64,7 @@ function Topbar(props) {
                 buttonText="Logout"
                 render={renderProps => (
                     <List.Item onClick={() => renderProps.onClick()}>
-                        <Button>Log out</Button>
+                        <Button className="blackButton">Log out</Button>
                     </List.Item>
                 )}
             />

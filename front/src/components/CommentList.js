@@ -7,11 +7,15 @@ import {
   BtnContainer,
   CommentContainer,
   Content,
+  ContentsContainer,
   Datetime,
   Info,
   LeftBox,
+  MoreBtn,
   RightBox,
   StyledButton,
+  ImageContainer,
+  StyledImage,
   StyledList,
 } from './CommentList.style.js';
 import Stars from './Stars.js';
@@ -24,6 +28,8 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editId, setEditId] = useState(undefined);
   const [editComment, setEditComment] = useState({});
+  const [showAllContents, setShowAllContents] = useState(false);
+  const [moreId, setMoreId] = useState(undefined);
 
   let location = useLocation();
 
@@ -71,6 +77,11 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
     setIsModalVisible(true);
   };
 
+  const onMoreBtnClick = (comment) => {
+    setShowAllContents(true);
+    setMoreId(comment.id);
+  };
+
   return (
     <>
       {editComment && (
@@ -87,13 +98,13 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
           dataSource={comments}
           itemLayout="horizontal"
           renderItem={(comment) => (
-            <CommentContainer>
+            <CommentContainer key={comment.id}>
               <Info>
                 <LeftBox>
                   <Avatar
                     size="large"
-                    // src={comment.img_path}
-                    // alt={`${comment.name}'s avatar`}
+                    // src={유저 이미지 주소}
+                    // alt={`${유저 이름}'s avatar`}
                   />
                   <AuthorAndTime>
                     <AuthorName>유저네임</AuthorName>
@@ -124,7 +135,30 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
                 </RightBox>
               </Info>
 
-              <Content>{comment.content}</Content>
+              <ContentsContainer
+                className={comment.id === moreId && showAllContents && 'open'}
+              >
+                {comment.img_path !== '' && (
+                  <ImageContainer>
+                    <StyledImage src={comment.img_path} />
+                  </ImageContainer>
+                )}
+                <Content
+                  className={comment.id === moreId && showAllContents && 'open'}
+                >
+                  {comment.content}
+                </Content>
+                {comment.content.length > 300 && (
+                  <MoreBtn
+                    className={
+                      comment.id === moreId && showAllContents && 'open'
+                    }
+                    onClick={() => onMoreBtnClick(comment)}
+                  >
+                    ...더보기
+                  </MoreBtn>
+                )}
+              </ContentsContainer>
             </CommentContainer>
           )}
         />

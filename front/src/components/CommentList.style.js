@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { List, Button } from 'antd';
+import { List, Button, Image } from 'antd';
 
 export const StyledList = styled(List)``;
 export const CommentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1.2rem;
+  padding: 1.4rem;
   margin-bottom: 1.5rem;
   border: 1px solid var(--grey-color);
   border-radius: 10px;
@@ -31,9 +31,6 @@ export const AuthorName = styled.div`
 export const Datetime = styled.div`
   font-size: 0.8rem;
 `;
-export const Content = styled.div`
-  margin-top: 0.5rem;
-`;
 export const RightBox = styled.div`
   margin-top: 0.6rem;
   display: flex;
@@ -44,5 +41,51 @@ export const BtnContainer = styled.div``;
 export const StyledButton = styled(Button)`
   &:last-child {
     margin-left: 0.4rem;
+  }
+`;
+export const ContentsContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  padding: 0 1rem;
+  position: relative;
+  &.open {
+    flex-wrap: wrap;
+  }
+`;
+export const ImageContainer = styled.div`
+  height: 6.7rem;
+`;
+export const StyledImage = styled(Image)`
+  height: 6.5rem;
+  width: 10.9rem;
+`;
+export const Content = styled.div`
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+  &.open {
+    display: block;
+    overflow: auto;
+    -webkit-line-clamp: unset;
+  }
+`;
+
+export const MoreBtn = styled.span`
+  font-weight: 600;
+  position: absolute;
+  bottom: -2px;
+  right: 1rem;
+  padding-left: 20px;
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 1) 17%
+  );
+  cursor: pointer;
+  &.open {
+    display: none;
   }
 `;

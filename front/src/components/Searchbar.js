@@ -6,16 +6,45 @@ import { Form, Input, Button, Tag, Slider, Rate } from 'antd';
 
 const { CheckableTag } = Tag;
 
-const tagsData = ["디저트가 있는","빙수","마카롱","케이크","허니브레드","와이파이","과제하기 좋은","주차가능","수다 떨기 좋은","깔끔한","로스팅","사진 찍기 좋은"];
+const tagsData = {
+    "마카롱": "macaron",
+    "빙수": "ice",
+    "와플": "waffle",
+    "허니브레드": "honey",
+    "케이크": "cake",
+    "스무디": "smoothie",
+    "밀크티": "milktea",
+    "스콘": "scone",
+    "에이드": "ade",
+    "아이스티": "icedtea",
+    "크로플": "cropple",
+    "과제하기 좋은": "work",
+    "베이글": "bagel",
+    "수다떨기 좋은": "chat",
+    "사진찍기 좋은": "camera",
+    "깔끔한": "clean",
+    "샌드위치": "sandwich",
+    "디저트가 있는": "dessert",
+    "로스팅 직접 하는": "roasting",
+}
 
 const marks = {
-    0: "1.0",
-    50: "3.0",
-    100: "5.0"
-};
+    0: "0.0",
+    33: "4.0",
+    66: "6.0",
+    100: "ALL"
+}
 
 function formatter(val) {
-    return `${1000 + (40 * val)}원`
+    if (val <= 33){
+        return "4천원 이하"
+    }
+    if (val > 33 && val <= 66){
+        return "6천원 이하"
+    }
+    if (val > 66) {
+        return "모든 가격"
+    }
 }
 
 function Searchbar(props) {
@@ -27,7 +56,7 @@ function Searchbar(props) {
     }
 
     const sliderChange = (value) => {
-        setPrice(value);
+        setPrice(value)
     }
 
     const rateChange = (value) => {
@@ -59,11 +88,11 @@ function Searchbar(props) {
                 <Rate allowHalf onChange={rateChange} value={rate}/>
             </Form.Item>
             <Form.Item>
-                {tagsData.map(tag => (
+                {Object.keys(tagsData).map(tag => (
                     <CheckableTag
-                        key={tag}
-                        checked={tags.indexOf(tag) > -1}
-                        onChange={checked => tagChange(tag, checked)}
+                        key={tagsData[tag]}
+                        checked={tags.indexOf(tagsData[tag]) > -1}
+                        onChange={checked => tagChange(tagsData[tag], checked)}
                     >
                         {tag}
                     </CheckableTag>
@@ -71,7 +100,7 @@ function Searchbar(props) {
             </Form.Item>
             <Form.Item>
                 <Link to='/search'>
-                    <Button>검색</Button>
+                    <Button className="blackButton">검색</Button>
                 </Link>
             </Form.Item>
         </Form>

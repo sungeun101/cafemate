@@ -38,7 +38,7 @@ const MyCafes = () => {
     setLoading(true);
     try {
       const res = await likesService.getLikedByUserId(user_id);
-      console.log('getLikes result : ', res.data);
+      // console.log('getLikes result : ', res.data);
       setLikes(res.data);
     } catch (e) {
       console.log(e.messgae);
@@ -52,7 +52,7 @@ const MyCafes = () => {
     for await (const obj of likes) {
       // const res = await cafeService.getCafesById(obj.cafe_id);
       const res = await cafeService.getCafesById(obj.id);
-      console.log('getCafes result : ', res);
+      // console.log('getCafes result : ', res);
       resArr.push(res.data);
     }
     setMyCafes(resArr);
@@ -60,13 +60,14 @@ const MyCafes = () => {
   };
 
   const onClick = (cafe) => {
-    // history.push({
-    //   pathname: `/detail/${cafe.id}`,
-    //   state: { cafe },
-    // });
+    history.push({
+      pathname: `/detail/${cafe.id}`,
+      state: { cafe },
+    });
   };
 
-  const RemoveFromLikes = async (cafe) => {
+  const RemoveFromLikes = async (cafe, e) => {
+    e.stopPropagation();
     try {
       const res = await likesService.cancelLike({
         //   cafe_id: cafe.id,
@@ -92,7 +93,7 @@ const MyCafes = () => {
     <CafeContainer>
       {myCafes.map((cafe) => (
         <StyledCard
-          onClick={() => onClick(cafe)}
+          onClick={(e) => onClick(cafe, e)}
           key={cafe.id}
           hoverable
           cover={<Cover alt={cafe.name} src={cafe.img_path} />}
@@ -105,7 +106,7 @@ const MyCafes = () => {
                 <HeartContainer>
                   <HeartIcon
                     icon={faHeart}
-                    onClick={() => RemoveFromLikes(cafe)}
+                    onClick={(e) => RemoveFromLikes(cafe, e)}
                   />
                 </HeartContainer>
               </Description>

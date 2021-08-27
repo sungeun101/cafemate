@@ -4,17 +4,17 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 
 const Stars = ({ star, size }) => {
-  const coloredStar = Array.from({ length: star });
-  const emptyStar = Array.from({ length: 5 - coloredStar.length });
+  const starArr = Array.from({ length: 5 }, (v, i) => i + 1);
 
   return (
     <StarContainer>
-      {coloredStar.map((count, i) => {
-        return <StarIcon key={i} icon={faStar} size={size || '2x'} />;
-      })}
-      {emptyStar.map((count, i) => {
-        return <StarIcon key={i} icon={farStar} size={size || '2x'} />;
-      })}
+      {starArr.map((starNum) => (
+        <StarIcon
+          key={starNum}
+          icon={starArr.indexOf(starNum) < star ? faStar : farStar}
+          size={size || '2x'}
+        />
+      ))}
     </StarContainer>
   );
 };
