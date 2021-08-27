@@ -3,10 +3,11 @@ import axios from 'axios';
 const baseUrl = 'http://localhost:4003';
 const endpoint = '/users';
 
-const getUser = (user_id) => {
-  return axios.get(baseUrl + endpoint + '/' + user_id);
+const getUserById = (user_id) => {
+  // return axios.get(`${baseUrl}${endpoint}/${user_id}`);
+  return axios.get(`${baseUrl}${endpoint}?id=${user_id}`);
 };
 
 export const userService = {
-  getUser,
+  getUserById,
 };

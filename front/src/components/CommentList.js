@@ -23,18 +23,21 @@ import Stars from './Stars.js';
 // import { getComment } from 'redux/ducks/comment';
 import EditModal from './EditModal';
 import { useLocation } from 'react-router-dom';
+import { userService } from 'service/users.js';
 
 const CommentList = ({
   comments,
   getCafeComments,
   getMyComments,
   userInfo,
+  userLogin,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editId, setEditId] = useState(undefined);
   const [editComment, setEditComment] = useState({});
   const [showAllContents, setShowAllContents] = useState(false);
   const [moreId, setMoreId] = useState(undefined);
+  const [commentsWithAuthor, setCommentsWithAuthor] = useState([]);
 
   let location = useLocation();
 
@@ -45,13 +48,15 @@ const CommentList = ({
     setEditComment(item);
   }, [isModalVisible]);
 
-  console.log('user', userInfo);
+  useEffect(() => {
+    getCommentAuthor();
+  }, [comments]);
 
   const updateComment = async (value) => {
     console.log('update this : ', value);
     try {
       const res = await commentService.updateComment(editComment.id, value);
-      console.log('update comment : ', res.data);
+      console.log('update comment result : ', res.data);
     } catch (e) {
       console.log(e.message);
     }
@@ -89,6 +94,24 @@ const CommentList = ({
     setMoreId(comment.id);
   };
 
+  const getCommentAuthor = async () => {
+    try {
+      let newComments = [];
+      for (let i = 0; i < comments.length; i++) {
+        const res = await userService.getUserById(comments[i].user_id);
+        const authorObj = {
+          authorName: res.data[0].name,
+          authorImage: res.data[0].img_path,
+        };
+        newComments.push({ ...comments[i], ...authorObj });
+      }
+      const sorted = newComments.reverse();
+      setCommentsWithAuthor(sorted);
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
   return (
     <>
       {editComment && (
@@ -102,7 +125,7 @@ const CommentList = ({
 
       {comments.length > 0 && (
         <StyledList
-          dataSource={comments}
+          dataSource={commentsWithAuthor}
           itemLayout="horizontal"
           renderItem={(comment) => (
             <CommentContainer key={comment.id}>
@@ -110,35 +133,37 @@ const CommentList = ({
                 <LeftBox>
                   <Avatar
                     size="large"
-                    // src={유저 이미지 주소}
-                    // alt={`${유저 이름}'s avatar`}
+                    src={comment.authorImage}
+                    alt={`${comment.authorName}'s avatar`}
                   />
                   <AuthorAndTime>
-                    <AuthorName>유저네임</AuthorName>
+                    <AuthorName>{comment.authorName}</AuthorName>
                     <Datetime>{comment.createdAt}</Datetime>
                   </AuthorAndTime>
                 </LeftBox>
                 <RightBox>
                   <Stars star={comment.star} size="sm" />
-                  <BtnContainer>
-                    <StyledButton
-                      type="text"
-                      size="small"
-                      onClick={() => onUpdateClick(comment)}
-                    >
-                      수정
-                    </StyledButton>
-                    <Popconfirm
-                      title="삭제할까요?"
-                      onConfirm={() => deleteComment(comment.id)}
-                      okText="Yes"
-                      cancelText="No"
-                    >
-                      <StyledButton type="text" size="small">
-                        삭제
+                  {userLogin && userInfo.googleId === comment.user_id && (
+                    <BtnContainer>
+                      <StyledButton
+                        type="text"
+                        size="small"
+                        onClick={() => onUpdateClick(comment)}
+                      >
+                        수정
                       </StyledButton>
-                    </Popconfirm>
-                  </BtnContainer>
+                      <Popconfirm
+                        title="삭제할까요?"
+                        onConfirm={() => deleteComment(comment.id)}
+                        okText="Yes"
+                        cancelText="No"
+                      >
+                        <StyledButton type="text" size="small">
+                          삭제
+                        </StyledButton>
+                      </Popconfirm>
+                    </BtnContainer>
+                  )}
                 </RightBox>
               </Info>
 

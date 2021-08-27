@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { getComment } from 'redux/ducks/comment';
 import { Comment } from 'antd';
@@ -8,6 +8,15 @@ import { Count, StyledDivider } from './Reviews.style';
 import CommentList from 'components/CommentList';
 
 const Reviews = ({ comments, getCafeComments, userInfo }) => {
+  const [userLogin, setUserLogin] = useState(false);
+
+  useEffect(() => {
+    if (userInfo.googleId) {
+      setUserLogin(true);
+    }
+  }, [userInfo]);
+  console.log('로그인했나요', userLogin);
+
   // const dispatch = useDispatch();
 
   // useEffect(() => {
@@ -24,7 +33,11 @@ const Reviews = ({ comments, getCafeComments, userInfo }) => {
       </h1>
       <Comment
         content={
-          <CommentForm getCafeComments={getCafeComments} userInfo={userInfo} />
+          <CommentForm
+            getCafeComments={getCafeComments}
+            userInfo={userInfo}
+            userLogin={userLogin}
+          />
         }
       />
       {comments.length > 0 && <StyledDivider />}
@@ -33,6 +46,7 @@ const Reviews = ({ comments, getCafeComments, userInfo }) => {
           comments={comments}
           getCafeComments={getCafeComments}
           userInfo={userInfo}
+          userLogin={userLogin}
         />
       )}
     </InfoWrapper>

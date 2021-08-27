@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Form, Input, message, Upload } from 'antd';
 import {
   StyledForm,
@@ -16,24 +16,18 @@ import Rating from 'components/Rating';
 
 const { TextArea } = Input;
 
-const CommentForm = ({ getCafeComments, userInfo }) => {
+const CommentForm = ({ getCafeComments, userInfo, userLogin }) => {
   const [uploadVisible, setUploadVisible] = useState(true);
-  const [userLogin, setUserLogin] = useState(false);
-
-  useEffect(() => {
-    if (userInfo.googleId) {
-      setUserLogin(true);
-    }
-  }, []);
 
   // const dispatch = useDispatch();
 
   let { id } = useParams();
 
   const cafe_id = parseInt(id);
-  const user_id = 1;
 
   const [form] = Form.useForm();
+
+  const user_id = 3;
 
   const props = {
     action: 'https://api.cloudinary.com/v1_1/dvomptrje/image/upload',
@@ -61,11 +55,11 @@ const CommentForm = ({ getCafeComments, userInfo }) => {
     }
     const { star, content, image } = value;
     addComment({
-      star: star,
-      content: content,
-      img_path: image ? image.file.response.url : '',
       cafe_id,
       user_id,
+      content: content,
+      img_path: image ? image.file.response.url : '',
+      star: star,
     });
     setUploadVisible(true);
     form.resetFields();
