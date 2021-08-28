@@ -17,7 +17,6 @@ function Results(props){
     const [loading, setLoading] = useState(false)
 
     const setMap = (data) => {
-        console.log(data)
         const container = document.getElementById("map");
         const options = {
             center: new kakao.maps.LatLng(data[0].latitude, data[0].longitude),
@@ -115,6 +114,13 @@ function Results(props){
         });
     };
 
+    const changeSort = (type) => {
+        const {dong, tags} = params
+        props.history.push({
+            pathname: `/search/${dong}/${tags}/${type}`
+        })
+    } 
+
     return (
         <Row>
             <Col span={24}>
@@ -126,7 +132,7 @@ function Results(props){
             </Col>
             <Col span={24}>
             <div className="sort">
-                <Select defaultValue="star">
+                <Select defaultValue="star" onChange={changeSort}>
                     <Option value="star">별점순</Option>
                     <Option value="price">가격순</Option>
                 </Select>
