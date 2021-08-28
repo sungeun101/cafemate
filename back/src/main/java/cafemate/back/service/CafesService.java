@@ -15,14 +15,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
-import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
-import org.qlrm.mapper.JpaResultMapper;
-import javax.persistence.Query;
 
 @Service
 @Transactional
@@ -160,12 +157,12 @@ public class CafesService {
     //myPageLikesList
     public Page<LikesListDto> getLikesCafe(Long sessionId, Pageable pageable){
         StringBuffer sb = new StringBuffer();
-        sb.append("SELECT c.id, c.name, c.img_path ");//likesState long을 boolean으로, //count와 상태 넣어야함
+        sb.append("SELECT c.cafe_id, c.name, c.img_path ");//likesState long을 boolean으로, //count와 상태 넣어야함
         sb.append("FROM likes l, cafes c ");
-        sb.append("WHERE l.cafe_id = c.id ");
-        sb.append("AND c.id IN (SELECT c.id FROM likes l, cafes c WHERE l.user_id = ? AND c.id = l.cafe_id) ");
-        sb.append("GROUP BY c.id ");
-        sb.append("ORDER BY c.id");
+        sb.append("WHERE l.cafe_id = c.cafe_id ");
+        sb.append("AND c.cafe_id IN (SELECT c.cafe_id FROM likes l, cafes c WHERE l.user_id = ? AND c.cafe_id = l.cafe_id) ");
+        sb.append("GROUP BY c.cafe_id ");
+        sb.append("ORDER BY c.cafe_id");
 
         //쿼리완성
         Query query = em.createNativeQuery(sb.toString()).setParameter(1, sessionId);

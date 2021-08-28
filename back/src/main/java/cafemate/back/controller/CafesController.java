@@ -2,6 +2,7 @@ package cafemate.back.controller;
 
 import cafemate.back.domain.Users;
 import cafemate.back.dto.cafes.CafesSearchResponseDto;
+import cafemate.back.dto.users.UsersResponseDto;
 import cafemate.back.service.CafesService;
 import cafemate.back.service.LikesService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,18 +33,18 @@ public class CafesController {
 
 
     @GetMapping("/cafes/{cafe_id}")//카페 상세보기
-    public ResponseEntity<?> cafeDetail(@PathVariable("cafe_id") Long cafeId, @AuthenticationPrincipal Users user){
+    public ResponseEntity<?> cafeDetail(@PathVariable("cafe_id") Long cafeId, @AuthenticationPrincipal UsersResponseDto user){
         System.out.println("cafe : "+cafeId);
         System.out.println("user : "+user.getId());
         return new ResponseEntity<>(cafesService.getCafeDetail(cafeId, user.getId()), HttpStatus.OK);
     }
     //
     @PostMapping("/cafes/{cafe_id}/likes")//좋아요 클릭
-    public ResponseEntity<?> likes(@PathVariable("cafe_id") Long cafeId , @AuthenticationPrincipal Users user){
+    public ResponseEntity<?> likes(@PathVariable("cafe_id") Long cafeId , @RequestBody @Validated UsersResponseDto user){
         System.out.println("좋아요 들어오는지");
         System.out.println("cafeId : "+cafeId);
         System.out.println("userId : "+user.getId());
-//        likesService.likes(authentication.get, cafeId);
+        likesService.likes(user.getId(), cafeId);
 
         System.out.println("좋아요 : ");
         return new ResponseEntity<>("좋아요 성공",HttpStatus.OK);

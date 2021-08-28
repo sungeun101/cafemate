@@ -1,5 +1,6 @@
+import axios from "axios";
 import '../styles/Main.css';
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Topbar from '../components/Topbar';
 import Searchbar from '../components/Searchbar';
@@ -57,7 +58,16 @@ function Main() {
     star: 5,
     menu: '아메리카노(HOT, ICE):3,500/카페민트:4,500/딸기라떼:5,500/민트초코라떼:5,000',
   };
-
+  useEffect(() => {
+    axios.get("/cafes?dong=삼양동&filtering=dessert&sorting=star").then(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  });
   return (
     <Layout>
       <Header>
