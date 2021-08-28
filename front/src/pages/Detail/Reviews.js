@@ -10,12 +10,13 @@ import CommentList from 'components/CommentList';
 const Reviews = ({ comments, getCafeComments, userInfo }) => {
   const [userLogin, setUserLogin] = useState(false);
 
+  console.log('comments', comments);
+
   useEffect(() => {
     if (userInfo.googleId) {
       setUserLogin(true);
     }
   }, [userInfo]);
-  console.log('로그인했나요', userLogin);
 
   // const dispatch = useDispatch();
 

@@ -57,6 +57,7 @@ const CommentList = ({
     try {
       const res = await commentService.updateComment(editComment.id, value);
       console.log('update comment result : ', res.data);
+      message.success('수정되었습니다.');
     } catch (e) {
       console.log(e.message);
     }
@@ -66,12 +67,12 @@ const CommentList = ({
     } else {
       getCafeComments();
     }
-    message.success('수정되었습니다.');
   };
 
   const deleteComment = async (id) => {
     try {
       await commentService.removeComment(id);
+      message.success('삭제되었습니다.');
     } catch (e) {
       console.log(e.message);
     }
@@ -81,7 +82,6 @@ const CommentList = ({
     } else {
       getCafeComments();
     }
-    message.success('삭제되었습니다.');
   };
 
   const onUpdateClick = (comment) => {
@@ -99,9 +99,10 @@ const CommentList = ({
       let newComments = [];
       for (let i = 0; i < comments.length; i++) {
         const res = await userService.getUserById(comments[i].user_id);
+        // console.log('getCommentAuthor : ', res);
         const authorObj = {
-          authorName: res.data[0].name,
-          authorImage: res.data[0].img_path,
+          authorName: res.data.name,
+          authorImage: res.data.img_path,
         };
         newComments.push({ ...comments[i], ...authorObj });
       }

@@ -22,7 +22,6 @@ const CommentForm = ({ getCafeComments, userInfo, userLogin }) => {
   // const dispatch = useDispatch();
 
   let { id } = useParams();
-
   const cafe_id = parseInt(id);
 
   const [form] = Form.useForm();
@@ -69,12 +68,12 @@ const CommentForm = ({ getCafeComments, userInfo, userLogin }) => {
     try {
       const res = await commentService.addComment(value);
       console.log('post comment result : ', res);
+      message.success('작성되었습니다.');
     } catch (e) {
       console.log(e.message);
     }
     // dispatch(getComment());
     getCafeComments();
-    message.success('작성되었습니다.');
   };
 
   const showLoginWarning = () => {
