@@ -16,7 +16,10 @@ function Topbar(props) {
     const { googleId, googleName, googleImg } = props.userInfo
 
     const loginSuccess = (res) => {
-        console.log("Login success!")
+        window.localStorage.setItem('googleId', res.googleId)
+        window.localStorage.setItem('googleName', res.profileObj.givenName)
+        window.localStorage.setItem('googleImg', res.profileObj.imageUrl)
+        window.localStorage.setItem('googleEmail', res.profileObj.email)
         setGoogleId(res.googleId)
         setGoogleName(res.profileObj.givenName)
         setGoogleImg(res.profileObj.imageUrl)
@@ -25,8 +28,11 @@ function Topbar(props) {
         console.log("Failed to log in.")
     }
 
-    const logoutSuccess = (res) => {
-        console.log("Logout success!")
+    const logoutSuccess = () => {
+        window.localStorage.removeItem('googleId')
+        window.localStorage.removeItem('googleName')
+        window.localStorage.removeItem('googleImg')
+        window.localStorage.removeItem('googleEmail')
         setGoogleId(null)
         setGoogleName(null)
         setGoogleImg(null)

@@ -1,5 +1,5 @@
 import '../styles/Main.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Topbar from '../components/Topbar';
 import Searchbar from '../components/Searchbar';
@@ -12,11 +12,17 @@ import GlobalStyle, { Container } from '../globalStyles';
 const { Header, Sider } = Layout;
 
 function Main() {
-  const [googleId, setGoogleId] = useState(null);
-  const [googleName, setGoogleName] = useState(null)
-  const [googleImg, setGoogleImg] = useState(null)
+  const [googleId, setGoogleId] = useState(window.localStorage.getItem('googleId'));
+  const [googleName, setGoogleName] = useState(window.localStorage.getItem('googleName'))
+  const [googleImg, setGoogleImg] = useState(window.localStorage.getItem('googleImg'))
 
   const userInfo = { googleId, googleName, googleImg }
+  
+  useEffect(() => {
+    setGoogleId(window.localStorage.getItem('googleId'))
+    setGoogleName(window.localStorage.getItem('googleName'))
+    setGoogleImg(window.localStorage.getItem('googleImg'))
+  }, [googleId, googleName, googleImg])
 
   const [cafeData, setCafeData] = useState([])
 
