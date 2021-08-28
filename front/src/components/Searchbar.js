@@ -2,8 +2,7 @@ import '../styles/Searchbar.css';
 import React, {useState} from 'react';
 import Address from './Address'
 import { Form, Button, Tag, Slider, Rate } from 'antd';
-import { withRouter } from 'react-router-dom';
-import axios from 'axios'
+import { withRouter, Link } from 'react-router-dom';
 
 const { CheckableTag } = Tag;
 
@@ -49,7 +48,7 @@ function formatter(value) {
 }
 
 function Searchbar(props) {
-    const { setCafeData, setPrice, setRate, setAddress1, setAddress2, setAddress3, setTags } = props.funcs
+    const { setPrice, setRate, setAddress1, setAddress2, setAddress3, setTags } = props.funcs
     const { price, rate, address1, address2, address3, tags } = props.filterData
 
     const [americano, setAmericano] = useState("four")
@@ -74,15 +73,6 @@ function Searchbar(props) {
     const tagChange = (tag, checked) => {
         const nextTags = checked ? [...tags, tag] : tags.filter(t => t !== tag);
         setTags(nextTags);
-    }
-
-    const onSearch = () => {
-        axios.get(`/cafes?dong=${address3}&filtering=${tags},${americano}&sorting=star`)
-        .then(response => {
-            setCafeData(response.data)
-            props.history.push("/search")
-        })
-        .catch(e => console.log(e))
     }
 
     return (
@@ -113,7 +103,9 @@ function Searchbar(props) {
                 ))}
             </Form.Item>
             <Form.Item>
-                <Button onClick={() => onSearch()} className="blackButton">검색</Button>
+                <Link to={`/search/${address3}/${tags.concat(americano).join(",")}/star`}>
+                    <Button className="blackButton">검색</Button>
+                </Link>
             </Form.Item>
         </Form>
     )

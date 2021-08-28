@@ -4,11 +4,10 @@ import MapContainer from './MapContainer'
 import Results from './Results'
 
 function Content(props){
-    const {cafeData} = props
     return (
         <Switch>
             <Route path='/' exact render={() => <MapContainer />} />
-            <Route path='/search/:dong/:filtering/:sorting' render={() => <Results cafeData={cafeData} />} />
+            <Route path={'/search/:dong/:tags/:sort'} render={() => <Results />} />
         </Switch>
     )
 }
