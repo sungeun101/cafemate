@@ -8,7 +8,7 @@ function Content(props){
     return (
         <Switch>
             <Route path='/' exact render={() => <MapContainer />} />
-            <Route path='/search' render={() => <Results cafeData={cafeData} />} />
+            <Route path='/search/:dong/:filtering/:sorting' render={() => <Results cafeData={cafeData} />} />
         </Switch>
     )
 }
