@@ -1,7 +1,7 @@
 import '../styles/Searchbar.css';
 import React, {useState} from 'react';
 import Address from './Address'
-import { Form, Button, Tag, Slider, Rate } from 'antd';
+import { Form, Button, Tag, Slider, Rate, message } from 'antd';
 import { withRouter, Link } from 'react-router-dom';
 
 const { CheckableTag } = Tag;
@@ -77,6 +77,10 @@ function Searchbar(props) {
         setTags(nextTags);
     }
 
+    const showError = () => {
+        message.error("주소를 선택하세요.")
+    }
+
     return (
         <Form>
             <Address
@@ -105,9 +109,13 @@ function Searchbar(props) {
                 ))}
             </Form.Item>
             <Form.Item>
-                <Link to={`/search/${address3}/${tags.concat(americano).join(",")}/star`}>
-                    <Button className="blackButton">검색</Button>
-                </Link>
+                {address3 ? 
+                    <Link to={`/search/${address3}/${tags.concat(americano).join(",")}/star`}>
+                        <Button className="blackButton">검색</Button>
+                    </Link>
+                    :
+                    <Button onClick={showError} className="blackButton">검색</Button>
+                }
             </Form.Item>
         </Form>
     )
