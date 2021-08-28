@@ -7,8 +7,8 @@ function MapContainer(){
     useEffect(() => {
         const container = document.getElementById("map");
         const options = {
-            center: new kakao.maps.LatLng(37.496472, 127.028333),
-            level: 3
+            center: new kakao.maps.LatLng(33.361425, 126.529418),
+            level: 9
         };
         if (navigator.geolocation){
             navigator.geolocation.getCurrentPosition(function(position){

@@ -19,7 +19,8 @@ function Main() {
 
   const userInfo = { googleId, googleName, googleImg }
 
-  const [keyword, setKeyword] = useState('');
+  const [cafeData, setCafeData] = useState([])
+
   const [price, setPrice] = useState(0);
   const [rate, setRate] = useState(0);
   const [address1, setAddress1] = useState(null);
@@ -28,7 +29,7 @@ function Main() {
   const [tags, setTags] = useState([]);
 
   const funcs = {
-    setKeyword,
+    setCafeData,
     setPrice,
     setRate,
     setAddress1,
@@ -37,7 +38,6 @@ function Main() {
     setTags,
   };
   const filterData = {
-    keyword,
     price,
     rate,
     address1,
@@ -93,7 +93,7 @@ function Main() {
               <Sider>
                 <Searchbar funcs={funcs} filterData={filterData} />
               </Sider>
-              <Content filterData={filterData} />
+              <Content cafeData={cafeData} />
             </Layout>
           )}
         />
