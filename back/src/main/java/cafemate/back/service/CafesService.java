@@ -104,7 +104,7 @@ public class CafesService {
 
         // 4. 정렬
         if (sorting.equals("star")) {
-            return cafesListDto.stream()
+            return  cafesListDto.stream()
                     .sorted(Comparator.comparingInt(CafesResponseDto::getPriority)
                             .thenComparingInt(CafesResponseDto::getStarInt).reversed())
                     .map(CafesSearchResponseDto::new)
@@ -130,7 +130,7 @@ public class CafesService {
 
 
     //카페 상세보기
-    public CafeDetailInfoDto getCafeDetail(Long cafeId, Long sessionId){
+    public CafeDetailInfoDto getCafeDetail(Long cafeId, String sessionId){
         CafeDetailInfoDto cafeDetailInfoDto = new CafeDetailInfoDto();
         cafeDetailInfoDto.setId(cafeId);
 
@@ -148,14 +148,14 @@ public class CafesService {
         cafeDetailInfoDto.setWifi(cafe.isWifi());
         cafeDetailInfoDto.setLikesCount(cafe.getLikeList().size());//카페 좋아요 갯수
         cafe.getLikeList().forEach(likes -> {
-            if(likes.getUsers().getId() == sessionId) cafeDetailInfoDto.setLikeState(true);//로그인한 아이디가 체크하였는지 확인
+            if(likes.getUsers().getId().equals(sessionId) ) cafeDetailInfoDto.setLikeState(true);//로그인한 아이디가 체크하였는지 확인
         });
 
         return cafeDetailInfoDto;
     }
 
     //myPageLikesList
-    public Page<LikesListDto> getLikesCafe(Long sessionId, Pageable pageable){
+    public Page<LikesListDto> getLikesCafe(String sessionId, Pageable pageable){
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT c.cafe_id, c.name, c.img_path ");//likesState long을 boolean으로, //count와 상태 넣어야함
         sb.append("FROM likes l, cafes c ");

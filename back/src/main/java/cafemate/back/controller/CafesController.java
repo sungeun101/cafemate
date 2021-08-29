@@ -6,6 +6,7 @@ import cafemate.back.dto.users.UsersResponseDto;
 import cafemate.back.service.CafesService;
 import cafemate.back.service.LikesService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -26,9 +27,9 @@ public class CafesController {
     // 메인페이지 검색, 다중 필터
     @GetMapping("/cafes")
     public ResponseEntity<List<CafesSearchResponseDto>> getCafes(@RequestParam(value = "sorting") String sorting,
-                                                @RequestParam(value = "dong") String dong,
-                                                @RequestParam(value = "filtering") String filtering) {
-        return new ResponseEntity<>(cafesService.getCafesList(sorting,dong, filtering), HttpStatus.OK);
+                                                                 @RequestParam(value = "dong") String dong,
+                                                                 @RequestParam(value = "filtering") String filtering) {
+        return new ResponseEntity<>(cafesService.getCafesList(sorting,dong, filtering ), HttpStatus.OK);
     }
 
 
