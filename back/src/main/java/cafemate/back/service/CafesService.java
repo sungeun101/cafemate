@@ -47,19 +47,19 @@ public class CafesService {
         boolean wifi = checkFilter(filtering, "wifi");
         String[] categoryArr = {"work" , "chat" , "camera" , "roasting" , "clean" , "dessert" };
         String[] dessertArr = {"macaron", "ice", "honey", "cafe", "smoothie", "milktea", "ade", "sandwich", "icedtea", "waffle", "cropple", "scone", "bagel"};
+        String[] starArr = {"1" ,"1.5",  "2" , "2.5" , "3" , "3.5" , "4" , "4.5" , "5" };
+
 
         //4. 필터링 배열로 만들기
         List<String> filterArr = new ArrayList<>();
         for ( String cate : categoryArr ) {
             if (filtering.contains(cate)) {
                 filterArr.add(cate);
-                System.out.println(cate);
             }
         }
         for ( String dessert : dessertArr ) {
             if (filtering.contains(dessert)) {
                 filterArr.add(dessert);
-                System.out.println(dessert);
             }
         }
 //        for (String i : filterArr) { // 필터링 출력
@@ -100,11 +100,21 @@ public class CafesService {
                     i.setPriority(i.getPriority()+1);
                 }
             }
+
+            // 별점 체크
+            for (String star : starArr) {
+                if (filtering.contains(star)) {
+                    float starFloat = Float.parseFloat(star);
+                    if(i.getStar() >= starFloat) {
+                        i.setPriority(i.getPriority()+1);
+                    }
+                }
+            }
         }
 
         // 4. 정렬
         if (sorting.equals("star")) {
-            return cafesListDto.stream()
+            return  cafesListDto.stream()
                     .sorted(Comparator.comparingInt(CafesResponseDto::getPriority)
                             .thenComparingInt(CafesResponseDto::getStarInt).reversed())
                     .map(CafesSearchResponseDto::new)
@@ -130,7 +140,7 @@ public class CafesService {
 
 
     //카페 상세보기
-    public CafeDetailInfoDto getCafeDetail(Long cafeId, Long sessionId){
+    public CafeDetailInfoDto getCafeDetail(Long cafeId, String sessionId){
         CafeDetailInfoDto cafeDetailInfoDto = new CafeDetailInfoDto();
         cafeDetailInfoDto.setId(cafeId);
 
@@ -148,14 +158,14 @@ public class CafesService {
         cafeDetailInfoDto.setWifi(cafe.isWifi());
         cafeDetailInfoDto.setLikesCount(cafe.getLikeList().size());//카페 좋아요 갯수
         cafe.getLikeList().forEach(likes -> {
-            if(likes.getUsers().getId() == sessionId) cafeDetailInfoDto.setLikeState(true);//로그인한 아이디가 체크하였는지 확인
+            if(likes.getUsers().getId().equals(sessionId) ) cafeDetailInfoDto.setLikeState(true);//로그인한 아이디가 체크하였는지 확인
         });
 
         return cafeDetailInfoDto;
     }
 
     //myPageLikesList
-    public Page<LikesListDto> getLikesCafe(Long sessionId, Pageable pageable){
+    public Page<LikesListDto> getLikesCafe(String sessionId, Pageable pageable){
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT c.cafe_id, c.name, c.img_path ");//likesState long을 boolean으로, //count와 상태 넣어야함
         sb.append("FROM likes l, cafes c ");

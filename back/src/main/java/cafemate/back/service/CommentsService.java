@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
@@ -76,7 +77,7 @@ public class CommentsService {
 
     //R 유저 리뷰 조회
     @Transactional(readOnly = true)
-    public List<CommentsResponseDto> getCommentsByUserId (Long userId) {
+    public List<CommentsResponseDto> getCommentsByUserId (String userId) {
         Users user = usersRepository.getById(userId);
         List<Comments> commentsList = commentsRepository.findAllByUsersOrderByCreatedAtDesc(user);
         return commentsList.stream().map(CommentsResponseDto::new).collect(Collectors.toList());

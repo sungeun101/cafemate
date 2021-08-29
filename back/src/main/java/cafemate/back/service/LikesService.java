@@ -14,7 +14,7 @@ public class LikesService {
     private final LikesRepository likesRepository;
 
     //좋아요
-    public void likes(Long sessionId, Long cafeId){
+    public void likes(String sessionId, Long cafeId){
         try{
             likesRepository.likes(sessionId,cafeId);
         }catch (Exception e){
@@ -25,7 +25,7 @@ public class LikesService {
     }
 
     //취소
-    public void cancelLikes(Long sessionId, Long cafeId){
+    public void cancelLikes(String sessionId, Long cafeId){
         likesRepository.cancelLikes(sessionId,cafeId);
     }
 

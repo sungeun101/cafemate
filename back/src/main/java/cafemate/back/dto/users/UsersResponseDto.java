@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class UsersResponseDto {
-    private Long id;
+    private String id;
     private String email;
     private String name;
     private String img_path;
