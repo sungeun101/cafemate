@@ -7,16 +7,8 @@ import CommentForm from './CommentForm';
 import { Count, StyledDivider } from './Reviews.style';
 import CommentList from 'components/CommentList';
 
-const Reviews = ({ comments, getCafeComments, userInfo }) => {
-  const [userLogin, setUserLogin] = useState(false);
-
+const Reviews = ({ comments, getCafeComments, userInfo, userLogin }) => {
   console.log('comments', comments);
-
-  useEffect(() => {
-    if (userInfo.googleId) {
-      setUserLogin(true);
-    }
-  }, [userInfo]);
 
   // const dispatch = useDispatch();
 

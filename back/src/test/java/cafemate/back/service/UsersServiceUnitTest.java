@@ -73,7 +73,7 @@ public class UsersServiceUnitTest {
         //given
         when(usersRepository.getById(any())).thenReturn(getStubUser());
         Users comment = usersRepository.getById(any());
-        Long userId = comment.getId();
+        String userId = comment.getId();
 
         //when
         usersRepository.deleteById(userId);

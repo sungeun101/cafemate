@@ -5,7 +5,6 @@ import lombok.*;
 import java.math.BigInteger;
 
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
@@ -16,7 +15,7 @@ public class LikesListDto {
     private String name;
     private String img_path;
 
-    public LikesListDto(BigInteger id, String name, String img_path){
+    public LikesListDto(Long id, String name, String img_path){
         this.id = id.longValue();
         this.name = name;
         this.img_path = img_path;

@@ -1,8 +1,8 @@
 import '../styles/Searchbar.css';
-import React from 'react';
-import { Link } from 'react-router-dom'
+import React, {useState} from 'react';
 import Address from './Address'
-import { Form, Input, Button, Tag, Slider, Rate } from 'antd';
+import { Form, Button, Tag, Slider, Rate, message } from 'antd';
+import { withRouter, Link } from 'react-router-dom';
 
 const { CheckableTag } = Tag;
 
@@ -18,12 +18,14 @@ const tagsData = {
     "에이드": "ade",
     "아이스티": "icedtea",
     "크로플": "cropple",
-    "과제하기 좋은": "work",
+    "샌드위치": "sandwich",
     "베이글": "bagel",
+    "주차가능": "parking",
+    "와이파이": "wifi",
+    "깔끔한": "clean",
+    "과제하기 좋은": "work",
     "수다떨기 좋은": "chat",
     "사진찍기 좋은": "camera",
-    "깔끔한": "clean",
-    "샌드위치": "sandwich",
     "디저트가 있는": "dessert",
     "로스팅 직접 하는": "roasting",
 }
@@ -35,27 +37,35 @@ const marks = {
     100: "ALL"
 }
 
-function formatter(val) {
-    if (val <= 33){
+function formatter(value) {
+    if (value <= 33){
         return "4천원 이하"
     }
-    if (val > 33 && val <= 66){
+    if (value > 33 && value <= 66){
         return "6천원 이하"
     }
-    if (val > 66) {
+    if (value > 66) {
         return "모든 가격"
     }
 }
 
 function Searchbar(props) {
-    const { setKeyword, setPrice, setRate, setAddress1, setAddress2, setAddress3, setTags } = props.funcs
-    const { keyword, price, rate, address1, address2, address3, tags } = props.filterData
+    const { setPrice, setRate, setAddress1, setAddress2, setAddress3, setTags } = props.funcs
+    const { price, rate, address1, address2, address3, tags } = props.filterData
+    console.log(rate)
 
-    const handleChange = (event) => {
-        setKeyword(event.target.value);
-    }
+    const [americano, setAmericano] = useState("four")
 
     const sliderChange = (value) => {
+        if (value <= 33){
+            setAmericano("four")
+        }
+        if (value > 33 && value <= 66){
+            setAmericano("six")
+        }
+        if (value > 66) {
+            setAmericano("over")
+        }
         setPrice(value)
     }
 
@@ -68,11 +78,12 @@ function Searchbar(props) {
         setTags(nextTags);
     }
 
+    const showError = () => {
+        message.error("주소를 선택하세요.")
+    }
+
     return (
         <Form>
-            <Form.Item>
-                <Input name="keyword" placeholder="키워드 검색" value={keyword} onChange={handleChange}/>
-            </Form.Item>
             <Address
                 setAddress1={setAddress1}
                 setAddress2={setAddress2}
@@ -99,12 +110,16 @@ function Searchbar(props) {
                 ))}
             </Form.Item>
             <Form.Item>
-                <Link to='/search'>
-                    <Button className="blackButton">검색</Button>
-                </Link>
+                {address3 ? 
+                    <Link to={`/search/${address3}/${tags.concat(americano).concat(rate).join(",")}/star`}>
+                        <Button className="blackButton">검색</Button>
+                    </Link>
+                    :
+                    <Button onClick={showError} className="blackButton">검색</Button>
+                }
             </Form.Item>
         </Form>
     )
 }
 
-export default Searchbar;
+export default withRouter(Searchbar);

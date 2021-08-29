@@ -7,8 +7,8 @@ const getLikedByUserId = (user_id) => {
   return axios.get(`${endpoint}/users/${user_id}`);
 };
 
-const addLike = (data) => {
-  return axios.post(`${endpoint}/${data.cafe_id}/users`, data);
+const addLike = (cafe_id, data) => {
+  return axios.post(`${endpoint}/${cafe_id}/users`, data);
 };
 
 const cancelLike = (data) => {

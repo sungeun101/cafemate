@@ -11,6 +11,6 @@ public class CommentsRequestDto {
     private String img_path; //file형식
     private float star;
 
-    private Long user_id;
+    private String user_id;
     private Long cafe_id;
 }

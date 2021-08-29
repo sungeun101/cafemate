@@ -24,13 +24,13 @@ public class UsersController {
 
     // R 회원 조회
     @GetMapping("/users/{user-id}")
-    public ResponseEntity<UsersResponseDto> getUser(@PathVariable(value = "user-id") Long userId) {
+    public ResponseEntity<UsersResponseDto> getUser(@PathVariable(value = "user-id") String userId) {
         return new ResponseEntity(usersService.findUser(userId), HttpStatus.OK);
     }
 
     // U 회원 삭제
     @DeleteMapping("/users/{user-id}")
-    public ResponseEntity deleteUser(@PathVariable(value = "user-id") Long userId) {
+    public ResponseEntity deleteUser(@PathVariable(value = "user-id") String userId) {
         usersService.deleteUser(userId);
         return new ResponseEntity(HttpStatus.OK);
     }

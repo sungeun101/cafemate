@@ -64,7 +64,7 @@ public class Cafes {
 
     //@JsonIgnoreProperties({"cafes"})
     @OneToMany(mappedBy = "cafes")
-    private List<Likes> likeList;
+    private List<Likes> likeList = new ArrayList<>();
 
     @OneToMany(mappedBy = "cafes") //fetch = FetchType.LAZY,
     private List<Comments> commentsCafes = new ArrayList<Comments>();

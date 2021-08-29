@@ -5,13 +5,18 @@ import { likesService } from 'service/likes';
 import { HeartIcon } from './Heart.style';
 import { message } from 'antd';
 
-const Heart = ({ likeState, cafe }) => {
-  const [showRedHeart, setShowRedHeart] = useState(likeState);
+const Heart = ({ likeState, cafe, userInfo, userLogin }) => {
+  const [showRedHeart, setShowRedHeart] = useState(
+    userLogin ? likeState : false
+  );
 
-  const user_id = 1;
   console.log('likeState', likeState);
 
   const handleLikes = async () => {
+    if (!userLogin) {
+      message.warning('로그인이 필요합니다.');
+      return;
+    }
     if (likeState) {
       RemoveFromLikes();
     } else {
@@ -21,9 +26,8 @@ const Heart = ({ likeState, cafe }) => {
 
   const AddtoLikes = async () => {
     try {
-      const res = await likesService.addLike({
-        cafe_id: cafe.id,
-        user_id,
+      const res = await likesService.addLike(cafe.id, {
+        user_id: userInfo.id,
       });
       console.log('addLike result : ', res);
       setShowRedHeart((prev) => !prev);
@@ -37,7 +41,7 @@ const Heart = ({ likeState, cafe }) => {
     try {
       const res = await likesService.cancelLike({
         cafe_id: cafe.id,
-        user_id,
+        user_id: userInfo.id,
       });
       console.log('cancelLike result : ', res);
       setShowRedHeart((prev) => !prev);

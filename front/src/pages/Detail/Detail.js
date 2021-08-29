@@ -30,6 +30,13 @@ import { useParams } from 'react-router-dom';
 const Detail = ({ userInfo }) => {
   const [cafe, setCafe] = useState({});
   const [comments, setComments] = useState([]);
+  const [userLogin, setUserLogin] = useState(false);
+
+  useEffect(() => {
+    if (userInfo.googleId) {
+      setUserLogin(true);
+    }
+  }, [userInfo]);
 
   useEffect(() => {
     getCafeDetail();
@@ -61,7 +68,7 @@ const Detail = ({ userInfo }) => {
   const getCafeDetail = async () => {
     try {
       const res = await cafeService.getCafeById(cafe_id);
-      console.log('getCafeDetail : ', res);
+      console.log('get cafe : ', res);
       setCafe(res.data);
     } catch (e) {
       console.log(e.message);
@@ -85,7 +92,12 @@ const Detail = ({ userInfo }) => {
       <TitleContainer>
         <NameContainer>
           <Name>{name}</Name>
-          <Heart likeState={likeState} cafe={cafe} />
+          <Heart
+            likeState={likeState}
+            cafe={cafe}
+            userInfo={userInfo}
+            userLogin={userLogin}
+          />
           <HeartCount>{likesCount > 0 && likesCount}</HeartCount>
         </NameContainer>
         <Stars star={star} />
@@ -116,11 +128,12 @@ const Detail = ({ userInfo }) => {
 
       <FlexContainer>
         <MenuAndReviews>
-          <Menu />
+          <Menu cafe={cafe} />
           <Reviews
             comments={comments}
             getCafeComments={getCafeComments}
             userInfo={userInfo}
+            userLogin={userLogin}
           />
         </MenuAndReviews>
         <LocationAndTags>

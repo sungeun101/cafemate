@@ -36,13 +36,13 @@ export const StarIcon = styled(FontAwesomeIcon)`
 export const InfoList = styled.ul`
   list-style: none;
   display: flex;
-  justify-content: space-between;
   margin-bottom: 3rem;
   @media (max-width: 768px) {
     flex-direction: column;
   }
 `;
 export const InfoItem = styled.li`
+  flex: 1;
   @media (max-width: 768px) {
     margin-bottom: 0.3rem;
     &:last-child {

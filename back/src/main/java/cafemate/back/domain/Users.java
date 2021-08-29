@@ -14,9 +14,9 @@ import java.util.List;
 @Getter
 public class Users {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long id;
+    private String id; //고유키값이 아닌, 구글아이디
 
     @NotNull
     private String name;
@@ -33,7 +33,8 @@ public class Users {
     private List<Likes> likes = new ArrayList<Likes>();
 
     @Builder
-    public Users(String email, String name, String img_path) {
+    public Users(String id, String email, String name, String img_path) {
+        this.id = id;
         this.email = email;
         this.name = name;
         this.img_path = img_path;

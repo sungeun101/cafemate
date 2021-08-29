@@ -1,5 +1,6 @@
+import axios from 'axios';
 import '../styles/Main.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Topbar from '../components/Topbar';
 import Searchbar from '../components/Searchbar';
@@ -12,13 +13,26 @@ import GlobalStyle, { Container } from '../globalStyles';
 const { Header, Sider } = Layout;
 
 function Main() {
-  const [googleId, setGoogleId] = useState(null);
-  const [googleName, setGoogleName] = useState(null);
-  const [googleImg, setGoogleImg] = useState(null);
+  const [googleId, setGoogleId] = useState(
+    window.localStorage.getItem('googleId')
+  );
+  const [googleName, setGoogleName] = useState(
+    window.localStorage.getItem('googleName')
+  );
+  const [googleImg, setGoogleImg] = useState(
+    window.localStorage.getItem('googleImg')
+  );
 
   const userInfo = { googleId, googleName, googleImg };
 
-  const [keyword, setKeyword] = useState('');
+  useEffect(() => {
+    setGoogleId(window.localStorage.getItem('googleId'));
+    setGoogleName(window.localStorage.getItem('googleName'));
+    setGoogleImg(window.localStorage.getItem('googleImg'));
+  }, [googleId, googleName, googleImg]);
+
+  const [cafeData, setCafeData] = useState([]);
+
   const [price, setPrice] = useState(0);
   const [rate, setRate] = useState(0);
   const [address1, setAddress1] = useState(null);
@@ -27,7 +41,7 @@ function Main() {
   const [tags, setTags] = useState([]);
 
   const funcs = {
-    setKeyword,
+    setCafeData,
     setPrice,
     setRate,
     setAddress1,
@@ -36,7 +50,6 @@ function Main() {
     setTags,
   };
   const filterData = {
-    keyword,
     price,
     rate,
     address1,
@@ -44,19 +57,6 @@ function Main() {
     address3,
     tags,
   };
-
-  // const cafe = {
-  //   id: 1,
-  //   name: '카페 일',
-  //   img_path:
-  //     'https://blog.kakaocdn.net/dn/zRTMr/btqW4iEwRTw/fULNvoGxM6kOIkE04dSK9K/img.jpg',
-  //   latitude: 89.584991,
-  //   longitude: 95.18178,
-  //   phone: '010-0000-0000',
-  //   time: '09:00~24:00',
-  //   star: 5,
-  //   menu: '아메리카노(HOT, ICE):3,500/카페민트:4,500/딸기라떼:5,500/민트초코라떼:5,000',
-  // };
 
   return (
     <Layout>
@@ -88,7 +88,7 @@ function Main() {
               <Sider>
                 <Searchbar funcs={funcs} filterData={filterData} />
               </Sider>
-              <Content filterData={filterData} />
+              <Content cafeData={cafeData} />
             </Layout>
           )}
         />
