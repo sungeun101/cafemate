@@ -5,6 +5,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import dotenv from 'dotenv';
 import { withRouter } from 'react-router-dom';
+import axios from 'axios'
 
 dotenv.config();
 const GOOGLE_KEY = process.env.REACT_APP_GOOGLE_KEY;
@@ -16,17 +17,42 @@ function Topbar(props) {
     const { googleId, googleName, googleImg } = props.userInfo
 
     const loginSuccess = (res) => {
-        console.log("Login success!")
-        setGoogleId(res.googleId)
-        setGoogleName(res.profileObj.givenName)
-        setGoogleImg(res.profileObj.imageUrl)
+        const id = res.googleId
+        const {givenName, imageUrl, email} = res.profileObj
+        window.localStorage.setItem('googleId', id)
+        window.localStorage.setItem('googleName', givenName)
+        window.localStorage.setItem('googleImg', imageUrl)
+        window.localStorage.setItem('googleEmail', email)
+        setGoogleId(id)
+        setGoogleName(givenName)
+        setGoogleImg(imageUrl)
+
+        axios.get(`/users/${id}`)
+        .then(res => {
+            console.log("Login success!")
+        }).catch(e => {
+            // 없는 아이디일 경우
+            axios.post('/users', {
+                id: id,
+                name: givenName,
+                email: email,
+                img_path: imageUrl
+            }).then(res => {
+                console.log("Login success!")
+            }).catch(e => {
+                console.log(e)
+            })
+        })
     }
     const loginFailure = (res) => {
         console.log("Failed to log in.")
     }
 
-    const logoutSuccess = (res) => {
-        console.log("Logout success!")
+    const logoutSuccess = () => {
+        window.localStorage.removeItem('googleId')
+        window.localStorage.removeItem('googleName')
+        window.localStorage.removeItem('googleImg')
+        window.localStorage.removeItem('googleEmail')
         setGoogleId(null)
         setGoogleName(null)
         setGoogleImg(null)

@@ -1,6 +1,6 @@
 import axios from "axios";
 import '../styles/Main.css';
-import React, { useState , useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Topbar from '../components/Topbar';
 import Searchbar from '../components/Searchbar';
@@ -13,11 +13,17 @@ import GlobalStyle, { Container } from '../globalStyles';
 const { Header, Sider } = Layout;
 
 function Main() {
-  const [googleId, setGoogleId] = useState(null);
-  const [googleName, setGoogleName] = useState(null)
-  const [googleImg, setGoogleImg] = useState(null)
+  const [googleId, setGoogleId] = useState(window.localStorage.getItem('googleId'));
+  const [googleName, setGoogleName] = useState(window.localStorage.getItem('googleName'))
+  const [googleImg, setGoogleImg] = useState(window.localStorage.getItem('googleImg'))
 
   const userInfo = { googleId, googleName, googleImg }
+  
+  useEffect(() => {
+    setGoogleId(window.localStorage.getItem('googleId'))
+    setGoogleName(window.localStorage.getItem('googleName'))
+    setGoogleImg(window.localStorage.getItem('googleImg'))
+  }, [googleId, googleName, googleImg])
 
   const [cafeData, setCafeData] = useState([])
 
@@ -58,16 +64,7 @@ function Main() {
     star: 5,
     menu: '아메리카노(HOT, ICE):3,500/카페민트:4,500/딸기라떼:5,500/민트초코라떼:5,000',
   };
-  useEffect(() => {
-    axios.get("/cafes?dong=삼양동&filtering=dessert&sorting=star").then(
-      (response) => {
-        console.log(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  });
+
   return (
     <Layout>
       <Header>
