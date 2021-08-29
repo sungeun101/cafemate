@@ -47,19 +47,19 @@ public class CafesService {
         boolean wifi = checkFilter(filtering, "wifi");
         String[] categoryArr = {"work" , "chat" , "camera" , "roasting" , "clean" , "dessert" };
         String[] dessertArr = {"macaron", "ice", "honey", "cafe", "smoothie", "milktea", "ade", "sandwich", "icedtea", "waffle", "cropple", "scone", "bagel"};
+        String[] starArr = {"1" ,"1.5",  "2" , "2.5" , "3" , "3.5" , "4" , "4.5" , "5" };
+
 
         //4. 필터링 배열로 만들기
         List<String> filterArr = new ArrayList<>();
         for ( String cate : categoryArr ) {
             if (filtering.contains(cate)) {
                 filterArr.add(cate);
-                System.out.println(cate);
             }
         }
         for ( String dessert : dessertArr ) {
             if (filtering.contains(dessert)) {
                 filterArr.add(dessert);
-                System.out.println(dessert);
             }
         }
 //        for (String i : filterArr) { // 필터링 출력
@@ -98,6 +98,16 @@ public class CafesService {
                 }
                 if (i.getDessert().contains(filter)) {
                     i.setPriority(i.getPriority()+1);
+                }
+            }
+
+            // 별점 체크
+            for (String star : starArr) {
+                if (filtering.contains(star)) {
+                    float starFloat = Float.parseFloat(star);
+                    if(i.getStar() >= starFloat) {
+                        i.setPriority(i.getPriority()+1);
+                    }
                 }
             }
         }
