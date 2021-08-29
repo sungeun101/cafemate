@@ -16,7 +16,7 @@ public class CommentsResponseDto {
     private LocalDate createdAt;
 
     private Long cafe_id;
-    private Long user_id;
+    private String user_id;
 
     //엔티티를 받으면 DTO로 변환하기
     public CommentsResponseDto(Comments comment){

@@ -26,21 +26,23 @@ function Topbar(props) {
         setGoogleId(id)
         setGoogleName(givenName)
         setGoogleImg(imageUrl)
-        /*
+
         axios.get(`/users/${id}`)
         .then(res => {
-            console.log(res)
-        })
-        axios.post('/users', {
-            id: id,
-            name: givenName,
-            email: email,
-            img_path: imageUrl
-        }).then(res => {
-            console.log(res)
+            console.log("Login success!")
         }).catch(e => {
-            console.log(e)
-        })*/
+            // 없는 아이디일 경우
+            axios.post('/users', {
+                id: id,
+                name: givenName,
+                email: email,
+                img_path: imageUrl
+            }).then(res => {
+                console.log("Login success!")
+            }).catch(e => {
+                console.log(e)
+            })
+        })
     }
     const loginFailure = (res) => {
         console.log("Failed to log in.")

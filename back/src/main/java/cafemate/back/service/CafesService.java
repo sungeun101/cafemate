@@ -15,14 +15,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
-import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
-import org.qlrm.mapper.JpaResultMapper;
-import javax.persistence.Query;
 
 @Service
 @Transactional
@@ -50,19 +47,19 @@ public class CafesService {
         boolean wifi = checkFilter(filtering, "wifi");
         String[] categoryArr = {"work" , "chat" , "camera" , "roasting" , "clean" , "dessert" };
         String[] dessertArr = {"macaron", "ice", "honey", "cafe", "smoothie", "milktea", "ade", "sandwich", "icedtea", "waffle", "cropple", "scone", "bagel"};
+        String[] starArr = {"1" ,"1.5",  "2" , "2.5" , "3" , "3.5" , "4" , "4.5" , "5" };
+
 
         //4. 필터링 배열로 만들기
         List<String> filterArr = new ArrayList<>();
         for ( String cate : categoryArr ) {
             if (filtering.contains(cate)) {
                 filterArr.add(cate);
-                System.out.println(cate);
             }
         }
         for ( String dessert : dessertArr ) {
             if (filtering.contains(dessert)) {
                 filterArr.add(dessert);
-                System.out.println(dessert);
             }
         }
 //        for (String i : filterArr) { // 필터링 출력
@@ -103,11 +100,21 @@ public class CafesService {
                     i.setPriority(i.getPriority()+1);
                 }
             }
+
+            // 별점 체크
+            for (String star : starArr) {
+                if (filtering.contains(star)) {
+                    float starFloat = Float.parseFloat(star);
+                    if(i.getStar() >= starFloat) {
+                        i.setPriority(i.getPriority()+1);
+                    }
+                }
+            }
         }
 
         // 4. 정렬
         if (sorting.equals("star")) {
-            return cafesListDto.stream()
+            return  cafesListDto.stream()
                     .sorted(Comparator.comparingInt(CafesResponseDto::getPriority)
                             .thenComparingInt(CafesResponseDto::getStarInt).reversed())
                     .map(CafesSearchResponseDto::new)
@@ -133,7 +140,7 @@ public class CafesService {
 
 
     //카페 상세보기
-    public CafeDetailInfoDto getCafeDetail(Long cafeId, Long sessionId){
+    public CafeDetailInfoDto getCafeDetail(Long cafeId, String sessionId){
         CafeDetailInfoDto cafeDetailInfoDto = new CafeDetailInfoDto();
         cafeDetailInfoDto.setId(cafeId);
 
@@ -151,21 +158,21 @@ public class CafesService {
         cafeDetailInfoDto.setWifi(cafe.isWifi());
         cafeDetailInfoDto.setLikesCount(cafe.getLikeList().size());//카페 좋아요 갯수
         cafe.getLikeList().forEach(likes -> {
-            if(likes.getUsers().getId() == sessionId) cafeDetailInfoDto.setLikeState(true);//로그인한 아이디가 체크하였는지 확인
+            if(likes.getUsers().getId().equals(sessionId) ) cafeDetailInfoDto.setLikeState(true);//로그인한 아이디가 체크하였는지 확인
         });
 
         return cafeDetailInfoDto;
     }
 
     //myPageLikesList
-    public Page<LikesListDto> getLikesCafe(Long sessionId, Pageable pageable){
+    public Page<LikesListDto> getLikesCafe(String sessionId, Pageable pageable){
         StringBuffer sb = new StringBuffer();
-        sb.append("SELECT c.id, c.name, c.img_path ");//likesState long을 boolean으로, //count와 상태 넣어야함
+        sb.append("SELECT c.cafe_id, c.name, c.img_path ");//likesState long을 boolean으로, //count와 상태 넣어야함
         sb.append("FROM likes l, cafes c ");
-        sb.append("WHERE l.cafe_id = c.id ");
-        sb.append("AND c.id IN (SELECT c.id FROM likes l, cafes c WHERE l.user_id = ? AND c.id = l.cafe_id) ");
-        sb.append("GROUP BY c.id ");
-        sb.append("ORDER BY c.id");
+        sb.append("WHERE l.cafe_id = c.cafe_id ");
+        sb.append("AND c.cafe_id IN (SELECT c.cafe_id FROM likes l, cafes c WHERE l.user_id = ? AND c.cafe_id = l.cafe_id) ");
+        sb.append("GROUP BY c.cafe_id ");
+        sb.append("ORDER BY c.cafe_id");
 
         //쿼리완성
         Query query = em.createNativeQuery(sb.toString()).setParameter(1, sessionId);
