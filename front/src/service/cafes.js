@@ -3,10 +3,10 @@ import axios from 'axios';
 const baseUrl = 'http://localhost:4002';
 const endpoint = '/cafes';
 
-const getCafesById = (cafe_id) => {
-  return axios.get(baseUrl + endpoint + '/' + cafe_id);
+const getCafeById = (cafe_id) => {
+  return axios.get(endpoint + '/' + cafe_id);
 };
 
 export const cafeService = {
-  getCafesById,
+  getCafeById,
 };

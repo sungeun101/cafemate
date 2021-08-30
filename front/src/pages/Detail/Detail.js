@@ -24,39 +24,60 @@ import Location from './Location';
 import Tags from './Tags';
 import Heart from './Heart';
 import { commentService } from 'service/comments';
+import { cafeService } from 'service/cafes';
+import { useParams } from 'react-router-dom';
 
-const Detail = ({ cafe }) => {
-  const [liked, setLiked] = useState(false);
+const Detail = ({ userInfo }) => {
+  const [cafe, setCafe] = useState({});
   const [comments, setComments] = useState([]);
+  const [userLogin, setUserLogin] = useState(false);
 
   useEffect(() => {
-    checkLiked();
+    if (userInfo.googleId) {
+      setUserLogin(true);
+    }
+  }, [userInfo]);
+
+  useEffect(() => {
+    getCafeDetail();
+    getCafeComments();
+    console.log('userInfo', userInfo);
   }, []);
 
-  const user_id = 1;
+  let { id } = useParams();
+  const cafe_id = parseInt(id);
 
-  const checkLiked = async () => {
+  const {
+    name,
+    img_path,
+    address,
+    phone,
+    time,
+    menu,
+    star,
+    cafegory,
+    area,
+    americano,
+    dessert,
+    parking,
+    wifi,
+    likeState,
+    likesCount,
+  } = cafe;
+
+  const getCafeDetail = async () => {
     try {
-      const res = await likesService.getLikedByUserId(user_id);
-      console.log('getLikedByUserId result : ', res.data);
-      if (res.data.length > 0) {
-        const obj = res.data.find((element) => element.cafe_id === cafe.id);
-        if (obj) {
-          setLiked(true);
-        }
-      }
+      const res = await cafeService.getCafeById(cafe_id);
+      console.log('get cafe : ', res);
+      setCafe(res.data);
     } catch (e) {
       console.log(e.message);
     }
   };
 
-  useEffect(() => {
-    getCafeComments();
-  }, []);
-
   const getCafeComments = async () => {
     try {
-      const res = await commentService.getCommentsByCafeId(cafe.id);
+      const res = await commentService.getCommentsByCafeId(id);
       console.log('getCafeComments : ', res);
       setComments(res.data);
     } catch (e) {
@@ -70,34 +91,50 @@ const Detail = ({ cafe }) => {
 
       <TitleContainer>
         <NameContainer>
-          <Name>{cafe.name}</Name>
-          <Heart liked={liked} setLiked={setLiked} cafe={cafe} />
-          <HeartCount>120</HeartCount>
+          <Name>{name}</Name>
+          <Heart
+            likeState={likeState}
+            cafe={cafe}
+            userInfo={userInfo}
+            userLogin={userLogin}
+          />
+          <HeartCount>{likesCount > 0 && likesCount}</HeartCount>
         </NameContainer>
-        <Stars star={cafe.star} />
+        <Stars star={star} />
       </TitleContainer>
 
       <Divider />
 
       <InfoList>
-        <InfoItem>
-          <FontAwesomeIcon icon={faMapMarkerAlt} />
-          <InfoText>{cafe.address}</InfoText>
-        </InfoItem>
-        <InfoItem>
-          <ClockCircleOutlined />
-          <InfoText>{cafe.time}</InfoText>
-        </InfoItem>
-        <InfoItem>
-          <PhoneOutlined />
-          <InfoText>{cafe.phone}</InfoText>
-        </InfoItem>
+        {address && (
+          <InfoItem>
+            <FontAwesomeIcon icon={faMapMarkerAlt} />
+            <InfoText>{address}</InfoText>
+          </InfoItem>
+        )}
+        {time && (
+          <InfoItem>
+            <ClockCircleOutlined />
+            <InfoText>{time}</InfoText>
+          </InfoItem>
+        )}
+        {phone && (
+          <InfoItem>
+            <PhoneOutlined />
+            <InfoText>{phone}</InfoText>
+          </InfoItem>
+        )}
       </InfoList>
 
       <FlexContainer>
         <MenuAndReviews>
-          <Menu />
-          <Reviews comments={comments} getCafeComments={getCafeComments} />
+          <Menu cafe={cafe} />
+          <Reviews
+            comments={comments}
+            getCafeComments={getCafeComments}
+            userInfo={userInfo}
+            userLogin={userLogin}
+          />
         </MenuAndReviews>
         <LocationAndTags>
           <Location />

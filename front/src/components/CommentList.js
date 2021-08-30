@@ -23,13 +23,21 @@ import Stars from './Stars.js';
 // import { getComment } from 'redux/ducks/comment';
 import EditModal from './EditModal';
 import { useLocation } from 'react-router-dom';
+import { userService } from 'service/users.js';
 
-const CommentList = ({ comments, getCafeComments, getMyComments }) => {
+const CommentList = ({
+  comments,
+  getCafeComments,
+  getMyComments,
+  userInfo,
+  userLogin,
+}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editId, setEditId] = useState(undefined);
   const [editComment, setEditComment] = useState({});
   const [showAllContents, setShowAllContents] = useState(false);
   const [moreId, setMoreId] = useState(undefined);
+  const [commentsWithAuthor, setCommentsWithAuthor] = useState([]);
 
   let location = useLocation();
 
@@ -40,11 +48,16 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
     setEditComment(item);
   }, [isModalVisible]);
 
+  useEffect(() => {
+    getCommentAuthor();
+  }, [comments]);
+
   const updateComment = async (value) => {
     console.log('update this : ', value);
     try {
       const res = await commentService.updateComment(editComment.id, value);
-      console.log('update comment : ', res.data);
+      console.log('update comment result : ', res.data);
+      message.success('수정되었습니다.');
     } catch (e) {
       console.log(e.message);
     }
@@ -54,12 +67,12 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
     } else {
       getCafeComments();
     }
-    message.success('수정되었습니다.');
   };
 
   const deleteComment = async (id) => {
     try {
       await commentService.removeComment(id);
+      message.success('삭제되었습니다.');
     } catch (e) {
       console.log(e.message);
     }
@@ -69,7 +82,6 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
     } else {
       getCafeComments();
     }
-    message.success('삭제되었습니다.');
   };
 
   const onUpdateClick = (comment) => {
@@ -80,6 +92,25 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
   const onMoreBtnClick = (comment) => {
     setShowAllContents(true);
     setMoreId(comment.id);
+  };
+
+  const getCommentAuthor = async () => {
+    try {
+      let newComments = [];
+      for (let i = 0; i < comments.length; i++) {
+        const res = await userService.getUserById(comments[i].user_id);
+        // console.log('getCommentAuthor : ', res);
+        const authorObj = {
+          authorName: res.data.name,
+          authorImage: res.data.img_path,
+        };
+        newComments.push({ ...comments[i], ...authorObj });
+      }
+      const sorted = newComments.reverse();
+      setCommentsWithAuthor(sorted);
+    } catch (e) {
+      console.log(e.message);
+    }
   };
 
   return (
@@ -95,7 +126,7 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
 
       {comments.length > 0 && (
         <StyledList
-          dataSource={comments}
+          dataSource={commentsWithAuthor}
           itemLayout="horizontal"
           renderItem={(comment) => (
             <CommentContainer key={comment.id}>
@@ -103,35 +134,37 @@ const CommentList = ({ comments, getCafeComments, getMyComments }) => {
                 <LeftBox>
                   <Avatar
                     size="large"
-                    // src={유저 이미지 주소}
-                    // alt={`${유저 이름}'s avatar`}
+                    src={comment.authorImage}
+                    alt={`${comment.authorName}'s avatar`}
                   />
                   <AuthorAndTime>
-                    <AuthorName>유저네임</AuthorName>
-                    <Datetime>{comment.created_at}</Datetime>
+                    <AuthorName>{comment.authorName}</AuthorName>
+                    <Datetime>{comment.createdAt}</Datetime>
                   </AuthorAndTime>
                 </LeftBox>
                 <RightBox>
                   <Stars star={comment.star} size="sm" />
-                  <BtnContainer>
-                    <StyledButton
-                      type="text"
-                      size="small"
-                      onClick={() => onUpdateClick(comment)}
-                    >
-                      수정
-                    </StyledButton>
-                    <Popconfirm
-                      title="삭제할까요?"
-                      onConfirm={() => deleteComment(comment.id)}
-                      okText="Yes"
-                      cancelText="No"
-                    >
-                      <StyledButton type="text" size="small">
-                        삭제
+                  {userLogin && userInfo.googleId === comment.user_id && (
+                    <BtnContainer>
+                      <StyledButton
+                        type="text"
+                        size="small"
+                        onClick={() => onUpdateClick(comment)}
+                      >
+                        수정
                       </StyledButton>
-                    </Popconfirm>
-                  </BtnContainer>
+                      <Popconfirm
+                        title="삭제할까요?"
+                        onConfirm={() => deleteComment(comment.id)}
+                        okText="Yes"
+                        cancelText="No"
+                      >
+                        <StyledButton type="text" size="small">
+                          삭제
+                        </StyledButton>
+                      </Popconfirm>
+                    </BtnContainer>
+                  )}
                 </RightBox>
               </Info>
 

@@ -23,13 +23,6 @@ const EditModal = ({
 
   useEffect(() => {
     form.setFieldsValue({ star, content, image: img_path });
-    // if (comment.img_path === '') {
-    //   setUploadVisible(true);
-    // } else {
-    //   setUploadVisible(false);
-    //   form.setFieldsValue({ image: comment.img_path });
-    // }
-    // console.log(form.getFieldValue());
     setUploadVisible(true);
   }, [comment]);
 
@@ -81,11 +74,6 @@ const EditModal = ({
     });
   };
 
-  const onImageRemove = () => {
-    form.setFieldsValue({ image: '' });
-    setUploadVisible(true);
-  };
-
   return (
     <Modal
       forceRender
@@ -128,16 +116,6 @@ const EditModal = ({
           </Form.Item>
           <UploadBox>
             <Form.Item name="image">
-              {/* {comment.img_path === '' ? (
-                <Upload {...props} listType="picture" />
-              ) : (
-                <Upload
-                  listType="picture"
-                  defaultFileList={[{ url: comment.img_path }]}
-                  onRemove={onImageRemove}
-                />
-              )} */}
-
               <Upload {...props}>
                 {uploadVisible && <CameraIcon icon={faCamera} size="2x" />}
               </Upload>

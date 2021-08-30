@@ -52,6 +52,7 @@ function formatter(value) {
 function Searchbar(props) {
     const { setPrice, setRate, setAddress1, setAddress2, setAddress3, setTags } = props.funcs
     const { price, rate, address1, address2, address3, tags } = props.filterData
+    console.log(rate)
 
     const [americano, setAmericano] = useState("four")
 
@@ -110,7 +111,7 @@ function Searchbar(props) {
             </Form.Item>
             <Form.Item>
                 {address3 ? 
-                    <Link to={`/search/${address3}/${tags.concat(americano).join(",")}/star`}>
+                    <Link to={`/search/${address3}/${tags.concat(americano).concat(rate).join(",")}/star`}>
                         <Button className="blackButton">검색</Button>
                     </Link>
                     :

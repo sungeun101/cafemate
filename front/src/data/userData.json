@@ -1,0 +1,22 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "유저1",
+      "email": "1@gmail.com",
+      "img_path": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYhFDuLj06zH5Bw3ZYCfP1s3RcpQJvvBtClHeFgTl00JLOFB5pnn-PWXgZ__bH5gf1rYU&usqp=CAU"
+    },
+    {
+      "id": 2,
+      "name": "유저2",
+      "email": "2@gmail.com",
+      "img_path": "https://cdn.pixabay.com/photo/2016/03/31/19/57/avatar-1295406_960_720.png"
+    },
+    {
+      "id": 3,
+      "name": "LightFury",
+      "email": "josungeun1019@gmail.com",
+      "img_path": "https://lh3.googleusercontent.com/a/AATXAJz9AYlH4QMpD4QzdjJPHnw-45qcx1K8ZsjWYDC9=s96-c"
+    }
+  ]
+}

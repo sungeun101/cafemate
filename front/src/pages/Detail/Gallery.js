@@ -13,8 +13,8 @@ const Gallery = ({ cafe, comments }) => {
   const { img_path } = cafe;
 
   const initialState = {
-    original: img_path,
-    thumbnail: img_path,
+    original: `https://${img_path}`,
+    thumbnail: `https://${img_path}`,
     originalHeight,
     thumbnailHeight,
   };
@@ -23,7 +23,7 @@ const Gallery = ({ cafe, comments }) => {
     if (img_path && img_path.length > 0) {
       setImages([initialState]);
     }
-  }, []);
+  }, [cafe]);
 
   useEffect(() => {
     if (comments.length > 0) {
@@ -44,19 +44,19 @@ const Gallery = ({ cafe, comments }) => {
   }, [comments]);
 
   return (
-    <Wrapper
-      onMouseOver={() => setShowNav(true)}
-      onMouseLeave={() => setShowNav(false)}
-    >
-      {images ? (
+    images.length > 0 && (
+      <Wrapper
+        onMouseOver={() => setShowNav(true)}
+        onMouseLeave={() => setShowNav(false)}
+      >
         <ImageGallery
           items={images}
           showNav={showNav}
           showPlayButton={false}
           showThumbnails={images.length === 1 ? false : true}
         />
-      ) : null}
-    </Wrapper>
+      </Wrapper>
+    )
   );
 };
 

@@ -38,7 +38,7 @@ const MyCafes = () => {
     setLoading(true);
     try {
       const res = await likesService.getLikedByUserId(user_id);
-      // console.log('getLikes result : ', res.data);
+      console.log('getLikes result : ', res.data);
       setLikes(res.data);
     } catch (e) {
       console.log(e.messgae);
@@ -50,9 +50,8 @@ const MyCafes = () => {
     setLoading(true);
     let resArr = [];
     for await (const obj of likes) {
-      // const res = await cafeService.getCafesById(obj.cafe_id);
-      const res = await cafeService.getCafesById(obj.id);
-      // console.log('getCafes result : ', res);
+      const res = await cafeService.getCafeById(obj.cafe_id);
+      console.log('getCafe result : ', res);
       resArr.push(res.data);
     }
     setMyCafes(resArr);
@@ -70,7 +69,6 @@ const MyCafes = () => {
     e.stopPropagation();
     try {
       const res = await likesService.cancelLike({
-        //   cafe_id: cafe.id,
         id: cafe.id,
         user_id,
       });

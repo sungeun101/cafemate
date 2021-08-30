@@ -5,7 +5,8 @@ import { StyledTabs } from './My.style';
 import Cafes from './Cafes';
 const { TabPane } = Tabs;
 
-const My = () => {
+const My = ({ userInfo }) => {
+  console.log('user', userInfo);
   return (
     <StyledTabs centered size="large" defaultActiveKey="1">
       <TabPane tab="찜한 카페" key="1">

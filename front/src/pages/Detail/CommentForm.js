@@ -4,7 +4,7 @@ import {
   StyledForm,
   CameraIcon,
   Header,
-  StyledButton,
+  SubmitButton,
   UploadBox,
 } from './CommentForm.style';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
@@ -16,16 +16,17 @@ import Rating from 'components/Rating';
 
 const { TextArea } = Input;
 
-const CommentForm = ({ getCafeComments }) => {
+const CommentForm = ({ getCafeComments, userInfo, userLogin }) => {
   const [uploadVisible, setUploadVisible] = useState(true);
+
   // const dispatch = useDispatch();
 
   let { id } = useParams();
-
   const cafe_id = parseInt(id);
-  const user_id = 1;
 
   const [form] = Form.useForm();
+
+  const user_id = 3;
 
   const props = {
     action: 'https://api.cloudinary.com/v1_1/dvomptrje/image/upload',
@@ -47,13 +48,17 @@ const CommentForm = ({ getCafeComments }) => {
   };
 
   const handleSubmit = (value) => {
+    if (!userLogin) {
+      message.warning('로그인이 필요합니다.');
+      return;
+    }
     const { star, content, image } = value;
     addComment({
-      star: star,
-      content: content,
-      img_path: image ? image.file.response.url : '',
       cafe_id,
       user_id,
+      content: content,
+      img_path: image ? image.file.response.url : '',
+      star: star,
     });
     setUploadVisible(true);
     form.resetFields();
@@ -63,12 +68,19 @@ const CommentForm = ({ getCafeComments }) => {
     try {
       const res = await commentService.addComment(value);
       console.log('post comment result : ', res);
+      message.success('작성되었습니다.');
     } catch (e) {
       console.log(e.message);
     }
     // dispatch(getComment());
     getCafeComments();
-    message.success('작성되었습니다.');
+  };
+
+  const showLoginWarning = () => {
+    if (!userLogin) {
+      message.warning('로그인이 필요합니다.');
+      return;
+    }
   };
 
   return (
@@ -87,13 +99,21 @@ const CommentForm = ({ getCafeComments }) => {
         </Form.Item>
         <UploadBox>
           <Form.Item name="image">
-            <Upload {...props}>
-              {uploadVisible && <CameraIcon icon={faCamera} size="2x" />}
-            </Upload>
+            {!userLogin ? (
+              <CameraIcon
+                onClick={showLoginWarning}
+                icon={faCamera}
+                size="2x"
+              />
+            ) : (
+              <Upload {...props}>
+                {uploadVisible && <CameraIcon icon={faCamera} size="2x" />}
+              </Upload>
+            )}
           </Form.Item>
-          <StyledButton type="primary" htmlType="submit">
+          <SubmitButton type="primary" htmlType="submit">
             등록
-          </StyledButton>
+          </SubmitButton>
         </UploadBox>
       </Header>
 
@@ -106,7 +126,12 @@ const CommentForm = ({ getCafeComments }) => {
           },
         ]}
       >
-        <TextArea placeholder="후기를 작성해주세요." rows={4} allowClear />
+        <TextArea
+          placeholder="후기를 작성해주세요."
+          rows={4}
+          allowClear
+          onClick={showLoginWarning}
+        />
       </Form.Item>
     </StyledForm>
   );

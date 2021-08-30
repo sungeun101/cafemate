@@ -23,7 +23,7 @@ export const CameraIcon = styled(FontAwesomeIcon)`
     color: var(--main-color);
   }
 `;
-export const StyledButton = styled(Button)`
+export const SubmitButton = styled(Button)`
   background-color: var(--black-color);
   border: none;
   margin-left: 1rem;
