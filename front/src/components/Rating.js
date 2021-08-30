@@ -1,23 +1,12 @@
 import React from 'react';
-import { StarIcon } from 'pages/Detail/CommentForm.style';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { Rate } from 'antd';
 
 const Rating = ({ form }) => {
-  const starArr = Array.from({ length: 5 }, (v, i) => i + 1);
-
-  const handleRating = (starNum) => {
-    form.setFieldsValue({ star: starNum });
+  const onChange = (rate) => {
+    form.setFieldsValue({ star: rate });
   };
 
-  return starArr.map((starNum) => (
-    <StarIcon
-      selected={starArr.indexOf(starNum) < form.getFieldsValue().star}
-      key={starNum}
-      icon={faStar}
-      size="2x"
-      onClick={() => handleRating(starNum)}
-    />
-  ));
+  return <Rate allowHalf onChange={onChange} />;
 };
 
 export default Rating;

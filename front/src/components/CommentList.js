@@ -143,7 +143,7 @@ const CommentList = ({
                   </AuthorAndTime>
                 </LeftBox>
                 <RightBox>
-                  <Stars star={comment.star} size="sm" />
+                  <Stars star={comment.star} />
                   {userLogin && userInfo.googleId === comment.user_id && (
                     <BtnContainer>
                       <StyledButton
