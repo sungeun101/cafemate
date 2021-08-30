@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, message, Upload } from 'antd';
+import { Form, Input, message, Rate, Upload } from 'antd';
 import {
   StyledForm,
   CameraIcon,
@@ -12,7 +12,6 @@ import { commentService } from 'service/comments.js';
 // import { getComment } from 'redux/ducks/comment';
 // import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import Rating from 'components/Rating';
 
 const { TextArea } = Input;
 
@@ -25,8 +24,6 @@ const CommentForm = ({ getCafeComments, userInfo, userLogin }) => {
   const cafe_id = parseInt(id);
 
   const [form] = Form.useForm();
-
-  const user_id = 3;
 
   const props = {
     action: 'https://api.cloudinary.com/v1_1/dvomptrje/image/upload',
@@ -55,7 +52,7 @@ const CommentForm = ({ getCafeComments, userInfo, userLogin }) => {
     const { star, content, image } = value;
     addComment({
       cafe_id,
-      user_id,
+      user_id: userInfo.googleId,
       content: content,
       img_path: image ? image.file.response.url : '',
       star: star,
@@ -72,8 +69,7 @@ const CommentForm = ({ getCafeComments, userInfo, userLogin }) => {
     } catch (e) {
       console.log(e.message);
     }
-    // dispatch(getComment());
-    getCafeComments();
+    await getCafeComments();
   };
 
   const showLoginWarning = () => {
@@ -81,6 +77,10 @@ const CommentForm = ({ getCafeComments, userInfo, userLogin }) => {
       message.warning('로그인이 필요합니다.');
       return;
     }
+  };
+
+  const onRateChange = (rate) => {
+    form.setFieldsValue({ star: rate });
   };
 
   return (
@@ -95,7 +95,7 @@ const CommentForm = ({ getCafeComments, userInfo, userLogin }) => {
             },
           ]}
         >
-          <Rating form={form} />
+          <Rate allowHalf onChange={onRateChange} />
         </Form.Item>
         <UploadBox>
           <Form.Item name="image">

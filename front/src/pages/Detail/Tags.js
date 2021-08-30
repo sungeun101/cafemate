@@ -50,7 +50,7 @@ const Tags = ({ cafe }) => {
       tagNames.push('와이파이');
     }
     setTags(tagNames);
-  }, []);
+  }, [cafe]);
 
   return (
     <InfoWrapper>

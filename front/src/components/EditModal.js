@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, message, Upload, Modal, Button } from 'antd';
+import { Form, Input, message, Upload, Modal, Button, Rate } from 'antd';
 import {
   StyledForm,
   CameraIcon,
@@ -7,7 +7,6 @@ import {
   UploadBox,
 } from 'pages/Detail/CommentForm.style';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
-import Rating from './Rating';
 
 const { TextArea } = Input;
 
@@ -47,7 +46,6 @@ const EditModal = ({
   };
 
   const handleUpdate = (value) => {
-    console.log('value', value);
     const { star, content, image } = value;
     if (img_path === '') {
       updateComment({
@@ -72,6 +70,10 @@ const EditModal = ({
       content,
       image: img_path || '',
     });
+  };
+
+  const onRateChange = (rate) => {
+    form.setFieldsValue({ star: rate });
   };
 
   return (
@@ -112,7 +114,7 @@ const EditModal = ({
               },
             ]}
           >
-            <Rating form={form} />
+            <Rate allowHalf onChange={onRateChange} />
           </Form.Item>
           <UploadBox>
             <Form.Item name="image">

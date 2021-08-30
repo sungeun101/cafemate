@@ -26,8 +26,9 @@ const Heart = ({ likeState, cafe, userInfo, userLogin }) => {
 
   const AddtoLikes = async () => {
     try {
-      const res = await likesService.addLike(cafe.id, {
-        user_id: userInfo.id,
+      const res = await likesService.addLike({
+        cafe_id: cafe.id,
+        user_id: userInfo.googleId,
       });
       console.log('addLike result : ', res);
       setShowRedHeart((prev) => !prev);
@@ -41,7 +42,7 @@ const Heart = ({ likeState, cafe, userInfo, userLogin }) => {
     try {
       const res = await likesService.cancelLike({
         cafe_id: cafe.id,
-        user_id: userInfo.id,
+        user_id: userInfo.googleId,
       });
       console.log('cancelLike result : ', res);
       setShowRedHeart((prev) => !prev);

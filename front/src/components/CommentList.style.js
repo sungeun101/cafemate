@@ -32,7 +32,7 @@ export const Datetime = styled.div`
   font-size: 0.8rem;
 `;
 export const RightBox = styled.div`
-  margin-top: 0.6rem;
+  margin-top: 0.8rem;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
