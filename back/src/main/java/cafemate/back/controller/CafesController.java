@@ -46,8 +46,6 @@ public class CafesController {
 
     @GetMapping("/cafes/{cafe_id}")//카페 상세보기
     public ResponseEntity<?> cafeDetail(@PathVariable("cafe_id") Long cafeId, @AuthenticationPrincipal UsersResponseDto user){
-        System.out.println("cafe : "+cafeId);
-        System.out.println("user : "+user.getId());
         return new ResponseEntity<>(cafesService.getCafeDetail(cafeId, user.getId()), HttpStatus.OK);
     }
 
