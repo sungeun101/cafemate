@@ -16,6 +16,6 @@ spring:
     #show-sql: true
     hibernate:
       format_sql : true
-      ddl-auto :  validate # 검증용
+      ddl-auto :  update # validate # 검증용
       # create :쓰면 테이블 초기화 -> 쓰면 데이터 다 사라짐
       # none : 초기화 NO
