@@ -20,8 +20,6 @@ public class LikesService {
         }catch (Exception e){
             throw new RuntimeException("이미 좋아요 하였습니다.");
         }
-
-
     }
 
     //취소

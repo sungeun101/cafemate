@@ -62,9 +62,9 @@ public class Cafes {
     @Transient
     private Long likesCount;
 
-    //@JsonIgnoreProperties({"cafes"})
+    @JsonIgnoreProperties({"cafes"})
     @OneToMany(mappedBy = "cafes")
-    private List<Likes> likeList = new ArrayList<>();
+    private List<Likes> likeList;
 
     @OneToMany(mappedBy = "cafes") //fetch = FetchType.LAZY,
     private List<Comments> commentsCafes = new ArrayList<Comments>();

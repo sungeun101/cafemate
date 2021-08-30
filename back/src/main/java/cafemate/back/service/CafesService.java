@@ -5,6 +5,7 @@ import cafemate.back.dto.cafes.CafeDetailInfoDto;
 import cafemate.back.dto.cafes.CafesResponseDto;
 import cafemate.back.dto.cafes.CafesSearchResponseDto;
 import cafemate.back.dto.likes.LikesListDto;
+import cafemate.back.dto.likes.LikesMyPageDto;
 import cafemate.back.repository.CafesRepository;
 import lombok.RequiredArgsConstructor;
 import org.qlrm.mapper.JpaResultMapper;
@@ -165,7 +166,7 @@ public class CafesService {
     }
 
     //myPageLikesList
-    public Page<LikesListDto> getLikesCafe(String sessionId, Pageable pageable){
+    public Page<LikesMyPageDto> getLikesCafe(String sessionId, Pageable pageable){
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT c.cafe_id, c.name, c.img_path ");//likesState long을 boolean으로, //count와 상태 넣어야함
         sb.append("FROM likes l, cafes c ");
@@ -176,18 +177,20 @@ public class CafesService {
 
         //쿼리완성
         Query query = em.createNativeQuery(sb.toString()).setParameter(1, sessionId);
+        System.out.println("query : "+query);
 
 
         //JPA 쿼리 매핑 - DTO에 매핑
         JpaResultMapper result = new JpaResultMapper();
-        List<LikesListDto> cafeLikesList = result.list(query, LikesListDto.class);
+        List<LikesMyPageDto> cafeLikesList = result.list(query, LikesMyPageDto.class);
+        System.out.println("들어왔음");
 
         int start = (int) pageable.getOffset();
         int end = (start + pageable.getPageSize())>cafeLikesList.size() ? cafeLikesList.size() : (start + pageable.getPageSize());
 
-        if(start > cafeLikesList.size()) return new PageImpl<LikesListDto>(cafeLikesList.subList(0,0),pageable,0);
+        if(start > cafeLikesList.size()) return new PageImpl<LikesMyPageDto>(cafeLikesList.subList(0,0),pageable,0);
 
-        Page<LikesListDto> cafeLikesPage = new PageImpl<>(cafeLikesList.subList(start,end),pageable,cafeLikesList.size());
+        Page<LikesMyPageDto> cafeLikesPage = new PageImpl<>(cafeLikesList.subList(start,end),pageable,cafeLikesList.size());
         return cafeLikesPage;
     }
 
