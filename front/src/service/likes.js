@@ -1,6 +1,5 @@
 import axios from 'axios';
 // import { baseUrl } from './config';
-const baseUrl = 'http://localhost:4001';
 const endpoint = '/likes';
 
 const getLikedByUserId = (user_id) => {

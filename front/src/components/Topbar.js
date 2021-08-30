@@ -31,6 +31,7 @@ function Topbar(props) {
       .get(`/users/${id}`)
       .then((res) => {
         console.log('Login success!');
+        console.log('login get res : ', res);
       })
       .catch((e) => {
         // 없는 아이디일 경우
@@ -43,6 +44,7 @@ function Topbar(props) {
           })
           .then((res) => {
             console.log('Login success!');
+            console.log('login post res : ', res);
           })
           .catch((e) => {
             console.log(e);

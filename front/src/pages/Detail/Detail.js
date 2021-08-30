@@ -16,7 +16,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import Stars from 'components/Stars';
-import { likesService } from 'service/likes';
 import Gallery from './Gallery';
 import Menu from './Menu';
 import Reviews from './Reviews';
@@ -138,7 +137,7 @@ const Detail = ({ userInfo }) => {
         </MenuAndReviews>
         <LocationAndTags>
           <Location />
-          <Tags />
+          <Tags cafe={cafe} />
         </LocationAndTags>
       </FlexContainer>
     </div>
