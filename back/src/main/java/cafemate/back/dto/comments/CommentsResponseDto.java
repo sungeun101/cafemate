@@ -22,7 +22,7 @@ public class CommentsResponseDto {
     public CommentsResponseDto(Comments comment){
         this.id = comment.getId();
         this.content = comment.getContent();
-        this.img_path = comment.getContent();
+        this.img_path = comment.getImg_path();
         this.star = comment.getStar();
         this.createdAt = comment.getCreatedAt();
         this.cafe_id = comment.getCafes().getId();
