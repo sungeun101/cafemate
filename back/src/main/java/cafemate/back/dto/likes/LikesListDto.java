@@ -1,10 +1,10 @@
 package cafemate.back.dto.likes;
 
+import cafemate.back.domain.Likes;
 import lombok.*;
 
 import java.math.BigInteger;
 
-@Builder
 @NoArgsConstructor
 @Setter
 @Getter
@@ -12,12 +12,13 @@ import java.math.BigInteger;
 public class LikesListDto {
 
     private Long id;
-    private String name;
-    private String img_path;
+    private String userId;
+    private Long cafeId;
 
-    public LikesListDto(Long id, String name, String img_path){
-        this.id = id.longValue();
-        this.name = name;
-        this.img_path = img_path;
+
+    public LikesListDto(Likes likes) {
+        this.id = likes.getId();
+        this.userId = likes.getUsers().getId();
+        this.cafeId = likes.getCafes().getId();
     }
 }

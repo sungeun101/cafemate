@@ -1,35 +1,29 @@
 package cafemate.back.domain;
 
+import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
 @Entity
-@Table(name = "likes",
-        uniqueConstraints = {
-                @UniqueConstraint(
-                        name = "likes_uk",
-                        columnNames = {"user_id","cafe_id"}
-                )
-        })
+@NoArgsConstructor
+@Getter
+@Table(name = "likes")
 public class Likes {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "like_id")
     private Long id;
 
-    @JoinColumn(name = "user_id")
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private Users users;
 
-    @JoinColumn(name = "cafe_id")
     @ManyToOne
+    @JoinColumn(name = "cafe_id")
     private Cafes cafes;
 
     @Builder

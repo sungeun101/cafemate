@@ -6,7 +6,6 @@ import cafemate.back.service.CommentsService;
 import cafemate.back.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -22,7 +21,7 @@ public class CommentsController {
 
     // C 리뷰 등록
     @PostMapping("/comments")
-    public ResponseEntity saveComment(@RequestBody  @Validated CommentsRequestDto comment) {
+    public ResponseEntity saveComment(@RequestBody @Validated CommentsRequestDto comment) {
         commentsService.createComment(comment);
         return new ResponseEntity(HttpStatus.OK);
     }

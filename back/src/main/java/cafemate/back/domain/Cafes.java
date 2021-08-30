@@ -63,14 +63,14 @@ public class Cafes {
     private Long likesCount;
 
     //@JsonIgnoreProperties({"cafes"})
-    @OneToMany(mappedBy = "cafes")
-    private List<Likes> likeList = new ArrayList<>();
+//    @OneToMany(mappedBy = "cafes")
+//    private List<Likes> likeList;
 
     @OneToMany(mappedBy = "cafes") //fetch = FetchType.LAZY,
     private List<Comments> commentsCafes = new ArrayList<Comments>();
 
-//    @OneToMany(mappedBy = "cafesLikes") //fetch = FetchType.LAZY,
-//    private List<Comments> commentsLikes = new ArrayList<>();
+    @OneToMany(mappedBy = "cafes") //fetch = FetchType.LAZY,
+    private List<Likes> commentsLikes = new ArrayList<>();
 
     public void updateStar(float newStar){
         int number = commentsCafes.size() +1;
