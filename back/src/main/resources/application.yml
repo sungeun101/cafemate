@@ -7,7 +7,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: cafecafe123
     #url: jdbc:mysql://localhost:3306/cafedb?characterEncoding=UTF-8&serverTimezone=Asia/Seoul # autoReconnect=true #useSSL=false& autoReconnect=true&
-    url : jdbc:mysql://cafedb.csfbpebiara7.ap-northeast-2.rds.amazonaws.com:3306/cafedb
+    url : jdbc:mysql://cafedb.csfbpebiara7.ap-northeast-2.rds.amazonaws.com:3306/cafedb?autoReconnect=true
     username: cafeadmin
   jpa:
     database: mysql
