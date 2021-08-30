@@ -6,12 +6,13 @@ const getLikedByUserId = (user_id) => {
   return axios.get(`${endpoint}/users/${user_id}`);
 };
 
-const addLike = (cafe_id, data) => {
-  return axios.post(`${endpoint}/${cafe_id}/users`, data);
+const addLike = (data) => {
+  console.log('add like data :', data);
+  return axios.post(`${endpoint}/${data.cafe_id}/${data.user_id}`);
 };
 
 const cancelLike = (data) => {
-  return axios.delete(`${endpoint}/users/${data.user_id}/${data.cafe_id}`);
+  return axios.delete(`${endpoint}/${data.cafe_id}/${data.user_id}`);
 };
 
 export const likesService = {

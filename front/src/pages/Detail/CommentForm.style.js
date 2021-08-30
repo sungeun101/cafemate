@@ -8,12 +8,6 @@ export const Header = styled.header`
   display: flex;
   justify-content: space-between;
 `;
-export const StarIcon = styled(FontAwesomeIcon)`
-  cursor: pointer;
-  color: ${(props) =>
-    props.selected ? 'var(--yellow-color)' : 'var(--grey-color)'};
-`;
-
 export const UploadBox = styled.div`
   display: flex;
 `;

@@ -40,7 +40,6 @@ const Detail = ({ userInfo }) => {
   useEffect(() => {
     getCafeDetail();
     getCafeComments();
-    console.log('userInfo', userInfo);
   }, []);
 
   let { id } = useParams();
@@ -77,7 +76,7 @@ const Detail = ({ userInfo }) => {
   const getCafeComments = async () => {
     try {
       const res = await commentService.getCommentsByCafeId(id);
-      console.log('getCafeComments : ', res);
+      console.log('get comments : ', res);
       setComments(res.data);
     } catch (e) {
       console.log(e.message);

@@ -1,20 +1,15 @@
 import React from 'react';
-import { StarContainer, StarIcon } from './Stars.style';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
+import { StarContainer, StyledRate } from './Stars.style';
 
-const Stars = ({ star, size }) => {
-  const starArr = Array.from({ length: 5 }, (v, i) => i + 1);
-
+const Stars = ({ star, small }) => {
   return (
     <StarContainer>
-      {starArr.map((starNum) => (
-        <StarIcon
-          key={starNum}
-          icon={starArr.indexOf(starNum) < star ? faStar : farStar}
-          size={size || '2x'}
-        />
-      ))}
+      <StyledRate
+        small={small}
+        allowHalf
+        disabled
+        defaultValue={Math.round(star * 100) / 100}
+      />
     </StarContainer>
   );
 };
