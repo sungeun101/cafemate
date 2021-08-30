@@ -45,23 +45,7 @@ const Detail = ({ userInfo }) => {
   let { id } = useParams();
   const cafe_id = parseInt(id);
 
-  const {
-    name,
-    img_path,
-    address,
-    phone,
-    time,
-    menu,
-    star,
-    cafegory,
-    area,
-    americano,
-    dessert,
-    parking,
-    wifi,
-    likeState,
-    likesCount,
-  } = cafe;
+  const { name, address, phone, time, star, likeState, likesCount } = cafe;
 
   const getCafeDetail = async () => {
     try {
@@ -135,7 +119,7 @@ const Detail = ({ userInfo }) => {
           />
         </MenuAndReviews>
         <LocationAndTags>
-          <Location />
+          <Location cafe={cafe} />
           <Tags cafe={cafe} />
         </LocationAndTags>
       </FlexContainer>
