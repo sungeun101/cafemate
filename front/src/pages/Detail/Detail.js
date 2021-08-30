@@ -11,6 +11,7 @@ import {
   MenuAndReviews,
   Name,
   NameContainer,
+  SubName,
   TitleContainer,
 } from './Detail.style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -45,7 +46,7 @@ const Detail = ({ userInfo }) => {
   let { id } = useParams();
   const cafe_id = parseInt(id);
 
-  const { name, address, phone, time, star, likeState, likesCount } = cafe;
+  const { name, sub, address, phone, time, star, likeState, likesCount } = cafe;
 
   const getCafeDetail = async () => {
     try {
@@ -73,7 +74,8 @@ const Detail = ({ userInfo }) => {
 
       <TitleContainer>
         <NameContainer>
-          <Name>{name}</Name>
+          <Name>{name}카페이름</Name>
+          {sub && <SubName>{sub}</SubName>}
           <Heart
             likeState={likeState}
             cafe={cafe}
