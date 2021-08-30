@@ -126,18 +126,10 @@ const CommentList = ({
       )}
 
       {comments.length > 0 && (
-        <InfiniteScroll
-          dataLength={comments.length}
-          next={getCafeComments}
-          hasMore={true}
-          loader={<h4>Loading...</h4>}
-          endMessage={
-            <p style={{ textAlign: 'center' }}>
-              <b>Yay! You have seen it all</b>
-            </p>
-          }
-        >
-          {comments.map((comment) => (
+        <StyledList
+          dataSource={commentsWithAuthor}
+          itemLayout="horizontal"
+          renderItem={(comment) => (
             <CommentContainer key={comment.id}>
               <Info>
                 <LeftBox>
@@ -152,7 +144,7 @@ const CommentList = ({
                   </AuthorAndTime>
                 </LeftBox>
                 <RightBox>
-                  <Stars star={comment.star} small="small" />
+                  <Stars star={comment.star} size="sm" />
                   {userLogin && userInfo.googleId === comment.user_id && (
                     <BtnContainer>
                       <StyledButton
@@ -202,88 +194,11 @@ const CommentList = ({
                 )}
               </ContentsContainer>
             </CommentContainer>
-          ))}
-        </InfiniteScroll>
+          )}
+        />
       )}
     </>
   );
 };
 
 export default CommentList;
-
-// <StyledList
-//   dataSource={commentsWithAuthor}
-//   itemLayout="horizontal"
-//   renderItem={(comment) => (
-//     <CommentContainer key={comment.id}>
-//       <Info>
-//         <LeftBox>
-//           <Avatar
-//             size="large"
-//             src={comment.authorImage}
-//             alt={`${comment.authorName}'s avatar`}
-//           />
-//           <AuthorAndTime>
-//             <AuthorName>{comment.authorName}</AuthorName>
-//             <Datetime>{comment.createdAt}</Datetime>
-//           </AuthorAndTime>
-//         </LeftBox>
-//         <RightBox>
-//           <Stars star={comment.star} small="small" />
-//           {userLogin && userInfo.googleId === comment.user_id && (
-//             <BtnContainer>
-//               <StyledButton
-//                 type="text"
-//                 size="small"
-//                 onClick={() => onUpdateClick(comment)}
-//               >
-//                 수정
-//               </StyledButton>
-//               <Popconfirm
-//                 title="삭제할까요?"
-//                 onConfirm={() => deleteComment(comment.id)}
-//                 okText="Yes"
-//                 cancelText="No"
-//               >
-//                 <StyledButton type="text" size="small">
-//                   삭제
-//                 </StyledButton>
-//               </Popconfirm>
-//             </BtnContainer>
-//           )}
-//         </RightBox>
-//       </Info>
-
-//       <ContentsContainer
-//         className={comment.id === moreId && showAllContents && 'open'}
-//       >
-//         {comment.img_path !== '' && (
-//           <ImageContainer>
-//             <StyledImage src={comment.img_path} />
-//           </ImageContainer>
-//         )}
-//         <Content
-//           className={comment.id === moreId && showAllContents && 'open'}
-//         >
-//           {comment.content}
-//         </Content>
-//         {comment.content.length > 300 && (
-//           <MoreBtn
-//             className={
-//               comment.id === moreId && showAllContents && 'open'
-//             }
-//             onClick={() => onMoreBtnClick(comment)}
-//           >
-//             ...더보기
-//           </MoreBtn>
-//         )}
-//       </ContentsContainer>
-//     </CommentContainer>
-//   )}
-// />
-//       )}
-//     </>
-//   );
-// };
-
-// export default CommentList;
