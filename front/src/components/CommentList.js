@@ -78,6 +78,7 @@ const CommentList = ({
       } else {
         await getCafeComments();
       }
+
       message.success('삭제되었습니다.');
     } catch (e) {
       console.log(e.message);

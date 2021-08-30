@@ -29,7 +29,7 @@ public class Users {
     @OneToMany(mappedBy = "users") //fetch = FetchType.LAZY,
     private List<Comments> commentsUsers = new ArrayList<Comments>();
 
-    @OneToMany( mappedBy = "users") //fetch = FetchType.LAZY,
+    @OneToMany( mappedBy = "users")//, fetch = FetchType.LAZY)
     private List<Likes> likes = new ArrayList<Likes>();
 
     @Builder

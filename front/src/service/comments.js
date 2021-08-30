@@ -3,11 +3,11 @@ import axios from 'axios';
 const endpoint = '/comments';
 
 const getCommentsByCafeId = (cafe_id) => {
-  return axios.get(`${endpoint}/${cafe_id}`);
+  return axios.get(`${endpoint}/${cafe_id}/? page=0`);
 };
 
 const getCommentsByUserId = (user_id) => {
-  return axios.get(endpoint + '/users/' + user_id);
+  return axios.get(endpoint + '/users/' + user_id + '/?page=0');
 };
 
 const addComment = (data) => {
