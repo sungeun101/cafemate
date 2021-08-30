@@ -7,7 +7,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: cafecafe123
     #url: jdbc:mysql://localhost:3306/cafedb?characterEncoding=UTF-8&serverTimezone=Asia/Seoul # autoReconnect=true #useSSL=false& autoReconnect=true&
-    url : jdbc:mysql://cafedb.csfbpebiara7.ap-northeast-2.rds.amazonaws.com:3306/cafedb?autoReconnect=true&characterEncoding=UTF-8
+    url : jdbc:mysql://cafedb.csfbpebiara7.ap-northeast-2.rds.amazonaws.com:3306/cafedb?autoReconnect=true # &characterEncoding=UTF-8
     username: cafeadmin
   jpa:
     database: mysql
@@ -16,6 +16,6 @@ spring:
     #show-sql: true
     hibernate:
       format_sql : true
-      ddl-auto :  update # validate # 검증용
+      ddl-auto :  validate # validate # 검증용
       # create :쓰면 테이블 초기화 -> 쓰면 데이터 다 사라짐
       # none : 초기화 NO

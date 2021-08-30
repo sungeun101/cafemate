@@ -145,6 +145,9 @@ public class CafesService {
         cafeDetailInfoDto.setId(cafeId);
 
         Cafes cafe = cafesRepository.findById(cafeId).get();
+        cafeDetailInfoDto.setAddress(cafe.getAddress());
+        cafeDetailInfoDto.setLatitude(cafe.getLatitude());
+        cafeDetailInfoDto.setLongitude(cafe.getLongitude());
         cafeDetailInfoDto.setName(cafe.getName());
         cafeDetailInfoDto.setImg_path(cafe.getImg_path());
         cafeDetailInfoDto.setPhone(cafe.getPhone());

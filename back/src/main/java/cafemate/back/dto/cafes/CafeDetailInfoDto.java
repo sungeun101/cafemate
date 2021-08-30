@@ -17,6 +17,8 @@ public class CafeDetailInfoDto {
     private String time;
     private String menu;
     private float star;
+    private double longitude;
+    private double latitude;
     private String category;
     private int americano;
     private String dessert;
@@ -24,6 +26,8 @@ public class CafeDetailInfoDto {
     private boolean wifi;
     private boolean likeState;
     private long likesCount;
+    private String address;
+
 
     public CafeDetailInfoDto(Cafes cafes){
         this.id = cafes.getId();
@@ -40,6 +44,10 @@ public class CafeDetailInfoDto {
         this.wifi = cafes.isWifi();
         this.likeState = cafes.isLikeState();
         this.likesCount = cafes.getLikesCount();
+        this.address = cafes.getAddress();
+        this.longitude = cafes.getLongitude();
+        this.latitude = cafes.getLatitude();
+
     }
 
 }
