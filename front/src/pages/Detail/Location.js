@@ -5,12 +5,12 @@ import { Map } from './Location.style';
 import { Skeleton } from 'antd';
 
 const Location = ({ cafe, loading }) => {
-  const { longtitude, latitude } = cafe;
+  const { longitude, latitude } = cafe;
 
   useEffect(() => {
     const container = document.getElementById('map');
     const options = {
-      center: new kakao.maps.LatLng(latitude, longtitude),
+      center: new kakao.maps.LatLng(latitude, longitude),
       level: 3,
     };
     const map = new kakao.maps.Map(container, options);
