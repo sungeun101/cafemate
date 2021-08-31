@@ -2,6 +2,7 @@ package cafemate.back.controller;
 
 import cafemate.back.domain.Likes;
 import cafemate.back.domain.Users;
+import cafemate.back.dto.cafes.CafesResponseDto;
 import cafemate.back.dto.cafes.CafesSearchResponseDto;
 import cafemate.back.dto.likes.LikesListDto;
 import cafemate.back.dto.users.UsersResponseDto;
@@ -45,8 +46,11 @@ public class CafesController {
 
 
     @GetMapping("/cafes/{cafe_id}")//카페 상세보기
-    public ResponseEntity<?> cafeDetail(@PathVariable("cafe_id") Long cafeId, @AuthenticationPrincipal UsersResponseDto user){
-        return new ResponseEntity<>(cafesService.getCafeDetail(cafeId, user.getId()), HttpStatus.OK);
+    public ResponseEntity<?> cafeDetail(@PathVariable("cafe_id") Long cafeId){
+
+        CafesResponseDto cafesResponseDto = cafesService.getCafeDetail(cafeId);
+
+        return new ResponseEntity<>(cafesResponseDto, HttpStatus.OK);
     }
 
 }
