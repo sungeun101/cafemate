@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom"
 import MapContainer from './MapContainer'
 import Results from './Results'
 
-function Content(props){
+function Content(){
     return (
         <Switch>
             <Route path='/' exact render={() => <MapContainer />} />

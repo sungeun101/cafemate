@@ -2,7 +2,7 @@ import '../styles/Searchbar.css';
 import React, { useState } from 'react';
 import Address from './Address';
 import { Form, Button, Tag, Slider, Rate, message } from 'antd';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, Link, Redirect } from 'react-router-dom';
 
 const { CheckableTag } = Tag;
 
@@ -50,12 +50,13 @@ function formatter(value) {
 }
 
 function Searchbar(props) {
-  const { setPrice, setRate, setAddress1, setAddress2, setAddress3, setTags } =
-    props.funcs;
-  const { price, rate, address1, address2, address3, tags } = props.filterData;
-  console.log(rate);
-
-  const [americano, setAmericano] = useState('four');
+    const [price, setPrice] = useState(0);
+    const [rate, setRate] = useState(0);
+    const [address1, setAddress1] = useState(null);
+    const [address2, setAddress2] = useState(null);
+    const [address3, setAddress3] = useState(null);
+    const [tags, setTags] = useState([]);
+    const [americano, setAmericano] = useState("four")
 
   const sliderChange = (value) => {
     if (value <= 33) {
@@ -83,56 +84,42 @@ function Searchbar(props) {
     message.error('주소를 선택하세요.');
   };
 
-  return (
-    <Form>
-      <Address
-        setAddress1={setAddress1}
-        setAddress2={setAddress2}
-        setAddress3={setAddress3}
-        address1={address1}
-        address2={address2}
-        address3={address3}
-      />
-      <Form.Item>
-        가격대 (아메리카노 기준)
-        <Slider
-          marks={marks}
-          tipFormatter={formatter}
-          onChange={sliderChange}
-          value={price}
-        />
-        별점
-        <Rate allowHalf onChange={rateChange} value={rate} />
-      </Form.Item>
-      <Form.Item>
-        {Object.keys(tagsData).map((tag) => (
-          <CheckableTag
-            key={tagsData[tag]}
-            checked={tags.indexOf(tagsData[tag]) > -1}
-            onChange={(checked) => tagChange(tagsData[tag], checked)}
-          >
-            {tag}
-          </CheckableTag>
-        ))}
-      </Form.Item>
-      <Form.Item>
-        {address3 ? (
-          <Link
-            to={`/search/${address3}/${tags
-              .concat(americano)
-              .concat(rate)
-              .join(',')}/star`}
-          >
-            <Button className="blackButton">검색</Button>
-          </Link>
-        ) : (
-          <Button onClick={showError} className="blackButton">
-            검색
-          </Button>
-        )}
-      </Form.Item>
-    </Form>
-  );
+    return (
+        <Form>
+            <Address
+                setAddress1={setAddress1}
+                setAddress2={setAddress2}
+                setAddress3={setAddress3}
+                address1={address1}
+                address2={address2}
+                address3={address3}
+            />
+            <Form.Item>
+                가격대 (아메리카노 기준)
+                <Slider marks={marks} tipFormatter={formatter} onChange={sliderChange} value={price} />
+                별점 
+                <Rate allowHalf onChange={rateChange} value={rate}/>
+            </Form.Item>
+            <Form.Item>
+                {Object.keys(tagsData).map(tag => (
+                    <CheckableTag
+                        key={tagsData[tag]}
+                        checked={tags.indexOf(tagsData[tag]) > -1}
+                        onChange={checked => tagChange(tagsData[tag], checked)}
+                    >
+                        {tag}
+                    </CheckableTag>
+                ))}
+            </Form.Item>
+            <Form.Item>
+                {address3 ? 
+                    <Button onClick={() => props.history.push(`/search/${address3}/${tags.concat(americano).concat(rate).join(",")}/star`)} className="blackButton">검색</Button>
+                    :
+                    <Button onClick={showError} className="blackButton">검색</Button>
+                }
+            </Form.Item>
+        </Form>
+    )
 }
 
 export default withRouter(Searchbar);
