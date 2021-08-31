@@ -44,32 +44,32 @@ public class CommentsController {
 
     // R 카페 리뷰 조회
     @GetMapping("/comments/{cafe-id}")
-    public ResponseEntity<Page<CommentsResponseDto>> getCommentsByCafe (
-            @RequestParam(value = "page") Integer page,
+    public ResponseEntity<List<CommentsResponseDto>> getCommentsByCafe (
+            // @RequestParam(value = "page") Integer page,
             @PathVariable(value = "cafe-id") Long cafeId) {
         List<CommentsResponseDto> commentsList = commentsService.getCommentsByCafeId(cafeId);
-        Pageable pageable = PageRequest.of(page, 10, Sort.by("createdAt").descending());
-        int start = (int) pageable.getOffset();
-        int end = (start + pageable.getPageSize() ) > commentsList.size() ? commentsList.size() : (start + pageable.getPageSize());
-        Page<CommentsResponseDto> commentsPage = new PageImpl<CommentsResponseDto>(commentsList.subList(start,end), pageable, commentsList.size());
+//        Pageable pageable = PageRequest.of(page, 10, Sort.by("createdAt").descending());
+//        int start = (int) pageable.getOffset();
+//        int end = (start + pageable.getPageSize() ) > commentsList.size() ? commentsList.size() : (start + pageable.getPageSize());
+//        Page<CommentsResponseDto> commentsPage = new PageImpl<CommentsResponseDto>(commentsList.subList(start,end), pageable, commentsList.size());
 
-        return new ResponseEntity<>(commentsPage, HttpStatus.OK);
+        return new ResponseEntity<>(commentsList, HttpStatus.OK);
     }
 
     //R 유저 리뷰 조회
     @GetMapping("/comments/users/{user-id}")
-    public ResponseEntity<Page<CommentsResponseDto>> getCommentsByUser (
-            @RequestParam(value = "page") Integer page,
+    public ResponseEntity<List<CommentsResponseDto>> getCommentsByUser (
+            // @RequestParam(value = "page") Integer page,
             @PathVariable(value = "user-id") String userId) {
         usersService.validateUser(userId); //유저가 있는지 검사
         List<CommentsResponseDto> commentsList = commentsService.getCommentsByUserId(userId);
-        Pageable pageable = PageRequest.of(page, 10, Sort.by("createdAt").descending());
-
-        int start = (int) pageable.getOffset();
-        int end = (start + pageable.getPageSize() ) > commentsList.size() ? commentsList.size() : (start + pageable.getPageSize());
-        Page<CommentsResponseDto> commentsPage = new PageImpl<>(commentsList.subList(start,end), pageable, commentsList.size());
-
-        return new ResponseEntity<> ( commentsPage , HttpStatus.OK);
+//        Pageable pageable = PageRequest.of(page, 10, Sort.by("createdAt").descending());
+//
+//        int start = (int) pageable.getOffset();
+//        int end = (start + pageable.getPageSize() ) > commentsList.size() ? commentsList.size() : (start + pageable.getPageSize());
+//        Page<CommentsResponseDto> commentsPage = new PageImpl<>(commentsList.subList(start,end), pageable, commentsList.size());
+//
+         return new ResponseEntity<> ( commentsList , HttpStatus.OK);
     }
 
 }

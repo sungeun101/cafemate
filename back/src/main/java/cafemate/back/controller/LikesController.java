@@ -36,16 +36,19 @@ public class LikesController {
 
     // 찜한 카페 조회 - 유저아이디로
     @GetMapping("/likes/users/{user-id}")
-    public ResponseEntity<Page<LikesListDto>> getLikesCafe(@PathVariable("user-id") String userId,
-                                                    @RequestParam(value = "page") Integer page){
+    public ResponseEntity<List<LikesListDto>> getLikesCafe(
+                                                @PathVariable("user-id") String userId
+                                                // @RequestParam(value = "page") Integer page
+    )
+    {
         List<Likes> likesList = likesService.getLikes(userId);
         List<LikesListDto> likesListDto = likesList.stream().map(LikesListDto::new).collect(Collectors.toList());
-        Pageable pageable = PageRequest.of(page, 12, Sort.unsorted());
+//        Pageable pageable = PageRequest.of(page, 12, Sort.unsorted());
+//
+//        int start = (int) pageable.getOffset();
+//        int end = (start + pageable.getPageSize() ) > likesList.size() ? likesList.size() : (start + pageable.getPageSize());
+//        Page<LikesListDto> likesPage = new PageImpl<>(likesListDto.subList(start,end), pageable, likesListDto.size());
 
-        int start = (int) pageable.getOffset();
-        int end = (start + pageable.getPageSize() ) > likesList.size() ? likesList.size() : (start + pageable.getPageSize());
-        Page<LikesListDto> likesPage = new PageImpl<>(likesListDto.subList(start,end), pageable, likesListDto.size());
-
-        return new ResponseEntity<>( likesPage ,HttpStatus.OK);
+        return new ResponseEntity<>( likesListDto ,HttpStatus.OK);
     }
 }
