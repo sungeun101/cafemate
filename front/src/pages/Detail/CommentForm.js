@@ -9,16 +9,12 @@ import {
 } from './CommentForm.style';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
 import { commentService } from 'service/comments.js';
-// import { getComment } from 'redux/ducks/comment';
-// import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 const { TextArea } = Input;
 
 const CommentForm = ({ getCafeComments, userInfo, userLogin }) => {
   const [uploadVisible, setUploadVisible] = useState(true);
-
-  // const dispatch = useDispatch();
 
   let { id } = useParams();
   const cafe_id = parseInt(id);

@@ -1,6 +1,4 @@
 import React from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { getComment } from 'redux/ducks/comment';
 import { Comment } from 'antd';
 import { InfoWrapper } from 'globalStyles';
 import CommentForm from './CommentForm';

@@ -19,12 +19,9 @@ import {
   StyledList,
 } from './CommentList.style.js';
 import Stars from './Stars.js';
-// import { useDispatch } from 'react-redux';
-// import { getComment } from 'redux/ducks/comment';
 import EditModal from './EditModal';
 import { useLocation } from 'react-router-dom';
 import { userService } from 'service/users.js';
-import InfiniteScroll from 'react-infinite-scroll-component';
 
 const CommentList = ({
   comments,
@@ -78,7 +75,6 @@ const CommentList = ({
       } else {
         await getCafeComments();
       }
-
       message.success('삭제되었습니다.');
     } catch (e) {
       console.log(e.message);
