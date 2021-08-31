@@ -8,7 +8,7 @@ const MyReviews = () => {
   const [myComments, setMyComments] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const myUserId = 2;
+  const myUserId = window.localStorage.getItem("googleId");
 
   useEffect(() => {
     getMyComments();
@@ -20,6 +20,7 @@ const MyReviews = () => {
       const res = await commentService.getCommentsByUserId(myUserId);
       console.log('getMyComments result : ', res.data);
       setMyComments(res.data);
+      setLoading(false);
     } catch (e) {
       console.log(e.message);
     }

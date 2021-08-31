@@ -28,12 +28,14 @@ import Tags from './Tags';
 import Heart from './Heart';
 import { commentService } from 'service/comments';
 import { cafeService } from 'service/cafes';
+import { likesService } from 'service/likes';
 import { useParams } from 'react-router-dom';
 
 const Detail = ({ userInfo }) => {
   const [cafe, setCafe] = useState({});
   const [comments, setComments] = useState([]);
   const [userLogin, setUserLogin] = useState(false);
+  const [likeState, setLikeState] = useState(false)
 
   useEffect(() => {
     if (userInfo.googleId) {
@@ -44,12 +46,13 @@ const Detail = ({ userInfo }) => {
   useEffect(() => {
     getCafeDetail();
     getCafeComments();
+    getLikeState();
   }, []);
 
   let { id } = useParams();
   const cafe_id = parseInt(id);
 
-  const { name, sub, address, phone, time, star, likeState, likesCount } = cafe;
+  const { name, sub, address, phone, time, star, likesCount } = cafe;
 
   const getCafeDetail = async () => {
     try {
@@ -85,6 +88,18 @@ const Detail = ({ userInfo }) => {
       console.log(e.message);
     }
   };
+
+  const getLikeState = async () => {
+    try {
+      const res = await likesService.getLikedByUserId(window.localStorage.getItem('googleId'))
+      const list = res.data.map(d => d.cafeId)
+      if (list.includes(cafe_id)){
+        setLikeState(true)
+      }
+    } catch (e) {
+      console.log(e.message)
+    }
+  }
 
   return (
     <div>

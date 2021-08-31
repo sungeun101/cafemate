@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 import { likesService } from 'service/likes';
@@ -6,11 +6,12 @@ import { HeartIcon } from './Heart.style';
 import { message } from 'antd';
 
 const Heart = ({ likeState, cafe, userInfo, userLogin }) => {
-  const [showRedHeart, setShowRedHeart] = useState(
-    userLogin ? likeState : false
-  );
+  //console.log(likeState)
+  const [showRedHeart, setShowRedHeart] = useState(likeState);
 
-  console.log('likeState', likeState);
+  useEffect(() => {
+    setShowRedHeart(likeState)
+  }, [likeState])
 
   const handleLikes = async () => {
     if (!userLogin) {
