@@ -139,33 +139,41 @@ public class CafesService {
 //    }
 
 
-    //카페 상세보기
-    public CafeDetailInfoDto getCafeDetail(Long cafeId, String sessionId){
-        CafeDetailInfoDto cafeDetailInfoDto = new CafeDetailInfoDto();
-        cafeDetailInfoDto.setId(cafeId);
-
-        Cafes cafe = cafesRepository.findById(cafeId).get();
-        cafeDetailInfoDto.setAddress(cafe.getAddress());
-        cafeDetailInfoDto.setLatitude(cafe.getLatitude());
-        cafeDetailInfoDto.setLongitude(cafe.getLongitude());
-        cafeDetailInfoDto.setName(cafe.getName());
-        cafeDetailInfoDto.setImg_path(cafe.getImg_path());
-        cafeDetailInfoDto.setPhone(cafe.getPhone());
-        cafeDetailInfoDto.setTime(cafe.getTime());
-        cafeDetailInfoDto.setMenu(cafe.getMenu());
-        cafeDetailInfoDto.setStar(cafe.getStar());
-        cafeDetailInfoDto.setCategory(cafe.getCategory());
-        cafeDetailInfoDto.setAmericano(cafe.getAmericano());
-        cafeDetailInfoDto.setDessert(cafe.getDessert());
-        cafeDetailInfoDto.setParking(cafe.isParking());
-        cafeDetailInfoDto.setWifi(cafe.isWifi());
-        cafeDetailInfoDto.setLikesCount(cafe.getLikesCount()); //카페 좋아요 갯수
-        cafe.getCommentsLikes().forEach(likes -> {
-            if(likes.getUsers().getId().equals(sessionId) ) cafeDetailInfoDto.setLikeState(true);//로그인한 아이디가 체크하였는지 확인
-        });
-
-        return cafeDetailInfoDto;
+    // 카페 상세 페이지
+    public CafesResponseDto getCafeDetail (Long cafeId) {
+        Cafes cafe = cafesRepository.getById(cafeId);
+        return new CafesResponseDto(cafe);
     }
+
+
+
+    //카페 상세보기
+//    public CafeDetailInfoDto getCafeDetail(Long cafeId, String sessionId){
+//        CafeDetailInfoDto cafeDetailInfoDto = new CafeDetailInfoDto();
+//        cafeDetailInfoDto.setId(cafeId);
+//
+//        Cafes cafe = cafesRepository.findById(cafeId).get();
+//        cafeDetailInfoDto.setAddress(cafe.getAddress());
+//        cafeDetailInfoDto.setLatitude(cafe.getLatitude());
+//        cafeDetailInfoDto.setLongitude(cafe.getLongitude());
+//        cafeDetailInfoDto.setName(cafe.getName());
+//        cafeDetailInfoDto.setImg_path(cafe.getImg_path());
+//        cafeDetailInfoDto.setPhone(cafe.getPhone());
+//        cafeDetailInfoDto.setTime(cafe.getTime());
+//        cafeDetailInfoDto.setMenu(cafe.getMenu());
+//        cafeDetailInfoDto.setStar(cafe.getStar());
+//        cafeDetailInfoDto.setCategory(cafe.getCategory());
+//        cafeDetailInfoDto.setAmericano(cafe.getAmericano());
+//        cafeDetailInfoDto.setDessert(cafe.getDessert());
+//        cafeDetailInfoDto.setParking(cafe.isParking());
+//        cafeDetailInfoDto.setWifi(cafe.isWifi());
+//        cafeDetailInfoDto.setLikesCount(cafe.getLikesCount()); //카페 좋아요 갯수
+//        cafe.getCommentsLikes().forEach(likes -> {
+//            if(likes.getUsers().getId().equals(sessionId) ) cafeDetailInfoDto.setLikeState(true);//로그인한 아이디가 체크하였는지 확인
+//        });
+//
+//        return cafeDetailInfoDto;
+//    }
 
 //    //myPageLikesList
 //    public Page<LikesListDto> getLikesCafe(String sessionId, Pageable pageable){
