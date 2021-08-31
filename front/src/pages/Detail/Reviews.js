@@ -3,7 +3,7 @@ import { Comment } from 'antd';
 import { InfoWrapper } from 'globalStyles';
 import CommentForm from './CommentForm';
 import { Count, StyledDivider } from './Reviews.style';
-import CommentList from 'components/CommentList';
+import CommentList from './CommentList';
 
 const Reviews = ({ comments, getCafeComments, userInfo, userLogin }) => {
   return (

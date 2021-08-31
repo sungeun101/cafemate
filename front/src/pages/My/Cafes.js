@@ -32,7 +32,7 @@ const MyCafes = () => {
     }
   }, [likes]);
 
-  const user_id = 1;
+  const user_id = window.localStorage.getItem("googleId");
 
   const getLikes = async () => {
     setLoading(true);
@@ -50,7 +50,7 @@ const MyCafes = () => {
     setLoading(true);
     let resArr = [];
     for await (const obj of likes) {
-      const res = await cafeService.getCafeById(obj.cafe_id);
+      const res = await cafeService.getCafeById(obj.cafeId);
       console.log('getCafe result : ', res);
       resArr.push(res.data);
     }
@@ -69,8 +69,8 @@ const MyCafes = () => {
     e.stopPropagation();
     try {
       const res = await likesService.cancelLike({
-        id: cafe.id,
-        user_id,
+        cafe_id: cafe.id,
+        user_id: user_id,
       });
       console.log('cancelLike result : ', res);
     } catch (e) {
@@ -94,13 +94,13 @@ const MyCafes = () => {
           onClick={(e) => onClick(cafe, e)}
           key={cafe.id}
           hoverable
-          cover={<Cover alt={cafe.name} src={cafe.img_path} />}
+          cover={<Cover alt={cafe.name} src={ cafe.img_path ? `http://${cafe.img_path}` : "https://1.bp.blogspot.com/-ZO8wGSRzFBA/YSnWa5QV6ZI/AAAAAAAAD-Y/3n5lSJwrx-Yh3McA1GpGCg6POSjrvsPPwCLcBGAsYHQ/s800/noimage.png"} />}
         >
           <Meta
             title={cafe.name}
             description={
               <Description>
-                <p>주소(동까지)</p>
+                <p>{cafe.address}</p>
                 <HeartContainer>
                   <HeartIcon
                     icon={faHeart}
