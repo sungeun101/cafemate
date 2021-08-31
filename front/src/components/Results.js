@@ -1,20 +1,21 @@
 /* global kakao */
 import '../styles/Results.css'
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
 import axios from 'axios';
 import { Select, Card, Row, Col, Typography, Rate } from 'antd';
-import { HeartFilled }from '@ant-design/icons';
 import { withRouter } from 'react-router-dom';
 
 const { Title } = Typography;
 const { Option } = Select;
 
-function Results(props){
-    const params = props.match.params
+function SearchData(pageNumber, params, setWidth){
+    const { dong, tags, sort } = params
 
-    const [width, setWidth] = useState(window.innerWidth);
-    const [cafeData, setCafeData] = useState([])
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+    const [data, setData] = useState([]);
+    const [hasMore, setHasMore] = useState(false);
+    let cancel;
 
     const setMap = (data) => {
         const container = document.getElementById("map");
@@ -81,31 +82,66 @@ function Results(props){
         }
     }
 
-    const searchData = async (params) => {
-        const {dong, tags, sort} = params
-        try {
-            setLoading(true)
-            const res = await axios.get(`/cafes?dong=${dong}&filtering=${tags}&sorting=${sort}`)
-            setCafeData(res.data)
-            setMap(res.data)
-        } catch (e) {
-            console.log(e)
-        } finally {
-            setLoading(false)
+    useEffect(() => {
+        if (pageNumber == 0){
+            setData([])
         }
-    }
+        setLoading(true);
+        setError(false);
+        axios({
+            method: 'GET',
+            url: `/cafes?dong=${dong}&filtering=${tags}&sorting=${sort}`,
+            params: { page: pageNumber },
+            cancelToken: new axios.CancelToken(c => cancel = c)
+        }).then(res => {
+            setData(prevData => {
+                return [... new Set([...prevData, ...res.data.content])]
+            });
+            if (pageNumber == 0){
+                setMap(res.data.content)
+            } else {
+                setMap([... new Set([...data, ...res.data.content])])
+            }
+            setHasMore(res.data.content.length > 0);
+            setLoading(false);
+        }).catch(e => {
+            if (axios.isCancel(e)) return
+            setError(true)
+        })
+        return () => cancel()
+    }, [pageNumber, params])
+    return {data, loading, hasMore};
+}
+
+function Results(props){
+    const params = props.match.params
+
+    const [width, setWidth] = useState(window.innerWidth);
+    const [pageNumber, setPageNumber] = useState(0);
+    const { data, loading, error, hasMore } = SearchData(pageNumber, params, setWidth);
 
     useEffect(() => {
-        searchData(params)
-    },[params, width])
+        setPageNumber(0)
+    }, [params])
 
-    const like = (event) => {
-        if (!event.target.style.color){
-            event.target.style.color = "#C92D40"
-        } else {
-            event.target.style.color = null
-        }
+    const changeSort = (type) => {
+        const {dong, tags} = params
+        props.history.push({
+            pathname: `/search/${dong}/${tags}/${type}`
+        })
     }
+
+    const observer = useRef()
+    const lastDataRef = useCallback(node => {
+        if (loading) return
+        if (observer.current) observer.current.disconnect()
+        observer.current = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting && hasMore){
+                setPageNumber(prevNum => prevNum + 1)
+            }
+        })
+        if (node) observer.current.observe(node)
+    }, [loading, hasMore])
 
     const onCafeClick = (cafe) => {
         props.history.push({
@@ -113,13 +149,6 @@ function Results(props){
           state: { cafe },
         });
     };
-
-    const changeSort = (type) => {
-        const {dong, tags} = params
-        props.history.push({
-            pathname: `/search/${dong}/${tags}/${type}`
-        })
-    } 
 
     return (
         <Row>
@@ -132,35 +161,59 @@ function Results(props){
             </Col>
             <Col span={24}>
             <div className="sort">
-                <Select defaultValue="star" onChange={changeSort}>
+                <Select value={props.match.params.sort} onChange={changeSort}>
                     <Option value="star">별점순</Option>
                     <Option value="price">가격순</Option>
                 </Select>
             </div>
             </Col>
             <Col span={24} className="list">
-            {cafeData ? cafeData.map(data => (
-                <div className="listItem" key={data.id}>
-                    <Card>
-                        <Row>
-                            <Col span={18}>
-                                <div className="img-div">
-                                    <img src={data.img_path ? `http://${data.img_path}` : "https://1.bp.blogspot.com/-ZO8wGSRzFBA/YSnWa5QV6ZI/AAAAAAAAD-Y/3n5lSJwrx-Yh3McA1GpGCg6POSjrvsPPwCLcBGAsYHQ/s800/noimage.png"} alt={data.name} />
-                                </div>
-                                <div className="info" onClick={() => onCafeClick(data)}>
-                                    <Title level={2} style={{margin: 0, color: "#dba56c"}}>{data.name}</Title>
-                                    <p>{data.address}</p>
-                                </div>
-                            </Col>
-                            <Col span={6}>
-                                <Rate allowHalf disabled defaultValue={data.star} />
-                                <HeartFilled onClick={like} />
-                            </Col>
-                        </Row>
-                    </Card>
-                </div>
-            ))
-            : <div>검색결과가 없습니다.</div>}
+            {data.map((d, index) => {
+            if (data.length === index + 1){
+                return (
+                    <div className="listItem" key={index} ref={lastDataRef}>
+                        <Card>
+                            <Row>
+                                <Col span={18}>
+                                    <div className="img-div">
+                                        <img src={d.img_path ? `http://${d.img_path}` : "https://1.bp.blogspot.com/-ZO8wGSRzFBA/YSnWa5QV6ZI/AAAAAAAAD-Y/3n5lSJwrx-Yh3McA1GpGCg6POSjrvsPPwCLcBGAsYHQ/s800/noimage.png"} alt={d.name} />
+                                    </div>
+                                    <div className="info" onClick={() => onCafeClick(d)}>
+                                        <Title level={2} style={{margin: 0, color: "#dba56c"}}>{d.name}</Title>
+                                        <p>{d.address}</p>
+                                    </div>
+                                </Col>
+                                <Col span={6}>
+                                    <Rate allowHalf disabled defaultValue={d.star} />
+                                </Col>
+                            </Row>
+                        </Card>
+                    </div>
+                )
+            }
+            else {
+                return (
+                    <div className="listItem" key={index}>
+                        <Card>
+                            <Row>
+                                <Col span={18}>
+                                    <div className="img-div">
+                                        <img src={d.img_path ? `http://${d.img_path}` : "https://1.bp.blogspot.com/-ZO8wGSRzFBA/YSnWa5QV6ZI/AAAAAAAAD-Y/3n5lSJwrx-Yh3McA1GpGCg6POSjrvsPPwCLcBGAsYHQ/s800/noimage.png"} alt={d.name} />
+                                    </div>
+                                    <div className="info" onClick={() => onCafeClick(d)}>
+                                        <Title level={2} style={{margin: 0, color: "#dba56c"}}>{d.name}</Title>
+                                        <p>{d.address}</p>
+                                    </div>
+                                </Col>
+                                <Col span={6}>
+                                    <Rate allowHalf disabled defaultValue={d.star} />
+                                </Col>
+                            </Row>
+                        </Card>
+                    </div>
+                )
+            }
+        })}
             </Col>
         </Row>
     )

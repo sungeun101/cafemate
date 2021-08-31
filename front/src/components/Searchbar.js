@@ -2,7 +2,7 @@ import '../styles/Searchbar.css';
 import React, {useState} from 'react';
 import Address from './Address'
 import { Form, Button, Tag, Slider, Rate, message } from 'antd';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, Link, Redirect } from 'react-router-dom';
 
 const { CheckableTag } = Tag;
 
@@ -50,10 +50,12 @@ function formatter(value) {
 }
 
 function Searchbar(props) {
-    const { setPrice, setRate, setAddress1, setAddress2, setAddress3, setTags } = props.funcs
-    const { price, rate, address1, address2, address3, tags } = props.filterData
-    console.log(rate)
-
+    const [price, setPrice] = useState(0);
+    const [rate, setRate] = useState(0);
+    const [address1, setAddress1] = useState(null);
+    const [address2, setAddress2] = useState(null);
+    const [address3, setAddress3] = useState(null);
+    const [tags, setTags] = useState([]);
     const [americano, setAmericano] = useState("four")
 
     const sliderChange = (value) => {
@@ -111,9 +113,7 @@ function Searchbar(props) {
             </Form.Item>
             <Form.Item>
                 {address3 ? 
-                    <Link to={`/search/${address3}/${tags.concat(americano).concat(rate).join(",")}/star`}>
-                        <Button className="blackButton">검색</Button>
-                    </Link>
+                    <Button onClick={() => props.history.push(`/search/${address3}/${tags.concat(americano).concat(rate).join(",")}/star`)} className="blackButton">검색</Button>
                     :
                     <Button onClick={showError} className="blackButton">검색</Button>
                 }

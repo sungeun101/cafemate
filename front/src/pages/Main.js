@@ -31,33 +31,6 @@ function Main() {
     setGoogleImg(window.localStorage.getItem('googleImg'));
   }, [googleId, googleName, googleImg]);
 
-  const [cafeData, setCafeData] = useState([]);
-
-  const [price, setPrice] = useState(0);
-  const [rate, setRate] = useState(0);
-  const [address1, setAddress1] = useState(null);
-  const [address2, setAddress2] = useState(null);
-  const [address3, setAddress3] = useState(null);
-  const [tags, setTags] = useState([]);
-
-  const funcs = {
-    setCafeData,
-    setPrice,
-    setRate,
-    setAddress1,
-    setAddress2,
-    setAddress3,
-    setTags,
-  };
-  const filterData = {
-    price,
-    rate,
-    address1,
-    address2,
-    address3,
-    tags,
-  };
-
   return (
     <Layout>
       <Header>
@@ -86,9 +59,9 @@ function Main() {
           render={() => (
             <Layout hasSider={true}>
               <Sider>
-                <Searchbar funcs={funcs} filterData={filterData} />
+                <Searchbar />
               </Sider>
-              <Content cafeData={cafeData} />
+              <Content />
             </Layout>
           )}
         />
