@@ -74,7 +74,7 @@ const Detail = ({ userInfo }) => {
 
       <TitleContainer>
         <NameContainer>
-          <Name>{name}카페이름</Name>
+          <Name>{name}</Name>
           {sub && <SubName>{sub}</SubName>}
           <Heart
             likeState={likeState}
