@@ -31,6 +31,7 @@ const Detail = ({ userInfo }) => {
   const [cafe, setCafe] = useState({});
   const [comments, setComments] = useState([]);
   const [userLogin, setUserLogin] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (userInfo.googleId) {
@@ -49,6 +50,7 @@ const Detail = ({ userInfo }) => {
   const { name, sub, address, phone, time, star, likeState, likesCount } = cafe;
 
   const getCafeDetail = async () => {
+    setLoading(true);
     try {
       const res = await cafeService.getCafeById(cafe_id);
       console.log('get cafe : ', res);
@@ -56,6 +58,7 @@ const Detail = ({ userInfo }) => {
     } catch (e) {
       console.log(e.message);
     }
+    setLoading(false);
   };
 
   const getCafeComments = async () => {
@@ -121,7 +124,7 @@ const Detail = ({ userInfo }) => {
           />
         </MenuAndReviews>
         <LocationAndTags>
-          <Location cafe={cafe} />
+          <Location cafe={cafe} loading={loading} />
           <Tags cafe={cafe} />
         </LocationAndTags>
       </FlexContainer>

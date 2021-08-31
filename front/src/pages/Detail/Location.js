@@ -2,8 +2,9 @@
 import React, { useEffect } from 'react';
 import { InfoWrapper } from 'globalStyles';
 import { Map } from './Location.style';
+import { Skeleton } from 'antd';
 
-const Location = ({ cafe }) => {
+const Location = ({ cafe, loading }) => {
   const { longtitude, latitude } = cafe;
 
   useEffect(() => {
@@ -18,7 +19,11 @@ const Location = ({ cafe }) => {
   return (
     <InfoWrapper>
       <h1>LOCATION</h1>
-      <Map id="map" />
+      {loading ? (
+        <Skeleton active={true} paragraph={{ rows: 4 }} />
+      ) : (
+        <Map id="map" />
+      )}
     </InfoWrapper>
   );
 };
