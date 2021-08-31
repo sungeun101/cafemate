@@ -3,7 +3,7 @@ import axios from 'axios';
 const endpoint = '/cafes';
 
 const getCafeById = (cafe_id) => {
-  return axios.get(endpoint + '/' + cafe_id + '?page=0');
+  return axios.get(endpoint + '/' + cafe_id);
 };
 
 export const cafeService = {
