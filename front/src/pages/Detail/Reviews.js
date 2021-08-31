@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { getComment } from 'redux/ducks/comment';
 import { Comment } from 'antd';
@@ -8,17 +8,6 @@ import { Count, StyledDivider } from './Reviews.style';
 import CommentList from 'components/CommentList';
 
 const Reviews = ({ comments, getCafeComments, userInfo, userLogin }) => {
-  console.log('comments', comments);
-
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   dispatch(getComment());
-  // }, [dispatch]);
-
-  // const comment = useSelector((state) => state.comment.comment);
-  // console.log('comment reviews', comment);
-
   return (
     <InfoWrapper>
       <h1>
@@ -33,14 +22,16 @@ const Reviews = ({ comments, getCafeComments, userInfo, userLogin }) => {
           />
         }
       />
-      {comments.length > 0 && <StyledDivider />}
-      {comments && (
-        <CommentList
-          comments={comments}
-          getCafeComments={getCafeComments}
-          userInfo={userInfo}
-          userLogin={userLogin}
-        />
+      {comments.length > 0 && (
+        <>
+          <StyledDivider />
+          <CommentList
+            comments={comments}
+            getCafeComments={getCafeComments}
+            userInfo={userInfo}
+            userLogin={userLogin}
+          />
+        </>
       )}
     </InfoWrapper>
   );

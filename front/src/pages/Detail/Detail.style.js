@@ -19,7 +19,10 @@ export const Name = styled.h1`
   font-size: 1.8rem;
   margin-right: 0.8rem;
 `;
-
+export const SubName = styled.span`
+  margin-right: 1rem;
+  opacity: 0.8;
+`;
 export const HeartCount = styled.div`
   color: var(--black-color);
   font-size: 1rem;

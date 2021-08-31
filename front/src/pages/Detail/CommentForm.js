@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, message, Upload } from 'antd';
+import { Form, Input, message, Rate, Upload } from 'antd';
 import {
   StyledForm,
   CameraIcon,
@@ -12,7 +12,6 @@ import { commentService } from 'service/comments.js';
 // import { getComment } from 'redux/ducks/comment';
 // import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import Rating from 'components/Rating';
 
 const { TextArea } = Input;
 
@@ -25,8 +24,6 @@ const CommentForm = ({ getCafeComments, userInfo, userLogin }) => {
   const cafe_id = parseInt(id);
 
   const [form] = Form.useForm();
-
-  const user_id = 3;
 
   const props = {
     action: 'https://api.cloudinary.com/v1_1/dvomptrje/image/upload',
@@ -55,7 +52,7 @@ const CommentForm = ({ getCafeComments, userInfo, userLogin }) => {
     const { star, content, image } = value;
     addComment({
       cafe_id,
-      user_id,
+      user_id: userInfo.googleId,
       content: content,
       img_path: image ? image.file.response.url : '',
       star: star,
@@ -72,8 +69,7 @@ const CommentForm = ({ getCafeComments, userInfo, userLogin }) => {
     } catch (e) {
       console.log(e.message);
     }
-    // dispatch(getComment());
-    getCafeComments();
+    await getCafeComments();
   };
 
   const showLoginWarning = () => {
@@ -81,6 +77,10 @@ const CommentForm = ({ getCafeComments, userInfo, userLogin }) => {
       message.warning('로그인이 필요합니다.');
       return;
     }
+  };
+
+  const onRateChange = (rate) => {
+    form.setFieldsValue({ star: rate });
   };
 
   return (
@@ -95,7 +95,7 @@ const CommentForm = ({ getCafeComments, userInfo, userLogin }) => {
             },
           ]}
         >
-          <Rating form={form} />
+          <Rate allowHalf onChange={onRateChange} />
         </Form.Item>
         <UploadBox>
           <Form.Item name="image">
@@ -138,103 +138,3 @@ const CommentForm = ({ getCafeComments, userInfo, userLogin }) => {
 };
 
 export default CommentForm;
-
-// import React, { useState } from 'react';
-// import { Form, Input, message, Upload } from 'antd';
-// import {
-//   StyledForm,
-//   CameraIcon,
-//   Header,
-//   StyledButton,
-//   UploadBox,
-// } from './CommentForm.style';
-// import { faCamera } from '@fortawesome/free-solid-svg-icons';
-// import { useParams } from 'react-router-dom';
-// import Rating from 'components/Rating';
-// import axios from 'axios';
-// const { TextArea } = Input;
-
-// const CommentForm = () => {
-//   const [uploadVisible, setUploadVisible] = useState(true);
-//   const [image, setImage] = useState(null);
-
-//   // const dispatch = useDispatch();
-
-//   let { id } = useParams();
-//   const cafe_id = parseInt(id);
-
-//   const [form] = Form.useForm();
-
-//   const fileChangedHandler = (e) => {
-//     const files = e.target.files;
-//     console.log('files', files);
-//     setImage(files);
-//   };
-
-//   const handleSubmit = async () => {
-//     const formData = new FormData();
-
-//     const config = {
-//       headers: {
-//         'content-type': 'multipart/form-data',
-//       },
-//     };
-
-//     formData.append('star', form.getFieldValue('star'));
-//     formData.append('content', form.getFieldValue('content'));
-//     formData.append('image', image[0]);
-//     console.log('star', form.getFieldValue('star'));
-
-//     const res = await axios.post(
-//       `http://localhost:4000/comments`,
-//       formData,
-//       config
-//     );
-//     for (var key of formData.entries()) {
-//       console.log(key[0] + ', ' + key[1]);
-//     }
-//     console.log('img-post-res', res);
-//   };
-
-//   return (
-//     <StyledForm form={form}>
-//       <Header>
-//         <Form.Item
-//           name="star"
-//           rules={[
-//             {
-//               required: true,
-//               message: '별점을 남겨주세요.',
-//             },
-//           ]}
-//         >
-//           <Rating
-//             form={form}
-//           />
-//         </Form.Item>
-
-//         <UploadBox>
-//           <Form.Item name="image">
-//             <input type="file" multiple onChange={fileChangedHandler} />
-//             {/* {uploadVisible && <CameraIcon icon={faCamera} size="2x" />} */}
-//           </Form.Item>
-//           <StyledButton onClick={handleSubmit}>등록</StyledButton>
-//         </UploadBox>
-//       </Header>
-
-//       <Form.Item
-//         name="content"
-//         rules={[
-//           {
-//             required: true,
-//             message: '내용을 입력해주세요.',
-//           },
-//         ]}
-//       >
-//         <TextArea placeholder="후기를 작성해주세요." rows={4} allowClear />
-//       </Form.Item>
-//     </StyledForm>
-//   );
-// };
-
-// export default CommentForm;

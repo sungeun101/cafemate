@@ -24,6 +24,7 @@ import Stars from './Stars.js';
 import EditModal from './EditModal';
 import { useLocation } from 'react-router-dom';
 import { userService } from 'service/users.js';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const CommentList = ({
   comments,
@@ -41,7 +42,7 @@ const CommentList = ({
 
   let location = useLocation();
 
-  // const dispatch = useDispatch();
+  console.log('comments', comments);
 
   useEffect(() => {
     const item = comments.find((comment) => comment.id === editId);
@@ -50,37 +51,37 @@ const CommentList = ({
 
   useEffect(() => {
     getCommentAuthor();
+    console.log('commentsWithAuthor', commentsWithAuthor);
   }, [comments]);
 
   const updateComment = async (value) => {
     console.log('update this : ', value);
     try {
       const res = await commentService.updateComment(editComment.id, value);
-      console.log('update comment result : ', res.data);
+      console.log('update comment result : ', res);
+      if (location.pathname === '/my') {
+        await getMyComments();
+      } else {
+        await getCafeComments();
+      }
       message.success('수정되었습니다.');
     } catch (e) {
       console.log(e.message);
-    }
-    // dispatch(getComment());
-    if (location.pathname === '/my') {
-      getMyComments();
-    } else {
-      getCafeComments();
     }
   };
 
   const deleteComment = async (id) => {
     try {
       await commentService.removeComment(id);
+      if (location.pathname === '/my') {
+        await getMyComments();
+      } else {
+        await getCafeComments();
+      }
+
       message.success('삭제되었습니다.');
     } catch (e) {
       console.log(e.message);
-    }
-    // dispatch(getComment());
-    if (location.pathname === '/my') {
-      getMyComments();
-    } else {
-      getCafeComments();
     }
   };
 
@@ -99,7 +100,7 @@ const CommentList = ({
       let newComments = [];
       for (let i = 0; i < comments.length; i++) {
         const res = await userService.getUserById(comments[i].user_id);
-        // console.log('getCommentAuthor : ', res);
+        console.log('get Comment Author : ', res);
         const authorObj = {
           authorName: res.data.name,
           authorImage: res.data.img_path,
