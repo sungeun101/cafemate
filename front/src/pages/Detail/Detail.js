@@ -57,7 +57,6 @@ const Detail = ({ userInfo }) => {
   const getCafeDetail = async () => {
     try {
       const res = await cafeService.getCafeById(cafe_id);
-      console.log('get cafe : ', res);
       setCafe(res.data);
       const container = document.getElementById('map');
       const options = {
@@ -82,7 +81,6 @@ const Detail = ({ userInfo }) => {
   const getCafeComments = async () => {
     try {
       const res = await commentService.getCommentsByCafeId(id);
-      console.log('get comments : ', res);
       setComments(res.data);
     } catch (e) {
       console.log(e.message);

@@ -6,7 +6,6 @@ import { HeartIcon } from './Heart.style';
 import { message } from 'antd';
 
 const Heart = ({ likeState, cafe, userInfo, userLogin }) => {
-  //console.log(likeState)
   const [showRedHeart, setShowRedHeart] = useState(likeState);
 
   useEffect(() => {
@@ -31,7 +30,6 @@ const Heart = ({ likeState, cafe, userInfo, userLogin }) => {
         cafe_id: cafe.id,
         user_id: userInfo.googleId,
       });
-      console.log('addLike result : ', res);
       setShowRedHeart((prev) => !prev);
       message.success('찜한 카페로 등록되었습니다.');
     } catch (e) {
@@ -45,7 +43,6 @@ const Heart = ({ likeState, cafe, userInfo, userLogin }) => {
         cafe_id: cafe.id,
         user_id: userInfo.googleId,
       });
-      console.log('cancelLike result : ', res);
       setShowRedHeart((prev) => !prev);
       message.success('찜한 카페에서 삭제되었습니다.');
     } catch (e) {

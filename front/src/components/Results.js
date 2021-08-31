@@ -83,7 +83,7 @@ function SearchData(pageNumber, params, setWidth){
     }
 
     useEffect(() => {
-        if (pageNumber == 0){
+        if (pageNumber === 0){
             setData([])
         }
         setLoading(true);
