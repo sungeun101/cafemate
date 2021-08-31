@@ -3,7 +3,7 @@ import axios from 'axios';
 const endpoint = '/likes';
 
 const getLikedByUserId = (user_id) => {
-  return axios.get(`${endpoint}/users/${user_id}/?page=0`);
+  return axios.get(`${endpoint}/users/${user_id}?page=0`);
 };
 
 const addLike = (data) => {
