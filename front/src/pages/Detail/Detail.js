@@ -1,3 +1,4 @@
+/* global kakao */
 import React, { useEffect, useState } from 'react';
 import { ClockCircleOutlined, PhoneOutlined } from '@ant-design/icons';
 import { Divider } from 'antd';
@@ -14,6 +15,8 @@ import {
   SubName,
   TitleContainer,
 } from './Detail.style';
+import { Map } from './Location.style';
+import { InfoWrapper } from 'globalStyles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import Stars from 'components/Stars';
@@ -31,7 +34,6 @@ const Detail = ({ userInfo }) => {
   const [cafe, setCafe] = useState({});
   const [comments, setComments] = useState([]);
   const [userLogin, setUserLogin] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (userInfo.googleId) {
@@ -50,15 +52,28 @@ const Detail = ({ userInfo }) => {
   const { name, sub, address, phone, time, star, likeState, likesCount } = cafe;
 
   const getCafeDetail = async () => {
-    setLoading(true);
     try {
       const res = await cafeService.getCafeById(cafe_id);
       console.log('get cafe : ', res);
       setCafe(res.data);
+      const container = document.getElementById('map');
+      const options = {
+        center: new kakao.maps.LatLng(res.data.latitude, res.data.longitude),
+        level: 3,
+      };
+      const map = new kakao.maps.Map(container, options);
+      var imageSrc = "https://1.bp.blogspot.com/-08ebwsVzqag/YSXWjBOHKPI/AAAAAAAAD9s/lRd5ya_9A2AgPtylT9oyilWIGohCTv9XQCLcBGAsYHQ/s834/dark_marker.png";   
+      var imageSize = new kakao.maps.Size(28, 40); 
+      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+      var marker = new kakao.maps.Marker({
+        map: map,
+        position: new kakao.maps.LatLng(res.data.latitude, res.data.longitude),
+        title : res.data.name,
+        image : markerImage
+    });
     } catch (e) {
       console.log(e.message);
     }
-    setLoading(false);
   };
 
   const getCafeComments = async () => {
@@ -124,7 +139,10 @@ const Detail = ({ userInfo }) => {
           />
         </MenuAndReviews>
         <LocationAndTags>
-          <Location cafe={cafe} loading={loading} />
+        <InfoWrapper>
+          <h1>LOCATION</h1>
+          <Map id="map" />
+        </InfoWrapper>
           <Tags cafe={cafe} />
         </LocationAndTags>
       </FlexContainer>
