@@ -48,7 +48,7 @@
     - 윤서윤
 
 - BE
-    - 조의형
-    Likes, Searching
     - 황수영
-    Comments, Login, Cafedetail
+    Comments, Login, Cafes, Likes
+    - 조의형
+    
