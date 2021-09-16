@@ -1,0 +1,23 @@
+.ant-layout-header {
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.user {
+    float: right;
+}
+
+.ant-avatar {
+    color: white;
+    background-color: #20110b;
+}
+
+.ant-typography {
+    display: inline-block;
+    margin-top: 15px;
+}
+
+h2.ant-typography, .ant-typography h2 {
+    color: #dba56c;
+    font-family: "Open Sans";
+}

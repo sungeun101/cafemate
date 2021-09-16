@@ -1,0 +1,51 @@
+.ant-row {
+    background: white;
+    position: relative;
+}
+
+.sort {
+    float: right;
+    margin-top: 0.5em;
+    margin-right: 1em;
+}
+
+.ant-card {
+    border-radius: 10px;
+}
+
+.list {
+    height: 49vh;
+    overflow: scroll;
+}
+
+.listItem, .ant-card {
+    margin: 0.5em;
+}
+
+.listItem img {
+    width: 15vw;
+    height: 10vw;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-right: 2em;
+    float: left;
+}
+
+.listItem .ant-rate {
+    float: right;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.listItem p {
+    font-size: 1.2em;
+}
+
+.anticon-heart {
+    color: #dcdcdc;
+    font-size: 2em;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}

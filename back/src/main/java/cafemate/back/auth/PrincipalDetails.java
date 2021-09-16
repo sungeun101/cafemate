@@ -1,7 +1,6 @@
 package cafemate.back.auth;
 
 import cafemate.back.domain.Users;
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -9,24 +8,25 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import java.util.Collection;
 import java.util.Map;
 
-@Data
-public class PrincipalDetails implements UserDetails,OAuth2User  {
-   private Users user;
-   private Map<String, Object> attributes;
+public class PrincipalDetails implements UserDetails, OAuth2User {
+    private Users user;
+    private Map<String, Object> attributes;
 
-   public PrincipalDetails(Users user){
-       this.user = user;
-   }
+    public PrincipalDetails(){}
 
-   public PrincipalDetails(Users user, Map<String , Object> attributes){
-       this.user = user;
-   }
+    public PrincipalDetails(Users user){
+        this.user = user;
+    }
+
+    public PrincipalDetails(Users user, Map<String , Object> attributes){
+        this.user = user;
+    }
 
 
 
     @Override
     public String getName() {
-        return user.getName();
+        return (String) attributes.get("name");
     }
 
     @Override

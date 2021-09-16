@@ -1,35 +1,29 @@
-
-
 package cafemate.back.domain;
-//
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
 @Entity
+@NoArgsConstructor
+@Getter
 @Table(name = "likes")
 public class Likes {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "like_id")
+    private Long id;
 
-    @JoinColumn(name = "user_id")
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private Users users;
 
-    @JoinColumn(name = "cafe_id")
     @ManyToOne
+    @JoinColumn(name = "cafe_id")
     private Cafes cafes;
 
     @Builder
@@ -39,4 +33,3 @@ public class Likes {
     }
 
 }
-

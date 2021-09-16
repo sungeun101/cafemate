@@ -4,12 +4,12 @@ import cafemate.back.domain.Cafes;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-
+import org.springframework.stereotype.Repository;
 import java.util.List;
 
-public interface CafesRepository extends JpaRepository<Cafes,Long> {
-//    List<Cafes> findAllByOrder();//전체 리스트
-
-
+@Repository
+public interface CafesRepository extends JpaRepository<Cafes, Long> {
+    List<Cafes> findAllByDong(String dong);
 }
+
+
