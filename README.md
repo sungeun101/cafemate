@@ -53,7 +53,7 @@ https://user-images.githubusercontent.com/77563814/133954530-cebd5cd8-1b49-4fa2-
 ## 기술 스택
 
 - Front
-    - Javascript, React, Redux, Ant design
+    - Javascript, React, Ant design, Styled-components
 - Back
     - Java - version 11, SpringBoot, Spring Data JPA, Gradle, Junit4, MySQL, AWS(EC2, RDS)
 
