@@ -61,18 +61,6 @@ https://user-images.githubusercontent.com/77563814/133954530-cebd5cd8-1b49-4fa2-
 ## 개발 기간
 
 - 2021.7.27 ~ 8.31  (5주)
-
-## FE & BE 역할 분담
-
-### [프로젝트 칸반보드](https://github.com/sungeun101/cafemate/projects/1)
-
-- FE (페이지별 분담)
-    - 조성은 : 카페 상세 페이지, 마이페이지
-    - 윤서윤 : 메인페이지, 로그인, 크롤링(Python)
-
-- BE
-    - 황수영 : Cafes, Comments, Users, Likes, Junit4, AWS(EC2, RDS), MySQL
-    - 조의형
     
 
 ## 기획 & 설계
