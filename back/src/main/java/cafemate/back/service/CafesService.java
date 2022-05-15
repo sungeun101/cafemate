@@ -134,73 +134,12 @@ public class CafesService {
         } else return false;
     }
 
-//    public String subtractFiltering (String filtering, String column) {
-//        return filtering.replace(column, "");
-//    }
-
 
     // 카페 상세 페이지
     public CafesResponseDto getCafeDetail (Long cafeId) {
         Cafes cafe = cafesRepository.getById(cafeId);
         return new CafesResponseDto(cafe);
     }
-
-
-
-    //카페 상세보기
-//    public CafeDetailInfoDto getCafeDetail(Long cafeId, String sessionId){
-//        CafeDetailInfoDto cafeDetailInfoDto = new CafeDetailInfoDto();
-//        cafeDetailInfoDto.setId(cafeId);
-//
-//        Cafes cafe = cafesRepository.findById(cafeId).get();
-//        cafeDetailInfoDto.setAddress(cafe.getAddress());
-//        cafeDetailInfoDto.setLatitude(cafe.getLatitude());
-//        cafeDetailInfoDto.setLongitude(cafe.getLongitude());
-//        cafeDetailInfoDto.setName(cafe.getName());
-//        cafeDetailInfoDto.setImg_path(cafe.getImg_path());
-//        cafeDetailInfoDto.setPhone(cafe.getPhone());
-//        cafeDetailInfoDto.setTime(cafe.getTime());
-//        cafeDetailInfoDto.setMenu(cafe.getMenu());
-//        cafeDetailInfoDto.setStar(cafe.getStar());
-//        cafeDetailInfoDto.setCategory(cafe.getCategory());
-//        cafeDetailInfoDto.setAmericano(cafe.getAmericano());
-//        cafeDetailInfoDto.setDessert(cafe.getDessert());
-//        cafeDetailInfoDto.setParking(cafe.isParking());
-//        cafeDetailInfoDto.setWifi(cafe.isWifi());
-//        cafeDetailInfoDto.setLikesCount(cafe.getLikesCount()); //카페 좋아요 갯수
-//        cafe.getCommentsLikes().forEach(likes -> {
-//            if(likes.getUsers().getId().equals(sessionId) ) cafeDetailInfoDto.setLikeState(true);//로그인한 아이디가 체크하였는지 확인
-//        });
-//
-//        return cafeDetailInfoDto;
-//    }
-
-//    //myPageLikesList
-//    public Page<LikesListDto> getLikesCafe(String sessionId, Pageable pageable){
-//        StringBuffer sb = new StringBuffer();
-//        sb.append("SELECT c.cafe_id, c.name, c.img_path ");//likesState long을 boolean으로, //count와 상태 넣어야함
-//        sb.append("FROM likes l, cafes c ");
-//        sb.append("WHERE l.cafe_id = c.cafe_id ");
-//        sb.append("AND c.cafe_id IN (SELECT c.cafe_id FROM likes l, cafes c WHERE l.user_id = ? AND c.cafe_id = l.cafe_id) ");
-//        sb.append("GROUP BY c.cafe_id ");
-//        sb.append("ORDER BY c.cafe_id");
-//
-//        //쿼리완성
-//        Query query = em.createNativeQuery(sb.toString()).setParameter(1, sessionId);
-//
-//
-//        //JPA 쿼리 매핑 - DTO에 매핑
-//        JpaResultMapper result = new JpaResultMapper();
-//        List<LikesListDto> cafeLikesList = result.list(query, LikesListDto.class);
-//
-//        int start = (int) pageable.getOffset();
-//        int end = (start + pageable.getPageSize())>cafeLikesList.size() ? cafeLikesList.size() : (start + pageable.getPageSize());
-//
-//        if(start > cafeLikesList.size()) return new PageImpl<LikesListDto>(cafeLikesList.subList(0,0),pageable,0);
-//
-//        Page<LikesListDto> cafeLikesPage = new PageImpl<>(cafeLikesList.subList(start,end),pageable,cafeLikesList.size());
-//        return cafeLikesPage;
-//    }
 
 }
 
