@@ -43,11 +43,6 @@ public class LikesController {
     {
         List<Likes> likesList = likesService.getLikes(userId);
         List<LikesListDto> likesListDto = likesList.stream().map(LikesListDto::new).collect(Collectors.toList());
-//        Pageable pageable = PageRequest.of(page, 12, Sort.unsorted());
-//
-//        int start = (int) pageable.getOffset();
-//        int end = (start + pageable.getPageSize() ) > likesList.size() ? likesList.size() : (start + pageable.getPageSize());
-//        Page<LikesListDto> likesPage = new PageImpl<>(likesListDto.subList(start,end), pageable, likesListDto.size());
 
         return new ResponseEntity<>( likesListDto ,HttpStatus.OK);
     }
