@@ -45,18 +45,4 @@ public class LikesService {
         return likesList;
     }
 
-//    //좋아요
-//    public void likes(String sessionId, Long cafeId){
-//        try{
-//            likesRepository.likes(sessionId,cafeId);
-//        }catch (Exception e){
-//            throw new RuntimeException("이미 좋아요 하였습니다.");
-//        }
-//    }
-//
-//    //취소
-//    public void cancelLikes(String sessionId, Long cafeId){
-//        likesRepository.cancelLikes(sessionId,cafeId);
-//    }
-
 }
